@@ -1,14 +1,14 @@
-# 의존성 설치
+### 의존성 설치
 yarn install
 
-# 개발 서버 실행
+### 개발 서버 실행
 yarn dev
 
-# 빌드
+### 빌드
 yarn build
 
-# lint 수행
+### lint 수행
 yarn lint
 
-# 미리보기
+### 미리보기
 yarn preview
