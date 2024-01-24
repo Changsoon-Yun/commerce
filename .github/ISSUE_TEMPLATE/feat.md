@@ -7,15 +7,6 @@ assignees: Changsoon-Yun
 
 ---
 
----
-name: 'feat: 기능 관련 이슈'
-about: 새로운 기능 추가 및 기능 개선
-title: 'feat: '
-labels: feature
-assignees: ''
-
----
-
 <!-- 기능 내용 -->
 ## 개요 Overview
 - 작업 일자: 
