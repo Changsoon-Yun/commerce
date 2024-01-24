@@ -1,4 +1,3 @@
-import './App.css';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
 function App() {
