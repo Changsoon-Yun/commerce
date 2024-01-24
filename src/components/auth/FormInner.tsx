@@ -7,23 +7,21 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input.tsx';
-import { UseFormReturn } from 'react-hook-form';
-import { z } from 'zod';
-import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 
-/** todo: 유니온 타입으로 잘 설정 했는데 email,password만 받을수있다고 에러가 남 왜지 ??
- *
- */
-type schemas = z.TypeOf<typeof loginFormSchema> | z.TypeOf<typeof registerFormSchema> | any;
-
-interface FormInnerProps {
-  form: UseFormReturn<schemas>;
-  name: 'email' | 'password' | 'userName';
+interface FormInnerProps<T extends FieldValues> {
+  form: UseFormReturn<T>;
+  name: Path<T>;
   label: string;
   isRegister?: boolean;
 }
 
-export default function FormInner({ form, name, label, isRegister }: FormInnerProps) {
+export default function FormInner<T extends FieldValues>({
+  form,
+  name,
+  label,
+  isRegister,
+}: FormInnerProps<T>) {
   return (
     <>
       <div className={'pb-4'}>
