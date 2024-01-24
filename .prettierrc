@@ -6,5 +6,5 @@
   "useTabs": false,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "bracketSameLine": false
+  "bracketSameLine": true
 }
