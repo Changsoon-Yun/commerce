@@ -14,7 +14,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* shading css lib */
+    /* shadcn css lib */
     "baseUrl": ".",
     "paths": {
       "@/*": [
