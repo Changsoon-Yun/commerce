@@ -15,8 +15,11 @@ import {
   navigationMenuTriggerStyle,
 } from './navigation-menu';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/apis/useAuth.ts';
 
 export default function Header() {
+  const { isLoggedIn, logout, userInfo } = useAuth();
+  console.log(userInfo?.isSeller);
   return (
     <>
       <div className={'flex justify-between px-20 py-2 items-center'}>
@@ -24,30 +27,31 @@ export default function Header() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem className={navigationMenuTriggerStyle()}>
-              <Link to={'/login'}>login</Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem className={navigationMenuTriggerStyle()}>
               <Link to={'/mypage'}>My Page</Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
         <div className={'flex gap-4'}>
           <Input className={'max-w-md'} type="text" placeholder="검색" />
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {isLoggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className={'focus-visible:outline-none'}>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>{userInfo?.email}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
+                <DropdownMenuItem>{userInfo?.isSeller && '판매자 페이지 이동'}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <NavigationMenuItem className={navigationMenuTriggerStyle()}>
+              <Link to={'/login'}>login</Link>
+            </NavigationMenuItem>
+          )}
         </div>
       </div>
     </>
