@@ -8,8 +8,10 @@ import SocialLogins from '@/components/auth/SocialLogins.tsx';
 import { Link } from 'react-router-dom';
 import AuthHeading from '@/components/auth/AuthHeading.tsx';
 import { loginFormSchema } from '@/lib/zod/schemas.ts';
+import { useAuth } from '@/apis/useAuth.ts';
 
 export default function LoginPage() {
+  const { authServerCall } = useAuth();
   const form = useForm({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -18,8 +20,8 @@ export default function LoginPage() {
     },
   });
 
-  const submitHandler = (values: z.infer<typeof loginFormSchema>) => {
-    console.log(values);
+  const submitHandler = async (values: z.infer<typeof loginFormSchema>) => {
+    await authServerCall({ type: 'login', data: values });
   };
   return (
     <>

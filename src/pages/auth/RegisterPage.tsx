@@ -7,15 +7,13 @@ import { Form } from '@/components/ui/form.tsx';
 import FormInner from '@/components/auth/FormInner.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { registerFormSchema } from '@/lib/zod/schemas.ts';
+import { useAuth } from '@/apis/useAuth.ts';
 
 export default function RegisterPage() {
   const location = useLocation();
-  let visitor: '소비자' | '판매자' | '' = '';
-  if (location.pathname === '/register/customer') {
-    visitor = '소비자';
-  } else {
-    visitor = '판매자';
-  }
+  const { authServerCall } = useAuth();
+
+  const isSeller = location.pathname === '/register/seller';
 
   const form = useForm({
     resolver: zodResolver(registerFormSchema),
@@ -26,13 +24,14 @@ export default function RegisterPage() {
     },
   });
 
-  const submitHandler = (values: z.infer<typeof registerFormSchema>) => {
-    console.log(values);
+  const submitHandler = async (values: z.infer<typeof registerFormSchema>) => {
+    await authServerCall({ type: 'register', data: values, isSeller });
   };
+
   return (
     <>
       <div className={'pb-6'}>
-        <AuthHeading text={`${visitor} 회원가입`} />
+        <AuthHeading text={`${isSeller ? '판매자' : '소비자'} 회원가입`} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submitHandler)}>
             <FormInner form={form} name={'email'} label={'이메일'} />
