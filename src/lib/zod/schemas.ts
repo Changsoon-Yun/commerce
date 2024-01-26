@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
-const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d|\W).{8,}$/;
+// const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d|\W).{8,}$/;
 export const loginFormSchema = z.object({
   email: z.string().email({ message: '이메일 형식에 맞지 않습니다.' }),
-  password: z.string().regex(regex, { message: '비밀번호 형식에 맞지 않습니다.' }),
+  // password: z.string().regex(regex, { message: '비밀번호 형식에 맞지 않습니다.' }),
+  password: z.string(),
 });
 
 export const registerFormSchema = loginFormSchema.extend({
