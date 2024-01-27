@@ -44,7 +44,9 @@ export default function Header() {
                 <DropdownMenuLabel>{userInfo?.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
-                <DropdownMenuItem>{userInfo?.isSeller && '판매자 페이지 이동'}</DropdownMenuItem>
+                <Link to={'/seller/dashboard'}>
+                  <DropdownMenuItem>{userInfo?.isSeller && '판매자 페이지 이동'}</DropdownMenuItem>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
