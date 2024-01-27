@@ -55,6 +55,7 @@ export function useAuth() {
     mutationFn: () => signOut(auth),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: ['userInfo'] });
     },
   });
 
@@ -66,16 +67,6 @@ export function useAuth() {
     });
   };
 
-  // const userInfo = () => {
-  //   const obj: Record<string, string> = {};
-  //   if (auth.currentUser) {
-  //     const { email } = auth.currentUser;
-  //     if (email) {
-  //       obj.email = email;
-  //     }
-  //   }
-  //   return obj;
-  // };
   const fetchUserInfo = async () => {
     const uid = auth.currentUser?.uid || '';
     const q = doc(db, 'users', uid);
