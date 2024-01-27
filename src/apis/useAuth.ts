@@ -8,7 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '@/App.tsx';
 
@@ -34,6 +34,9 @@ export function useAuth() {
           uid: userCredential.user.uid,
           isSeller,
           userName: data.userName,
+          profileImg: '',
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
         });
         alert('회원가입 성공! \n로그인 페이지로 이동합니다!');
         navigate('/login');
