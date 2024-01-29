@@ -27,7 +27,7 @@ export default function Header() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem className={navigationMenuTriggerStyle()}>
-              <Link to={'/mypage'}>My Page</Link>
+              <Link to={'/'}>My Page</Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -41,7 +41,9 @@ export default function Header() {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>{userInfo?.email}</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  <Link to={'/user/dashboard'}>{userInfo?.email}</Link>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
                 <Link to={'/seller/dashboard'}>
