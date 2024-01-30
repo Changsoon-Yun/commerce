@@ -6,17 +6,11 @@ import { Form } from '@/components/ui/form.tsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productAddFormSchema } from '@/lib/zod/schemas.ts';
-import { z } from 'zod';
-import { ChangeEvent, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
-import { useAuth } from '@/apis/useAuth.ts';
-import { ref, uploadBytes } from 'firebase/storage';
-import { storage } from '@/lib/firebase/firebase';
+import useUpload from '@/apis/useUpload.ts';
 
-type UploadImgListType = { src: string; blob: File }[];
 export default function SellerProductAddPage() {
-  const { userInfo } = useAuth();
-  const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
+  const { submitHandler, addImgHandler, uploadImages, deleteImageHandler } = useUpload();
   const form = useForm({
     resolver: zodResolver(productAddFormSchema),
     defaultValues: {
@@ -25,37 +19,6 @@ export default function SellerProductAddPage() {
     },
   });
 
-  const addImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const temp = [];
-    if (e.target.files) {
-      for (let i = 0; i < e.target.files.length; i++) {
-        const blobImage = URL.createObjectURL(e.target.files[i]);
-        temp.push({ src: blobImage, blob: e.target.files[i] });
-      }
-    }
-    setUploadImages([...uploadImages, ...temp]);
-  };
-
-  const deleteImageHandler = (targetSrc: string) => {
-    setUploadImages(
-      uploadImages.filter(({ src }) => {
-        return targetSrc != src;
-      })
-    );
-  };
-
-  const uploadHandler = async () => {
-    const promises = uploadImages.map(async (data) => {
-      const imageRef = ref(storage, `${userInfo?.uid}/${data.blob.name}`);
-      return await uploadBytes(imageRef, data.blob);
-    });
-    await Promise.all(promises);
-  };
-
-  const submitHandler = async (values: z.infer<typeof productAddFormSchema>) => {
-    console.log(values);
-    await uploadHandler();
-  };
   return (
     <>
       <Form {...form}>
