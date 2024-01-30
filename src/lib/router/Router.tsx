@@ -22,8 +22,6 @@ export default function Router() {
           <Route path={'/'} element={<HomePage />} />
           {/*권한 필요 라우트*/}
           <Route element={<PrivateRouter />}>
-            <Route path={'/user/dashboard'} element={<UserDashBoardPage />} />
-            <Route path={'/user/dashboard/edit'} element={<UserDashBoardEditPage />} />
             <Route element={<SellerRouter />}>
               <Route path={'/seller/dashboard'} element={<SellerDashBoardPage />} />
               <Route path={'/seller/product/add'} element={<SellerProductAddPage />} />
@@ -37,6 +35,10 @@ export default function Router() {
           <Route path={'/login'} element={<LoginPage />} />
           <Route path={'/register/select'} element={<RegisterSelectPage />} />
           <Route path={'/register/:params'} element={<RegisterPage />} />
+          <Route element={<PrivateRouter />}>
+            <Route path={'/user/dashboard'} element={<UserDashBoardPage />} />
+            <Route path={'/user/dashboard/edit'} element={<UserDashBoardEditPage />} />
+          </Route>
         </Route>
       </Routes>
     </>

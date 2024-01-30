@@ -19,7 +19,6 @@ import { useAuth } from '@/apis/useAuth.ts';
 
 export default function Header() {
   const { isLoggedIn, logout, userInfo } = useAuth();
-  console.log(userInfo?.isSeller);
   return (
     <>
       <div className={'flex justify-between px-20 py-2 items-center'}>
