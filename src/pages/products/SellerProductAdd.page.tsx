@@ -9,9 +9,14 @@ import { productAddFormSchema } from '@/lib/zod/schemas.ts';
 import { z } from 'zod';
 import { ChangeEvent, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
+import { useAuth } from '@/apis/useAuth.ts';
+import { ref, uploadBytes } from 'firebase/storage';
+import { storage } from '@/lib/firebase/firebase';
 
+type UploadImgListType = { src: string; blob: File }[];
 export default function SellerProductAddPage() {
-  const [uploadImages, setUploadImages] = useState<string[]>([]);
+  const { userInfo } = useAuth();
+  const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
   const form = useForm({
     resolver: zodResolver(productAddFormSchema),
     defaultValues: {
@@ -25,7 +30,7 @@ export default function SellerProductAddPage() {
     if (e.target.files) {
       for (let i = 0; i < e.target.files.length; i++) {
         const blobImage = URL.createObjectURL(e.target.files[i]);
-        temp.push(blobImage);
+        temp.push({ src: blobImage, blob: e.target.files[i] });
       }
     }
     setUploadImages([...uploadImages, ...temp]);
@@ -33,14 +38,23 @@ export default function SellerProductAddPage() {
 
   const deleteImageHandler = (targetSrc: string) => {
     setUploadImages(
-      uploadImages.filter((src) => {
+      uploadImages.filter(({ src }) => {
         return targetSrc != src;
       })
     );
   };
 
+  const uploadHandler = async () => {
+    const promises = uploadImages.map(async (data) => {
+      const imageRef = ref(storage, `${userInfo?.uid}/${data.blob.name}`);
+      return await uploadBytes(imageRef, data.blob);
+    });
+    await Promise.all(promises);
+  };
+
   const submitHandler = async (values: z.infer<typeof productAddFormSchema>) => {
     console.log(values);
+    await uploadHandler();
   };
   return (
     <>
@@ -66,7 +80,7 @@ export default function SellerProductAddPage() {
           <div className={'flex flex-col'}>
             <div>업로드 될 이미지</div>
             <div className={'flex gap-4'}>
-              {uploadImages.map((src) => (
+              {uploadImages.map(({ src }) => (
                 <div className={'relative  p-3'} key={src}>
                   <div className={'w-24 h-24 border border-zinc-300'}>
                     <img src={src} alt="image" className={'w-full h-full object-cover'} />
