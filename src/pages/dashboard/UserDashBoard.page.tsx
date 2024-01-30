@@ -1,11 +1,11 @@
 import { useAuth } from '@/apis/useAuth.ts';
 
 export default function UserDashBoardPage() {
-  const { userInfo } = useAuth();
+  const { userData } = useAuth();
   return (
     <>
       유저 프로필
-      <div>{userInfo?.userName}</div>
+      <div>{userData?.userName}</div>
     </>
   );
 }

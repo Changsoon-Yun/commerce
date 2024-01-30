@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase/firebase.ts';
 import { z } from 'zod';
 import { productAddFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
 
@@ -11,7 +11,7 @@ type UploadImgListType = { src: string; blob: File }[];
 
 export default function useUpload() {
   const navigate = useNavigate();
-  const { userInfo } = useAuth();
+  const { userData } = useAuth();
   const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
   const addImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const temp = [];
@@ -34,7 +34,7 @@ export default function useUpload() {
 
   const uploadHandler = async (title: string) => {
     const promises = uploadImages.map(async (data) => {
-      const imageRef = ref(storage, userInfo?.uid + '/' + title + ` ${data.blob.name}`);
+      const imageRef = ref(storage, userData?.uid + '/' + title + ` ${data.blob.name}`);
       return await uploadBytes(imageRef, data.blob);
     });
     await Promise.all(promises);
@@ -42,7 +42,7 @@ export default function useUpload() {
 
   const getImageURL = async (title: string) => {
     const promises = uploadImages.map(async (data) => {
-      const imageRef = ref(storage, userInfo?.uid + '/' + title + ` ${data.blob.name}`);
+      const imageRef = ref(storage, userData?.uid + '/' + title + ` ${data.blob.name}`);
       return await getDownloadURL(imageRef);
     });
     return await Promise.all(promises);
@@ -52,8 +52,10 @@ export default function useUpload() {
     await uploadHandler(values.title);
     const imageUrlList = await getImageURL(values.title);
 
-    await setDoc(doc(db, `products/${userInfo?.uid}/items`, `${values.title + ' ' + Date.now()}`), {
-      uid: userInfo?.uid,
+    const collectionRef = collection(db, `products/${userData?.uid}/products`);
+
+    await addDoc(collectionRef, {
+      uid: userData?.uid,
       title: values.title,
       desc: values.desc,
       imageList: imageUrlList,
