@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
 
 export default function Header() {
-  const { isLoggedIn, logout, userInfo } = useAuth();
+  const { storedUserData, logout } = useAuth();
   return (
     <>
       <div className={'flex justify-between px-20 py-2 items-center'}>
@@ -32,7 +32,7 @@ export default function Header() {
         </NavigationMenu>
         <div className={'flex gap-4'}>
           <Input className={'max-w-md'} type="text" placeholder="검색" />
-          {isLoggedIn ? (
+          {storedUserData ? (
             <DropdownMenu>
               <DropdownMenuTrigger className={'focus-visible:outline-none'}>
                 <Avatar>
@@ -41,12 +41,14 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>
-                  <Link to={'/user/dashboard'}>{userInfo?.email}</Link>
+                  <Link to={'/user/dashboard'}>{storedUserData?.email}</Link>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
                 <Link to={'/seller/dashboard'}>
-                  <DropdownMenuItem>{userInfo?.isSeller && '판매자 페이지 이동'}</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    {storedUserData?.isSeller && '판매자 페이지 이동'}
+                  </DropdownMenuItem>
                 </Link>
               </DropdownMenuContent>
             </DropdownMenu>

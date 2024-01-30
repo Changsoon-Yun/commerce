@@ -8,17 +8,56 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, DocumentData, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '@/App.tsx';
+import { useEffect, useState } from 'react';
 
 interface authServerCallProps {
   type: 'register' | 'login';
   data?: z.infer<typeof loginFormSchema> | z.infer<typeof registerFormSchema>;
   isSeller?: boolean;
 }
+
+const USER_INFO_QUERY_KEY = ['userInfo'];
 export function useAuth() {
   const navigate = useNavigate();
+
+  //storedUserData의 초기값은 로컬스토리지에 있는 데이터를 사용한다.
+  const [storedUserData, setStoredUserData] = useState<DocumentData | undefined | null>(
+    JSON.parse(localStorage.getItem('user') as string)
+  );
+
+  //유저 상태가 변경 될때마다 실행되는 Effect
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      const userData = await fetchUserInfo();
+      if (user) {
+        setStoredUserData(userData);
+        queryClient.setQueryData(USER_INFO_QUERY_KEY, userData);
+      } else {
+        setStoredUserData(null);
+        queryClient.setQueryData(USER_INFO_QUERY_KEY, null);
+      }
+    });
+  }, []);
+
+  //유저정보를 페칭한다면 로컬스토리지, storedUserData 및 쿼리데이터 변경
+  const fetchUserInfo = async () => {
+    const uid = auth.currentUser?.uid || '';
+    const q = doc(db, 'users', uid);
+    const querySnapshot = await getDoc(q);
+    localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
+    setStoredUserData(querySnapshot.data());
+    return querySnapshot.data();
+  };
+
+  //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
+  const { data: userData } = useQuery({
+    queryKey: USER_INFO_QUERY_KEY,
+    queryFn: fetchUserInfo,
+  });
+
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
     try {
       //회원가입
@@ -45,6 +84,8 @@ export function useAuth() {
       // 로그인
       if (type === 'login' && data) {
         await signInWithEmailAndPassword(auth, data.email, data.password);
+        // 로그인시 로컬스토리지에 저장할 유저정보를 페칭한다
+        localStorage.setItem('user', JSON.stringify(await fetchUserInfo()));
         alert('로그인 성공! \n메인 페이지로 이동합니다!');
         navigate('/');
       }
@@ -57,30 +98,10 @@ export function useAuth() {
   const { mutate: logout } = useMutation({
     mutationFn: () => signOut(auth),
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-      queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      queryClient.setQueryData(USER_INFO_QUERY_KEY, null);
+      localStorage.removeItem('user');
+      navigate('/');
     },
   });
-
-  const fetchUser = async () => {
-    return new Promise((resolve) => {
-      onAuthStateChanged(auth, (user) => {
-        resolve(!!user);
-      });
-    });
-  };
-
-  const fetchUserInfo = async () => {
-    const uid = auth.currentUser?.uid || '';
-    const q = doc(db, 'users', uid);
-    const querySnapshot = await getDoc(q);
-    return querySnapshot.data();
-  };
-
-  const { data: isLoggedIn } = useQuery({ queryKey: ['user'], queryFn: fetchUser });
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: fetchUserInfo,
-  });
-  return { isLoggedIn, authServerCall, logout, userInfo };
+  return { storedUserData, authServerCall, logout, userData };
 }

@@ -1,7 +1,7 @@
 import { useAuth } from '@/apis/useAuth.ts';
 
 export default function HomePage() {
-  const { isLoggedIn } = useAuth();
+  const { storedUserData } = useAuth();
 
-  return <>Home {isLoggedIn ? '로그인함' : '아님'}</>;
+  return <>Home {storedUserData ? '로그인함' : '아님'}</>;
 }
