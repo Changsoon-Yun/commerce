@@ -34,9 +34,20 @@ export default function RegisterPage() {
         <AuthHeading text={`${isSeller ? '판매자' : '소비자'} 회원가입`} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submitHandler)}>
-            <FormInner form={form} name={'email'} label={'이메일'} />
-            <FormInner form={form} name={'userName'} label={'이름'} />
-            <FormInner form={form} name={'password'} label={'비밀번호'} isRegister={true} />
+            <FormInner
+              form={form}
+              name={'email'}
+              label={'이메일'}
+              placeholder={'example@email.com'}
+            />
+            <FormInner form={form} name={'userName'} label={'이름'} placeholder={'홍길동'} />
+            <FormInner
+              form={form}
+              name={'password'}
+              label={'비밀번호'}
+              isRegister={true}
+              placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
+            />
             <Button className={'w-full mt-10 py-6'} type={'submit'}>
               회원가입 하기
             </Button>

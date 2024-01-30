@@ -29,8 +29,18 @@ export default function LoginPage() {
         <AuthHeading text={'로그인'} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submitHandler)}>
-            <FormInner form={form} name={'email'} label={'이메일'} />
-            <FormInner form={form} name={'password'} label={'비밀번호'} />
+            <FormInner
+              form={form}
+              name={'email'}
+              label={'이메일'}
+              placeholder={'example@email.com'}
+            />
+            <FormInner
+              form={form}
+              name={'password'}
+              label={'비밀번호'}
+              placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
+            />
             <Button className={'w-full mt-10 py-6'} type={'submit'}>
               로그인 하기
             </Button>
