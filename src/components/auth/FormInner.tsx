@@ -8,19 +8,24 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input.tsx';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
+import { Textarea } from '../ui/textarea';
 
 interface FormInnerProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   name: Path<T>;
   label: string;
+  placeholder: string;
   isRegister?: boolean;
+  isTextArea?: boolean;
 }
 
 export default function FormInner<T extends FieldValues>({
   form,
   name,
   label,
+  placeholder,
   isRegister,
+  isTextArea,
 }: FormInnerProps<T>) {
   return (
     <>
@@ -32,11 +37,15 @@ export default function FormInner<T extends FieldValues>({
             <FormItem>
               <FormLabel style={{ color: 'black' }}>{label}</FormLabel>
               <FormControl>
-                <Input
-                  type={name === 'password' ? 'password' : ''}
-                  placeholder="shadcn"
-                  {...field}
-                />
+                {isTextArea ? (
+                  <Textarea placeholder={placeholder} className="resize-none" {...field} />
+                ) : (
+                  <Input
+                    type={name === 'password' ? 'password' : ''}
+                    placeholder={placeholder}
+                    {...field}
+                  />
+                )}
               </FormControl>
               {name === 'password' && isRegister && (
                 <FormDescription>
