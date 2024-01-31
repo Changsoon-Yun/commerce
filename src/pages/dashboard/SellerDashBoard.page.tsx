@@ -1,22 +1,17 @@
 import { Link } from 'react-router-dom';
 import useGetSellerProducts from '@/apis/useGetSellerProducts.ts';
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Separator } from '@/components/ui/separator';
 
 export default function SellerDashBoardPage() {
   const { products } = useGetSellerProducts();
-  useEffect(() => {
-    if (products) {
-      console.log(products[0].id);
-    }
-  }, [products]);
+
   return (
     <>
       <div>판매자 대시보드</div>
       <Link to={'/seller/product/add'}>판매자 상품 등록</Link>
       <div>
-        {products?.map(({ title, desc, imageList, createdAt }) => (
+        {products?.map(({ title, desc, imageList, createdAt, id }) => (
           <div key={title}>
             <div className={'flex justify-between items-center p-2'}>
               <div className={'flex items-center'}>
@@ -34,7 +29,9 @@ export default function SellerDashBoardPage() {
                 </div>
               </div>
               <div>
-                <Button>수정하기</Button>
+                <Button>
+                  <Link to={`/seller/product/edit/${id}`}>수정하기</Link>
+                </Button>
               </div>
             </div>
             <Separator />
