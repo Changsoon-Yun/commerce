@@ -3,16 +3,17 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 import { db, storage } from '@/lib/firebase/firebase.ts';
 import { z } from 'zod';
 import { productAddFormSchema } from '@/lib/zod/schemas.ts';
-import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
+import { queryClient } from '@/App.tsx';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
-export default function useUpload(id?: string) {
+export default function useProductActions(id?: string) {
   const navigate = useNavigate();
-  const { userData } = useAuth();
+  const { userData, storedUserData } = useAuth();
   const { product } = useGetSellerProduct({ id: id as string });
   const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
@@ -102,9 +103,9 @@ export default function useUpload(id?: string) {
     await uploadHandler(values.title);
     const imageUrlList = await getImageURL(values.title);
 
-    const imageListRef = doc(db, `products/${userData?.uid}/products/${id}`);
+    const productRef = doc(db, `products/${userData?.uid}/products/${id}`);
     if (product) {
-      await updateDoc(imageListRef, {
+      await updateDoc(productRef, {
         ...product,
         title: values.title,
         desc: values.desc,
@@ -114,6 +115,15 @@ export default function useUpload(id?: string) {
     }
     alert('수정 완료');
     navigate('/seller/dashboard');
+  };
+
+  const deleteHandler = async (id: string) => {
+    const productRef = doc(db, `products/${userData?.uid}/products/${id}`);
+    if (confirm('삭제 하시겠습니까?')) {
+      await deleteDoc(productRef);
+      await queryClient.invalidateQueries({ queryKey: [`products/${storedUserData?.uid}`] });
+      alert('삭제 되었습니다.');
+    }
   };
 
   return {
@@ -126,5 +136,6 @@ export default function useUpload(id?: string) {
     setPreviewImages,
     previewImages,
     editHandler,
+    deleteHandler,
   };
 }

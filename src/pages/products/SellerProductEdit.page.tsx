@@ -1,4 +1,4 @@
-import useUpload from '@/apis/useUpload.ts';
+import useProductActions from '@/apis/useProductActions.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productAddFormSchema } from '@/lib/zod/schemas.ts';
@@ -16,7 +16,7 @@ import { storage } from '@/lib/firebase/firebase';
 export default function SellerProductEditPage() {
   const { id } = useParams();
   const { editHandler, addImgHandler, previewImages, setPreviewImages, deleteImageHandler } =
-    useUpload(id);
+    useProductActions(id);
   const { product } = useGetSellerProduct({ id: id as string });
 
   const form = useForm({

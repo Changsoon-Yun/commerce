@@ -4,12 +4,12 @@ import { Form } from '@/components/ui/form.tsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productAddFormSchema } from '@/lib/zod/schemas.ts';
-import useUpload from '@/apis/useUpload.ts';
+import useProductActions from '@/apis/useProductActions.ts';
 import FormFileInner from '@/components/products/FormFileInner.tsx';
 import ProductImgList from '@/components/products/ProductImgList.tsx';
 
 export default function SellerProductAddPage() {
-  const { submitHandler, addImgHandler, previewImages, deleteImageHandler } = useUpload();
+  const { submitHandler, addImgHandler, previewImages, deleteImageHandler } = useProductActions();
   const form = useForm({
     resolver: zodResolver(productAddFormSchema),
     defaultValues: {

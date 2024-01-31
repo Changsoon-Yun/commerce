@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/apis/useAuth.ts';
-import { collection, DocumentData, getDocs, query } from 'firebase/firestore';
+import { collection, DocumentData, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 
 interface TimeStamp {
@@ -22,7 +22,10 @@ export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();
 
   const fetchData = async () => {
-    const q = query(collection(db, `products/${storedUserData?.uid}/products`));
+    const q = query(
+      collection(db, `products/${storedUserData?.uid}/products`),
+      orderBy('updatedAt', 'desc')
+    );
     const querySnapshot = await getDocs(q);
     const products: IProducts[] = [];
     querySnapshot.forEach((doc) => {
