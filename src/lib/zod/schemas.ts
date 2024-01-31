@@ -16,6 +16,13 @@ export const registerFormSchema = loginFormSchema.extend({
 
 export const productAddFormSchema = z.object({
   title: z.string().min(1, { message: '제목은 최소 1글자 이상 입니다.' }),
-  // password: z.string().regex(regex, { message: '비밀번호 형식에 맞지 않습니다.' }),
   desc: z.string().min(1, { message: '내용은 최소 1글자 이상 입니다.' }),
+  imgList: z
+    .array(
+      z.object({
+        src: z.string(),
+        blob: z.instanceof(File),
+      })
+    )
+    .refine((data) => data?.length <= 1, { message: '최소1장 필요' }),
 });
