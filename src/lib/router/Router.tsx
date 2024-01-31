@@ -25,7 +25,7 @@ export default function Router() {
             <Route element={<SellerRouter />}>
               <Route path={'/seller/dashboard'} element={<SellerDashBoardPage />} />
               <Route path={'/seller/product/add'} element={<SellerProductAddPage />} />
-              <Route path={'/seller/product/edit'} element={<SellerProductEditPage />} />
+              <Route path={'/seller/product/edit/:id'} element={<SellerProductEditPage />} />
             </Route>
           </Route>
         </Route>
