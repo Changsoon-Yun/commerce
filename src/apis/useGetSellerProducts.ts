@@ -35,7 +35,6 @@ export default function useGetSellerProducts() {
   const fetchData = async (
     lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
   ) => {
-    console.log(lastVisible);
     const q = !lastVisible
       ? query(
           collection(db, `products/${storedUserData?.uid}/products`),
@@ -86,7 +85,7 @@ export default function useGetSellerProducts() {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return { products, fetchNextPage, isFetchingNextPage, hasNextPage, inViewRef };
 }
