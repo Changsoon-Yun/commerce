@@ -1,7 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/apis/useAuth.ts';
-import { collection, DocumentData, getDocs, orderBy, query } from 'firebase/firestore';
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  startAfter,
+} from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 interface TimeStamp {
   nanoseconds: number;
@@ -21,23 +32,61 @@ interface IProducts extends DocumentData {
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();
 
-  const fetchData = async () => {
-    const q = query(
-      collection(db, `products/${storedUserData?.uid}/products`),
-      orderBy('updatedAt', 'desc')
-    );
+  const fetchData = async (
+    lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
+  ) => {
+    console.log(lastVisible);
+    const q = !lastVisible
+      ? query(
+          collection(db, `products/${storedUserData?.uid}/products`),
+          orderBy('updatedAt', 'desc'),
+          limit(10)
+        )
+      : query(
+          collection(db, `products/${storedUserData?.uid}/products`),
+          orderBy('updatedAt', 'desc'),
+          startAfter(lastVisible),
+          limit(10)
+        );
     const querySnapshot = await getDocs(q);
     const products: IProducts[] = [];
     querySnapshot.forEach((doc) => {
       products.push(<IProducts>{ id: doc.id, ...doc.data() });
     });
 
-    return products;
+    return { products, querySnapshot };
   };
 
-  const { data: products } = useQuery({
+  const {
+    data: products,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: [`products/${storedUserData?.uid}`],
-    queryFn: fetchData,
+    initialPageParam: undefined,
+    queryFn: ({
+      pageParam,
+    }: {
+      pageParam: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
+    }) => fetchData(pageParam),
+    getNextPageParam: (lastPage) => {
+      const lastVisible = lastPage.querySnapshot.docs[lastPage.querySnapshot.docs.length - 1];
+      if (lastPage.querySnapshot.size < 10) {
+        return undefined;
+      } else {
+        return lastVisible;
+      }
+    },
   });
-  return { products };
+
+  const [inViewRef, inView] = useInView({});
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  return { products, fetchNextPage, isFetchingNextPage, hasNextPage, inViewRef };
 }
