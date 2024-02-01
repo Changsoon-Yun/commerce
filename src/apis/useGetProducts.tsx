@@ -1,5 +1,5 @@
 import { db } from '@/lib/firebase/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 
 interface Product {
@@ -7,6 +7,7 @@ interface Product {
   imageList: string[];
   uid: string;
   title: string;
+  price: number;
   updatedAt: {
     seconds: number;
     nanoseconds: number;
@@ -17,10 +18,10 @@ interface Product {
     nanoseconds: number;
   };
 }
-export default function useGetProducts() {
+export default function useGetProducts(category: string) {
   const fetchData = async () => {
     // 모든 상품을 가져오는 쿼리
-    const q = collection(db, `products`);
+    const q = query(collection(db, 'products'), where('category', '==', category), limit(4));
     const querySnapshot = await getDocs(q);
 
     const products: Product[] = [];
@@ -33,7 +34,7 @@ export default function useGetProducts() {
   };
 
   const { data: products } = useQuery({
-    queryKey: [`products/all`],
+    queryKey: [`products`, category],
     queryFn: fetchData,
   });
 

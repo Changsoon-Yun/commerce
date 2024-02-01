@@ -1,7 +1,12 @@
-import { useAuth } from '@/apis/useAuth.ts';
+import { categories } from '@/constant/categories.ts';
+import CardWithCategory from '@/components/products/home/CardWithCategory.tsx';
 
 export default function HomePage() {
-  const { storedUserData } = useAuth();
-
-  return <>Home {storedUserData ? '로그인함' : '아님'}</>;
+  return (
+    <>
+      {categories.map((category) => (
+        <CardWithCategory category={category} />
+      ))}
+    </>
+  );
 }
