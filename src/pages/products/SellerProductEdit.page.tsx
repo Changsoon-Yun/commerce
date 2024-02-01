@@ -5,13 +5,13 @@ import { productFormSchema } from '@/lib/zod/schemas.ts';
 import { Form } from '@/components/ui/form.tsx';
 import FormInner from '@/components/auth/FormInner.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import ProductImgList from '@/components/products/ProductImgList.tsx';
+import ProductImgList from '@/components/products/form/ProductImgList.tsx';
 import { useParams } from 'react-router-dom';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
 import { useEffect } from 'react';
-import FormFileInner from '@/components/products/FormFileInner.tsx';
-import FormComboxInner from '@/components/products/FormComboxInner.tsx';
-import FormRadioGroup from '@/components/products/FormRadioGroup.tsx';
+import FormFileInner from '@/components/products/form/FormFileInner.tsx';
+import FormComboxInner from '@/components/products/form/FormComboxInner.tsx';
+import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 
 export default function SellerProductEditPage() {
   const { id } = useParams();

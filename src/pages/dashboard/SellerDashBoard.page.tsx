@@ -51,8 +51,12 @@ export default function SellerDashBoardPage() {
                         />
                       </div>
                     </TableCell>
-                    <TableCell>{title}</TableCell>
-                    <TableCell>{desc}</TableCell>
+                    <TableCell>
+                      <div className={'line-clamp-4'}>{title}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className={'line-clamp-4'}>{desc}</div>
+                    </TableCell>
                     <TableCell>{convertLabelByValue(category, categories)}</TableCell>
                     <TableCell>{convertLabelByValue(condition, conditions)}</TableCell>
                     <TableCell>

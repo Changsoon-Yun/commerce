@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
 import useProductActions from '@/apis/useProductActions.ts';
-import FormFileInner from '@/components/products/FormFileInner.tsx';
-import ProductImgList from '@/components/products/ProductImgList.tsx';
-import FormComboxInner from '@/components/products/FormComboxInner.tsx';
-import FormRadioGroup from '@/components/products/FormRadioGroup.tsx';
+import FormFileInner from '@/components/products/form/FormFileInner.tsx';
+import ProductImgList from '@/components/products/form/ProductImgList.tsx';
+import FormComboxInner from '@/components/products/form/FormComboxInner.tsx';
+import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 
 export default function SellerProductAddPage() {
   const { submitHandler, addImgHandler, previewImages, deleteImageHandler } = useProductActions();
