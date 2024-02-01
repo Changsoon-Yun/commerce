@@ -84,10 +84,9 @@ export default function useProductActions(id?: string) {
   };
 
   const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
-    console.log(values);
     await uploadHandler(values.title);
     const imageUrlList = await getImageURL(values.title);
-    const collectionRef = collection(db, `products/${userData?.uid}/products`);
+    const collectionRef = collection(db, `products`);
     await addDoc(collectionRef, {
       uid: userData?.uid,
       title: values.title,
@@ -108,13 +107,13 @@ export default function useProductActions(id?: string) {
     await uploadHandler(values.title);
     const imageUrlList = await getImageURL(values.title);
 
-    const productRef = doc(db, `products/${userData?.uid}/products/${id}`);
+    const productRef = doc(db, `products/${id}`);
     if (product) {
       await updateDoc(productRef, {
         ...product,
         title: values.title,
         desc: values.desc,
-        price: values.price,
+        price: +values.price,
         category: values.category,
         condition: values.condition,
         imageList: [...product.imageList, ...imageUrlList],
@@ -126,10 +125,10 @@ export default function useProductActions(id?: string) {
   };
 
   const deleteHandler = async (id: string) => {
-    const productRef = doc(db, `products/${userData?.uid}/products/${id}`);
+    const productRef = doc(db, `products/${id}`);
     if (confirm('삭제 하시겠습니까?')) {
       await deleteDoc(productRef);
-      await queryClient.invalidateQueries({ queryKey: [`products/${storedUserData?.uid}`] });
+      await queryClient.invalidateQueries({ queryKey: [`products`, storedUserData?.uid] });
       alert('삭제 되었습니다.');
     }
   };

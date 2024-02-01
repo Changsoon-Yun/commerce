@@ -39,22 +39,20 @@ export default function useGetSellerProducts() {
     lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
   ) => {
     const q = !lastVisible
-      ? query(
-          collection(db, `products/${storedUserData?.uid}/products`),
-          orderBy('updatedAt', 'desc'),
-          limit(10)
-        )
+      ? query(collection(db, `products`), limit(10), orderBy('updatedAt', 'desc'))
       : query(
-          collection(db, `products/${storedUserData?.uid}/products`),
+          collection(db, `products`),
           orderBy('updatedAt', 'desc'),
           startAfter(lastVisible),
           limit(10)
         );
     const querySnapshot = await getDocs(q);
-    const products: IProducts[] = [];
+    const temp: IProducts[] = [];
     querySnapshot.forEach((doc) => {
-      products.push(<IProducts>{ id: doc.id, ...doc.data() });
+      temp.push(<IProducts>{ id: doc.id, ...doc.data() });
     });
+
+    const products = temp.filter((product) => product.uid === storedUserData?.uid);
 
     return { products, querySnapshot };
   };
@@ -65,7 +63,7 @@ export default function useGetSellerProducts() {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: [`products/${storedUserData?.uid}`],
+    queryKey: [`products`, storedUserData?.uid],
     initialPageParam: undefined,
     queryFn: ({
       pageParam,
