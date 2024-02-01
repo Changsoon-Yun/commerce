@@ -35,6 +35,7 @@
     "react-intersection-observer": "^9.5.3",
     "react-router-dom": "^6.21.3",
     "tailwind-merge": "^2.2.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
   },
