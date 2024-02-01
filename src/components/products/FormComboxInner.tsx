@@ -34,7 +34,7 @@ export default function FormComboxInner<T extends FieldValues>({
           name={name}
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel style={{ color: 'black' }}>{label}</FormLabel>
+              <FormLabel className={'font-black text-black'}>{label}</FormLabel>
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -42,7 +42,7 @@ export default function FormComboxInner<T extends FieldValues>({
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        'w-[200px] justify-between',
+                        'w-full justify-between',
                         !field.value && 'text-muted-foreground'
                       )}>
                       {field.value
@@ -52,7 +52,7 @@ export default function FormComboxInner<T extends FieldValues>({
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-full p-0">
                   <Command>
                     <CommandInput placeholder="카테고리 검색" />
                     <CommandEmpty>검색된 카테고리가 없습니다.</CommandEmpty>

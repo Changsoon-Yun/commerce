@@ -21,13 +21,15 @@ export default function Header() {
   const { storedUserData, logout } = useAuth();
   return (
     <>
-      <div className={'flex justify-between px-20 py-2 items-center'}>
-        <img src="/img/git-logo.png" alt="logo" width={40} height={20} />
+      <div className={'flex justify-between px-5 py-2 items-center'}>
+        <Link to={'/'}>
+          <img src="/img/logo.jpg" alt="logo" width={60} height={60} />
+        </Link>
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem className={navigationMenuTriggerStyle()}>
-              <Link to={'/'}>My Page</Link>
-            </NavigationMenuItem>
+            {/*<NavigationMenuItem className={navigationMenuTriggerStyle()}>*/}
+            {/*  <Link to={'/'}>My Page</Link>*/}
+            {/*</NavigationMenuItem>*/}
           </NavigationMenuList>
         </NavigationMenu>
         <div className={'flex gap-4'}>
@@ -36,7 +38,7 @@ export default function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger className={'focus-visible:outline-none'}>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage src="/img/defaultProfileImage.png" />
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -44,12 +46,12 @@ export default function Header() {
                   <Link to={'/user/dashboard'}>{storedUserData?.email}</Link>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
                 <Link to={'/seller/dashboard'}>
                   <DropdownMenuItem>
                     {storedUserData?.isSeller && '판매자 페이지 이동'}
                   </DropdownMenuItem>
                 </Link>
+                <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

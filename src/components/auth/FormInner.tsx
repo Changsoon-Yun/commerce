@@ -37,10 +37,26 @@ export default function FormInner<T extends FieldValues>({
           name={name}
           render={({ field }) => (
             <FormItem>
-              <FormLabel style={{ color: 'black' }}>{label}</FormLabel>
+              <FormLabel className={'font-black text-black'}>{label}</FormLabel>
               <FormControl>
                 {isTextArea ? (
                   <Textarea placeholder={placeholder} className="resize-none" {...field} />
+                ) : type === 'number' ? (
+                  <>
+                    <div className={'relative'}>
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">&#8361;</span>
+                      </div>
+                      <Input
+                        {...field}
+                        type={type}
+                        placeholder={placeholder}
+                        className={
+                          'pl-7 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                        }
+                      />
+                    </div>
+                  </>
                 ) : (
                   <Input
                     type={type}

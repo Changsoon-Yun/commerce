@@ -9,25 +9,22 @@ export default function ProductImgList({ previewImages, deleteImageHandler }: Pr
   const { id } = useParams();
   return (
     <>
-      <div className={'flex flex-col'}>
-        <div>업로드 될 이미지</div>
-        <div className={'flex gap-4'}>
-          {previewImages.map((src) => (
-            <div className={'relative  p-3'} key={src}>
-              <div className={'w-24 h-24 border border-zinc-300'}>
-                <img src={src} alt="image" className={'w-full h-full object-cover'} />
-                <button
-                  className={'absolute top-0 right-0'}
-                  type={'button'}
-                  onClick={() => {
-                    deleteImageHandler(src, id);
-                  }}>
-                  <TiDelete size={24} />
-                </button>
-              </div>
+      <div className={'flex flex-1 overflow-auto'}>
+        {previewImages.map((src) => (
+          <div className={'relative p-3'} key={src}>
+            <div className={'w-20 h-20 border-2 border-zinc-300 rounded overflow-hidden'}>
+              <img src={src} alt="image" className={'w-full h-full object-cover'} />
+              <button
+                className={'absolute top-0 right-0'}
+                type={'button'}
+                onClick={() => {
+                  deleteImageHandler(src, id);
+                }}>
+                <TiDelete size={24} />
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </>
   );

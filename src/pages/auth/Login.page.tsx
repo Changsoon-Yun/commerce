@@ -38,6 +38,7 @@ export default function LoginPage() {
             <FormInner
               form={form}
               name={'password'}
+              type={'password'}
               label={'비밀번호'}
               placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
             />

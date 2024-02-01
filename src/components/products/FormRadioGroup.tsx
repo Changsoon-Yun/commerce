@@ -24,7 +24,7 @@ export default function FormRadioGroup<T extends FieldValues>({
           name={name}
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel className={'text-black'}>{label}</FormLabel>
+              <FormLabel className={'font-black text-black'}>{label}</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
@@ -37,7 +37,7 @@ export default function FormRadioGroup<T extends FieldValues>({
                       <FormControl>
                         <RadioGroupItem value={condition.value} />
                       </FormControl>
-                      <FormLabel className="font-normal">{condition.label}</FormLabel>
+                      <FormLabel className="font-normal text-black">{condition.label}</FormLabel>
                     </FormItem>
                   ))}
                 </RadioGroup>

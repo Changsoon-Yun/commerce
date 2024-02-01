@@ -1,14 +1,8 @@
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input.tsx';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { ChangeEvent } from 'react';
+import { MdOutlinePhotoCamera } from 'react-icons/md';
 
 interface FormInnerProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -25,31 +19,34 @@ export default function FormFileInner<T extends FieldValues>({
 }: FormInnerProps<T>) {
   return (
     <>
-      <div className={'pb-4'}>
-        <FormField
-          control={form.control}
-          name={name}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor={'picture'} style={{ color: 'black' }}>
-                {label}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  className={'hidden'}
-                  onChange={addImgHandler}
-                  id="picture"
-                  type="file"
-                  multiple={true}
-                />
-              </FormControl>
-              <FormDescription>이미지는 최소 한장필요합니다</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel htmlFor={'picture'} style={{ color: 'black' }}>
+              <div
+                className={
+                  'border-zinc-500 border-2 rounded mt-3 p-3 flex justify-center items-center cursor-pointer'
+                }>
+                <MdOutlinePhotoCamera size={50} />
+                <p className={'hidden'}>{label}</p>
+              </div>
+            </FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                className={'hidden'}
+                onChange={addImgHandler}
+                id="picture"
+                type="file"
+                multiple={true}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
   );
 }

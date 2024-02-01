@@ -58,13 +58,14 @@ export default function SellerProductEditPage() {
             addImgHandler={addImgHandler}
           />
           <ProductImgList previewImages={previewImages} deleteImageHandler={deleteImageHandler} />
+          <FormInner form={form} name={'title'} label={'제목'} placeholder={'제목'} />
           <FormInner
             form={form}
-            name={'title'}
-            label={'제목'}
-            placeholder={'최소 1글자 이상 입니다.'}
+            name={'price'}
+            label={'가격'}
+            type={'number'}
+            placeholder={'가격을 입력해 주세요.'}
           />
-          <FormInner form={form} name={'price'} label={'가격'} type={'number'} placeholder={'0'} />
           <FormInner
             form={form}
             name={'desc'}

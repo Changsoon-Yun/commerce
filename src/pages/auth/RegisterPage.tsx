@@ -45,6 +45,7 @@ export default function RegisterPage() {
               form={form}
               name={'password'}
               label={'비밀번호'}
+              type={'password'}
               isRegister={true}
               placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
             />

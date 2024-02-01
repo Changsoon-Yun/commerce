@@ -18,7 +18,7 @@ export default function SellerProductAddPage() {
       title: '',
       desc: '',
       condition: '',
-      price: '0',
+      price: '',
       category: '',
       imgList: [],
     },
@@ -28,26 +28,29 @@ export default function SellerProductAddPage() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitHandler)}>
-          <FormFileInner
-            form={form}
-            name={'imgList'}
-            label={'사진등록'}
-            addImgHandler={addImgHandler}
-          />
-          <ProductImgList previewImages={previewImages} deleteImageHandler={deleteImageHandler} />
+          <div className={'flex pb-4 relative gap-4'}>
+            <FormFileInner
+              form={form}
+              name={'imgList'}
+              label={'사진등록'}
+              addImgHandler={addImgHandler}
+            />
+            <ProductImgList previewImages={previewImages} deleteImageHandler={deleteImageHandler} />
+          </div>
+          <FormInner form={form} name={'title'} label={'제목'} placeholder={'제목'} />
           <FormInner
             form={form}
-            name={'title'}
-            label={'제목'}
-            placeholder={'최소 1글자 이상 입니다.'}
+            name={'price'}
+            label={'가격'}
+            type={'number'}
+            placeholder={'가격을 입력해 주세요.'}
           />
-          <FormInner form={form} name={'price'} label={'가격'} type={'number'} placeholder={'0'} />
           <FormInner
             form={form}
             name={'desc'}
             label={'상세 내용'}
             isTextArea={true}
-            placeholder={'최소 1글자 이상입니다.'}
+            placeholder={'게시글 내용을 작성해 주세요.'}
           />
           <FormComboxInner form={form} name={'category'} label={'카테고리'} />
           <FormRadioGroup form={form} name={'condition'} label={'상태'} />
