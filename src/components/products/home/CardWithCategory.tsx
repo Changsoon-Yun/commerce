@@ -31,6 +31,9 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
                       {imageList.map((src, index) => (
                         <CarouselItem key={index} className={'border-0'}>
                           <div className={'relative'}>
+                            {imageList.length == 1 && (
+                              <div className={'absolute t-0 l-0 w-full h-full'}></div>
+                            )}
                             <Card className={'p-2 shadow-none border-0'}>
                               <CardContent className="flex aspect-square items-center justify-center p-0">
                                 <div className={'w-full h-full rounded-lg overflow-hidden'}>
