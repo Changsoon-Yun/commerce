@@ -51,13 +51,15 @@ export default function SellerProductEditPage() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(editHandler)}>
-          <FormFileInner
-            form={form}
-            name={'imgList'}
-            label={'사진등록'}
-            addImgHandler={addImgHandler}
-          />
-          <ProductImgList previewImages={previewImages} deleteImageHandler={deleteImageHandler} />
+          <div className={'flex pb-4 relative gap-4'}>
+            <FormFileInner
+              form={form}
+              name={'imgList'}
+              label={'사진등록'}
+              addImgHandler={addImgHandler}
+            />
+            <ProductImgList previewImages={previewImages} deleteImageHandler={deleteImageHandler} />
+          </div>
           <FormInner form={form} name={'title'} label={'제목'} placeholder={'제목'} />
           <FormInner
             form={form}
