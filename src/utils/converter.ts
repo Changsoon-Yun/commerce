@@ -8,3 +8,7 @@ export const convertLabelByValue = (
   const item = arr.find((item) => item.value === value);
   return item ? item.label : undefined;
 };
+
+export const formatNumberWithCommas = (number: number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
