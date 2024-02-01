@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button.tsx';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -27,7 +26,6 @@ export default function SellerDashBoardPage() {
       </div>
       <div>
         <Table>
-          <TableCaption>마지막 제품 입니다.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[130px]">대표이미지</TableHead>
