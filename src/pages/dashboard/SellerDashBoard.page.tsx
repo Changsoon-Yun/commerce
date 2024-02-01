@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import useGetSellerProducts from '@/apis/useGetSellerProducts.ts';
 import { Button } from '@/components/ui/button.tsx';
-import useProductActions from '@/apis/useProductActions.ts';
-import { categories } from '@/constant/categories.ts';
 import {
   Table,
   TableBody,
@@ -12,21 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { convertLabelByValue } from '@/utils/converter';
+import useProductActions from '@/apis/useProductActions';
+import { categories } from '@/constant/categories.ts';
 import { conditions } from '@/constant/conditions';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
   const { deleteHandler } = useProductActions();
-
-  const getCategoryLabelByValue = (value: string): string | undefined => {
-    const category = categories.find((category) => category.value === value);
-    return category ? category.label : undefined;
-  };
-
-  const getConditionLabelByValue = (value: string): string | undefined => {
-    const condition = conditions.find((condition) => condition.value === value);
-    return condition ? condition.label : undefined;
-  };
   return (
     <>
       <div className={'flex justify-center py-16'}>
@@ -64,8 +55,8 @@ export default function SellerDashBoardPage() {
                     </TableCell>
                     <TableCell>{title}</TableCell>
                     <TableCell>{desc}</TableCell>
-                    <TableCell>{getCategoryLabelByValue(category)}</TableCell>
-                    <TableCell>{getConditionLabelByValue(condition)}</TableCell>
+                    <TableCell>{convertLabelByValue(category, categories)}</TableCell>
+                    <TableCell>{convertLabelByValue(condition, conditions)}</TableCell>
                     <TableCell>
                       <div className={'flex flex-col flex-wrap gap-3 max-w-sm'}>
                         <Button>

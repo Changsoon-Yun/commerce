@@ -12,6 +12,7 @@ import UserDashBoardEditPage from '@/pages/dashboard/UserDashBoardEdit.page.tsx'
 import SellerDashBoardPage from '@/pages/dashboard/SellerDashBoard.page.tsx';
 import SellerProductAddPage from '@/pages/products/SellerProductAdd.page.tsx';
 import SellerProductEditPage from '@/pages/products/SellerProductEdit.page.tsx';
+import CategoryProducts from '@/pages/products/CategoryProducts.tsx';
 
 export default function Router() {
   return (
@@ -20,6 +21,7 @@ export default function Router() {
         <Route element={<CommonLayout />}>
           {/*일반 라우트*/}
           <Route path={'/'} element={<HomePage />} />
+          <Route path={'/products/:category'} element={<CategoryProducts />} />
           {/*권한 필요 라우트*/}
           <Route element={<PrivateRouter />}>
             <Route element={<SellerRouter />}>
