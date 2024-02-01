@@ -17,6 +17,7 @@ interface FormInnerProps<T extends FieldValues> {
   placeholder: string;
   isRegister?: boolean;
   isTextArea?: boolean;
+  type?: string;
 }
 
 export default function FormInner<T extends FieldValues>({
@@ -25,6 +26,7 @@ export default function FormInner<T extends FieldValues>({
   label,
   placeholder,
   isRegister,
+  type,
   isTextArea,
 }: FormInnerProps<T>) {
   return (
@@ -41,8 +43,11 @@ export default function FormInner<T extends FieldValues>({
                   <Textarea placeholder={placeholder} className="resize-none" {...field} />
                 ) : (
                   <Input
-                    type={name === 'password' ? 'password' : ''}
+                    type={type}
                     placeholder={placeholder}
+                    className={
+                      '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                    }
                     {...field}
                   />
                 )}
