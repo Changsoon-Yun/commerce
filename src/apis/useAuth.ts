@@ -31,8 +31,8 @@ export function useAuth() {
   //유저 상태가 변경 될때마다 실행되는 Effect
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
-      const userData = await fetchUserInfo();
       if (user) {
+        const userData = await fetchUserInfo();
         setStoredUserData(userData);
         queryClient.setQueryData(USER_INFO_QUERY_KEY, userData);
       } else {
