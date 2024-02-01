@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import '../app/globals.css';
+import '../src/styles/fonts/font.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from '@/App.tsx';
 
