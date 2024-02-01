@@ -1,7 +1,7 @@
 import useProductActions from '@/apis/useProductActions.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { productAddFormSchema } from '@/lib/zod/schemas.ts';
+import { productFormSchema } from '@/lib/zod/schemas.ts';
 import { Form } from '@/components/ui/form.tsx';
 import FormInner from '@/components/auth/FormInner.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -10,8 +10,8 @@ import { useParams } from 'react-router-dom';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
 import { useEffect } from 'react';
 import FormFileInner from '@/components/products/FormFileInner.tsx';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '@/lib/firebase/firebase';
+import FormComboxInner from '@/components/products/FormComboxInner.tsx';
+import FormRadioGroup from '@/components/products/FormRadioGroup.tsx';
 
 export default function SellerProductEditPage() {
   const { id } = useParams();
@@ -20,10 +20,13 @@ export default function SellerProductEditPage() {
   const { product } = useGetSellerProduct({ id: id as string });
 
   const form = useForm({
-    resolver: zodResolver(productAddFormSchema),
+    resolver: zodResolver(productFormSchema),
     defaultValues: {
       title: '',
       desc: '',
+      condition: '',
+      price: '0',
+      category: '',
       imgList: [],
     },
   });
@@ -32,44 +35,22 @@ export default function SellerProductEditPage() {
     if (product) {
       form.setValue('title', product.title);
       form.setValue('desc', product.desc);
+      form.setValue('condition', product.condition);
+      form.setValue('category', product.category);
+      form.setValue('price', product.price);
       const temp = [];
       for (let i = 0; i < product.imageList.length; i++) {
         temp.push(product.imageList[i]);
       }
       setPreviewImages(temp);
-
-      // let decodedFilePath = decodeURIComponent(imgUrl.split("/o/")[1].split("?")[0]);
-      // let fileRef = ref(storage, decodedFilePath);
-      // deleteObject(fileRef)
-      //   .then(() => {})
-      //   .catch((error) => {});
-
-      const decodedFilePath = decodeURIComponent(
-        product.imageList[0].split('/o/')[1].split('?')[0]
-      );
-      const fileRef = ref(storage, decodedFilePath);
-      // console.log(fileRef);
-
-      const getget = async () => {
-        const data = await getDownloadURL(fileRef);
-        // console.log(data);
-        return data;
-      };
-      getget();
       form.setValue('imgList', []);
     }
-  }, [form, product]);
+  }, [form, product, setPreviewImages]);
 
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(editHandler)}>
-          <FormInner
-            form={form}
-            name={'title'}
-            label={'제목'}
-            placeholder={'최소 1글자 이상 입니다.'}
-          />
           <FormFileInner
             form={form}
             name={'imgList'}
@@ -79,11 +60,20 @@ export default function SellerProductEditPage() {
           <ProductImgList previewImages={previewImages} deleteImageHandler={deleteImageHandler} />
           <FormInner
             form={form}
+            name={'title'}
+            label={'제목'}
+            placeholder={'최소 1글자 이상 입니다.'}
+          />
+          <FormInner form={form} name={'price'} label={'가격'} type={'number'} placeholder={'0'} />
+          <FormInner
+            form={form}
             name={'desc'}
             label={'상세 내용'}
             isTextArea={true}
             placeholder={'최소 1글자 이상입니다.'}
           />
+          <FormComboxInner form={form} name={'category'} label={'카테고리'} />
+          <FormRadioGroup form={form} name={'condition'} label={'상태'} />
           <Button className={'w-full mt-10 py-6'} type={'submit'}>
             수정 하기
           </Button>

@@ -26,6 +26,9 @@ interface IProducts extends DocumentData {
   imageList: string[];
   createdAt: TimeStamp;
   updatedAt: TimeStamp;
+  category: string;
+  price: number;
+  condition: string;
   uid: string;
 }
 

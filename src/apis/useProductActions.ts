@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase/firebase.ts';
 import { z } from 'zod';
-import { productAddFormSchema } from '@/lib/zod/schemas.ts';
+import { productFormSchema } from '@/lib/zod/schemas.ts';
 import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
@@ -83,7 +83,8 @@ export default function useProductActions(id?: string) {
     return await Promise.all(promises);
   };
 
-  const submitHandler = async (values: z.infer<typeof productAddFormSchema>) => {
+  const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
+    console.log(values);
     await uploadHandler(values.title);
     const imageUrlList = await getImageURL(values.title);
     const collectionRef = collection(db, `products/${userData?.uid}/products`);
@@ -91,7 +92,11 @@ export default function useProductActions(id?: string) {
       uid: userData?.uid,
       title: values.title,
       desc: values.desc,
+      price: +values.price,
+      category: values.category,
+      condition: values.condition,
       imageList: imageUrlList,
+      isSold: false,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
@@ -99,7 +104,7 @@ export default function useProductActions(id?: string) {
     navigate('/seller/dashboard');
   };
 
-  const editHandler = async (values: z.infer<typeof productAddFormSchema>) => {
+  const editHandler = async (values: z.infer<typeof productFormSchema>) => {
     await uploadHandler(values.title);
     const imageUrlList = await getImageURL(values.title);
 
@@ -109,6 +114,9 @@ export default function useProductActions(id?: string) {
         ...product,
         title: values.title,
         desc: values.desc,
+        price: values.price,
+        category: values.category,
+        condition: values.condition,
         imageList: [...product.imageList, ...imageUrlList],
         updatedAt: serverTimestamp(),
       });
