@@ -7,7 +7,5 @@ export const categories = [
   { label: '자동차 및 오토바이', value: 'cars_motorcycles' },
   { label: '아동용품', value: 'kids_baby_items' },
   { label: '뷰티 및 건강', value: 'beauty_health' },
-  { label: '취미 및 공예', value: 'hobbies_crafts' },
-  { label: '티켓 및 이벤트', value: 'tickets_events' },
   { label: '기타', value: 'etc' },
 ] as const;
