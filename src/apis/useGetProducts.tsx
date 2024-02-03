@@ -34,7 +34,7 @@ export default function useGetProducts(category: string) {
   };
 
   const { data: products } = useQuery({
-    queryKey: [`products`, category],
+    queryKey: [`products`, 'home', category],
     queryFn: fetchData,
   });
 

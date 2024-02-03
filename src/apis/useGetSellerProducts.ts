@@ -8,6 +8,7 @@ import {
   query,
   QueryDocumentSnapshot,
   startAfter,
+  where,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -39,20 +40,24 @@ export default function useGetSellerProducts() {
     lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
   ) => {
     const q = !lastVisible
-      ? query(collection(db, `products`), limit(10), orderBy('updatedAt', 'desc'))
+      ? query(
+          collection(db, `products`),
+          where('uid', '==', storedUserData?.uid),
+          orderBy('updatedAt', 'desc'),
+          limit(10)
+        )
       : query(
           collection(db, `products`),
+          where('uid', '==', storedUserData?.uid),
           orderBy('updatedAt', 'desc'),
           startAfter(lastVisible),
           limit(10)
         );
     const querySnapshot = await getDocs(q);
-    const temp: IProducts[] = [];
+    const products: IProducts[] = [];
     querySnapshot.forEach((doc) => {
-      temp.push(<IProducts>{ id: doc.id, ...doc.data() });
+      products.push({ id: doc.id, ...doc.data() } as IProducts);
     });
-
-    const products = temp.filter((product) => product.uid === storedUserData?.uid);
 
     return { products, querySnapshot };
   };
