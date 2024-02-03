@@ -18,7 +18,7 @@ interface Product {
     nanoseconds: number;
   };
 }
-export default function useGetProducts(category: string) {
+export default function useGetHomeProducts(category: string) {
   const fetchData = async () => {
     // 모든 상품을 가져오는 쿼리
     const q = query(collection(db, 'products'), where('category', '==', category), limit(4));
