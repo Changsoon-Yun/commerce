@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter } from '@/components/ui/card.tsx';
-import useGetProducts from '@/apis/useGetProducts';
+import useGetProducts from '@/apis/useGetProducts.ts';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { formatNumberWithCommas } from '@/utils/converter.ts';
 import { Button } from '@/components/ui/button.tsx';
