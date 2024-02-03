@@ -8,32 +8,21 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { Input } from './input';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from './navigation-menu';
+import { NavigationMenuItem, navigationMenuTriggerStyle } from './navigation-menu';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
+import { Button } from './button';
 
 export default function Header() {
   const { storedUserData, logout } = useAuth();
   return (
     <>
-      <div className={'flex justify-between px-5 py-2 items-center'}>
+      <div className={'flex justify-between px-5 items-center'}>
         <Link to={'/'}>
-          <img src="/img/logo.jpg" alt="logo" width={60} height={60} />
+          <img src="/img/logo.jpg" alt="logo" width={80} height={80} />
         </Link>
-        <NavigationMenu>
-          <NavigationMenuList>
-            {/*<NavigationMenuItem className={navigationMenuTriggerStyle()}>*/}
-            {/*  <Link to={'/'}>My Page</Link>*/}
-            {/*</NavigationMenuItem>*/}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <Input className={'max-w-md'} type="text" placeholder="검색" />
         <div className={'flex gap-4'}>
-          <Input className={'max-w-md'} type="text" placeholder="검색" />
           {storedUserData ? (
             <DropdownMenu>
               <DropdownMenuTrigger className={'focus-visible:outline-none'}>
@@ -42,21 +31,27 @@ export default function Header() {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>
-                  <Link to={'/user/dashboard'}>{storedUserData?.email}</Link>
-                </DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <Link to={'/user/dashboard'}>내 프로필 보기</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <Link to={'/seller/dashboard'}>
-                  <DropdownMenuItem>
-                    {storedUserData?.isSeller && '판매자 페이지 이동'}
-                  </DropdownMenuItem>
-                </Link>
+                {storedUserData?.isSeller && (
+                  <>
+                    <DropdownMenuLabel>판매자 메뉴</DropdownMenuLabel>
+                    <Link to={'/seller/dashboard'}>
+                      <DropdownMenuItem>판매 목록</DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
                 <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <NavigationMenuItem className={navigationMenuTriggerStyle()}>
-              <Link to={'/login'}>login</Link>
+            <NavigationMenuItem className={navigationMenuTriggerStyle() + ' px-0'}>
+              <Link to={'/login'}>
+                <Button variant={'outline'}>로그인</Button>
+              </Link>
             </NavigationMenuItem>
           )}
         </div>
