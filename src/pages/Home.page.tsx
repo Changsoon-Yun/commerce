@@ -21,8 +21,8 @@ export default function HomePage() {
         <div className={'pr-5 flex flex-col gap-2 min-w-[120px]'}>
           <p className={'font-semibold'}>카테고리</p>
           {categories.map((category) => (
-            <Link to={`products/${category.value}`}>
-              <div key={category.value} className={'cursor-pointer hover:font-semibold transition'}>
+            <Link to={`products/${category.value}`} key={category.value}>
+              <div className={'cursor-pointer hover:font-semibold transition'}>
                 <small>{category.label}</small>
               </div>
             </Link>
@@ -30,7 +30,9 @@ export default function HomePage() {
         </div>
         <div>
           {categories.map((category) => (
-            <CardWithCategory category={category} />
+            <div key={category.value}>
+              <CardWithCategory category={category} />
+            </div>
           ))}
         </div>
       </div>
