@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { convertLabelByValue } from '@/utils/converter.ts';
 import { categories } from '@/constant/categories.ts';
 
-export default function CategoryProducts() {
+export default function CategoryProductsPage() {
   const { category } = useParams();
   if (!category) {
     return;
