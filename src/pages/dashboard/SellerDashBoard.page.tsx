@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { convertLabelByValue } from '@/utils/converter';
+import { convertLabelByValue, formatNumberWithCommas } from '@/utils/converter';
 import useProductActions from '@/apis/useProductActions';
 import { categories } from '@/constant/categories.ts';
 import { conditions } from '@/constant/conditions';
@@ -73,7 +73,7 @@ export default function SellerDashBoardPage() {
                         </Button>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">{price}원</TableCell>
+                    <TableCell className="text-right">{formatNumberWithCommas(price)}원</TableCell>
                   </TableRow>
                 )
               )
