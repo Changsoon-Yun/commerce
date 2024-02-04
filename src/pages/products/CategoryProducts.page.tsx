@@ -82,7 +82,7 @@ export default function CategoryProductsPage() {
             ))}
           </RadioGroup>
         </div>
-        <div className={'min-h-screen'}>
+        <div>
           <div className={'flex gap-2 flex-wrap '}>
             {products?.pages.map((items) =>
               items.products?.map(({ title, imageList, id, price }) => (
@@ -123,7 +123,7 @@ export default function CategoryProductsPage() {
                   </CardContent>
                   <CardFooter className={'p-2'}>
                     <Button variant={'secondary'} className={'w-full'} asChild>
-                      <Link to={`/product/${id}`}>장바구니 담기</Link>
+                      <Link to={`/product/${id}`}>상세 보기</Link>
                     </Button>
                   </CardFooter>
                 </Card>

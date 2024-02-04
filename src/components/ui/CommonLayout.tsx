@@ -10,7 +10,7 @@ export default function CommonLayout() {
           <Header />
         </div>
       </div>
-      <div className={'max-w-6xl m-auto'}>
+      <div className={'max-w-6xl m-auto min-h-screen'}>
         <div className={'m-5'}>
           <Outlet />
         </div>
