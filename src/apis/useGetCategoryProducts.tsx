@@ -1,6 +1,18 @@
 import { db } from '@/lib/firebase/firebase';
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
-import { useQuery } from '@tanstack/react-query';
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  startAfter,
+  where,
+} from 'firebase/firestore';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 export interface FilterOptions {
   option: 'updatedAt' | 'price';
@@ -27,13 +39,23 @@ interface Product {
   };
 }
 export default function useGetCategoryProducts({ category, filter }: Options) {
-  const fetchData = async () => {
-    // 모든 상품을 가져오는 쿼리
-    const q = query(
-      collection(db, 'products'),
-      where('category', '==', category),
-      orderBy(filter.option, filter.direction)
-    );
+  const fetchData = async (
+    lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
+  ) => {
+    const q = !lastVisible
+      ? query(
+          collection(db, `products`),
+          where('category', '==', category),
+          orderBy(filter.option, filter.direction),
+          limit(8)
+        )
+      : query(
+          collection(db, `products`),
+          where('category', '==', category),
+          orderBy(filter.option, filter.direction),
+          startAfter(lastVisible),
+          limit(8)
+        );
     const querySnapshot = await getDocs(q);
 
     const products: Product[] = [];
@@ -42,14 +64,40 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
       products.push({ id: doc.id, ...doc.data() } as Product);
     });
 
-    return products;
+    return { products, querySnapshot };
   };
 
-  const { data: products } = useQuery({
+  const {
+    data: products,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: [`products`, category, filter],
-    queryFn: fetchData,
+    initialPageParam: undefined,
+    queryFn: ({
+      pageParam,
+    }: {
+      pageParam: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
+    }) => fetchData(pageParam),
     enabled: !!category,
+    getNextPageParam: (lastPage) => {
+      const lastVisible = lastPage.querySnapshot.docs[lastPage.querySnapshot.docs.length - 1];
+      if (lastPage.querySnapshot.size < 8) {
+        return undefined;
+      } else {
+        return lastVisible;
+      }
+    },
   });
 
-  return { products };
+  const [inViewRef, inView] = useInView({});
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+
+  return { products, fetchNextPage, isFetchingNextPage, hasNextPage, inViewRef };
 }
