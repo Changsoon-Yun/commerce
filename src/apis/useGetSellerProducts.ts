@@ -20,7 +20,7 @@ interface TimeStamp {
   seconds: number;
 }
 
-interface IProducts extends DocumentData {
+export interface IProducts extends DocumentData {
   title: string;
   id: string;
   desc: string;
