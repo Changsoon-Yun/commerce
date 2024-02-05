@@ -1,13 +1,12 @@
-import { Link, useParams } from 'react-router-dom';
-import { convertLabelByValue, formatNumberWithCommas } from '@/utils/converter.ts';
+import { useParams } from 'react-router-dom';
+import { convertLabelByValue } from '@/utils/converter.ts';
 import useGetCategoryProducts from '@/apis/useGetCategoryProducts.tsx';
-import { Card, CardContent, CardFooter } from '@/components/ui/card.tsx';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel.tsx';
-import { Button } from '@/components/ui/button.tsx';
 import { categories } from '@/constant/categories.ts';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.tsx';
 import { Label } from '@/components/ui/label.tsx';
+import ProductCard from '@/components/products/ProductCard.tsx';
+import { IProducts } from '@/apis/useGetSellerProducts.ts';
 
 export default function CategoryProductsPage() {
   const { category } = useParams();
@@ -82,53 +81,13 @@ export default function CategoryProductsPage() {
             ))}
           </RadioGroup>
         </div>
-        <div>
-          <div className={'flex gap-2 flex-wrap '}>
-            {products?.pages.map((items) =>
-              items.products?.map(({ title, imageList, id, price }) => (
-                <Card className="flex-1 w-[240px] max-w-[240px] min-w-[240px]" key={id}>
-                  <div>
-                    <Carousel className="w-full max-w-xs" opts={{ active: imageList.length > 1 }}>
-                      <CarouselContent>
-                        {imageList.map((src, index) => (
-                          <CarouselItem key={index} className={'border-0'}>
-                            <div className={'relative'}>
-                              {imageList.length == 1 && (
-                                <div className={'layer absolute t-0 l-0 w-full h-full'}></div>
-                              )}
-                              <Card className={'p-2 shadow-none border-0'}>
-                                <CardContent className="flex aspect-square items-center justify-center p-0">
-                                  <div className={'w-full h-full rounded-lg overflow-hidden'}>
-                                    <img
-                                      src={src}
-                                      alt="img"
-                                      className={'w-full h-full object-cover'}
-                                    />
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </div>
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                    </Carousel>
-                  </div>
-                  <CardContent className={'p-2'}>
-                    <h3 className="scroll-m-20 text-lg tracking-tight line-clamp-2 min-h-[56px] pb-1">
-                      {title}
-                    </h3>
-                    <div className="text-sm font-semibold line-clamp-2">
-                      {formatNumberWithCommas(price)}원
-                    </div>
-                  </CardContent>
-                  <CardFooter className={'p-2'}>
-                    <Button variant={'secondary'} className={'w-full'} asChild>
-                      <Link to={`/product/${id}`}>상세 보기</Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))
-            )}
+        <div className={'flex-1'}>
+          <div className={'flex flex-wrap gap-2 justify-between '}>
+            {products?.pages.map((items, idx) => (
+              <Fragment key={idx}>
+                <ProductCard targetArr={items.products as IProducts[]} />
+              </Fragment>
+            ))}
           </div>
           <div ref={inViewRef} className="h-42 w-full">
             {isFetchingNextPage && <p>loading...</p>}
