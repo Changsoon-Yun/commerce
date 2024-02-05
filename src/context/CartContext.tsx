@@ -5,8 +5,7 @@ const CartContext = createContext({
   isOpen: false,
   addCart: (_id: string) => {},
   removeCart: (_id: string) => {},
-  closeHandler: () => {},
-  openHandler: () => {},
+  toggleHandler: () => {},
 });
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [carts, setCarts] = useState<string[]>(JSON.parse(localStorage.getItem('cart') ?? '[]'));
@@ -32,14 +31,10 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     setCarts(a);
   };
 
-  const openHandler = () => {
-    setIsOpen(true);
+  const toggleHandler = () => {
+    setIsOpen(!isOpen);
   };
-
-  const closeHandler = () => {
-    setIsOpen(false);
-  };
-  const value = { carts, isOpen, addCart, openHandler, closeHandler, removeCart };
+  const value = { carts, isOpen, addCart, toggleHandler, removeCart };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 

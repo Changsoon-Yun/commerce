@@ -15,14 +15,14 @@ import { useAuth } from '@/apis/useAuth.ts';
 
 export default function UserHeader() {
   const { storedUserData, logout } = useAuth();
-  const { isOpen, openHandler, closeHandler } = useContext(CartContext);
+  const { toggleHandler } = useContext(CartContext);
   const { carts } = useContext(CartContext);
   return (
     <>
       <div className={'flex items-center gap-4'}>
         <div
           onClick={() => {
-            !isOpen ? openHandler() : closeHandler();
+            toggleHandler();
           }}
           className={'relative p-4 cursor-pointer text-zinc-500 hover:text-zinc-600 transition'}>
           <FaRegHeart size={24} />
