@@ -15,8 +15,7 @@ import { useAuth } from '@/apis/useAuth.ts';
 
 export default function UserHeader() {
   const { storedUserData, logout } = useAuth();
-  const { toggleHandler } = useContext(CartContext);
-  const { carts } = useContext(CartContext);
+  const { carts, toggleHandler } = useContext(CartContext);
   return (
     <>
       <div className={'flex items-center gap-4'}>

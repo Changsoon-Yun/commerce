@@ -9,8 +9,8 @@ export default function SideCart() {
   return (
     <>
       <div
-        style={{ height: `calc(100vh - 80px)`, transition: 'right 0.3s ease-in-out' }}
-        className={`fixed top-[80px] w-[300px] px-4 border-l border-zinc-200  bg-zinc-50 overflow-auto ${isOpen ? 'right-[-300px]' : 'right-[0px]'}`}>
+        style={{ height: `calc(100vh - 80px)` }}
+        className={`fixed top-[80px] w-[300px] px-4 border-l border-zinc-200  bg-zinc-50 overflow-auto ${isOpen ? 'right-[0px]' : 'right-[-300px]'}`}>
         <div className={'relative'}>
           <Button
             onClick={() => {
