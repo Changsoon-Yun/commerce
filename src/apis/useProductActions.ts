@@ -39,15 +39,17 @@ export default function useProductActions(id?: string) {
       }
       if (confirm('이미 등록된 사진입니다. \n삭제 하시겠습니까?')) {
         const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
+        console.log(decodedFilePath);
         const fileRef = ref(storage, decodedFilePath);
-        const imageListRef = doc(db, `products/${userData?.uid}/products/${id}`);
+        const productRef = doc(db, `products/${id}`);
 
         const updatedImageList = product?.imageList.filter((src: string) => {
           return src !== targetSrc;
         });
 
+        //
         await deleteObject(fileRef);
-        await updateDoc(imageListRef, {
+        await updateDoc(productRef, {
           ...product,
           imageList: updatedImageList,
           updatedAt: serverTimestamp(),
