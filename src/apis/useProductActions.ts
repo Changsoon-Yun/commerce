@@ -39,7 +39,6 @@ export default function useProductActions(id?: string) {
       }
       if (confirm('이미 등록된 사진입니다. \n삭제 하시겠습니까?')) {
         const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
-        console.log(decodedFilePath);
         const fileRef = ref(storage, decodedFilePath);
         const productRef = doc(db, `products/${id}`);
 

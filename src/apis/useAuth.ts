@@ -10,8 +10,10 @@ import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
 import { doc, DocumentData, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient } from '@/App.tsx';
 import { useEffect, useState } from 'react';
+import { useToast } from '@/components/ui/use-toast.ts';
+import { FirebaseError } from 'firebase/app';
+import { queryClient } from '@/App';
 
 interface authServerCallProps {
   type: 'register' | 'login';
@@ -22,6 +24,7 @@ interface authServerCallProps {
 const USER_INFO_QUERY_KEY = ['userInfo'];
 export function useAuth() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   //storedUserData의 초기값은 로컬스토리지에 있는 데이터를 사용한다.
   const [storedUserData, setStoredUserData] = useState<DocumentData | undefined | null>(
@@ -52,12 +55,6 @@ export function useAuth() {
     return querySnapshot.data();
   };
 
-  //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
-  const { data: userData } = useQuery({
-    queryKey: USER_INFO_QUERY_KEY,
-    queryFn: fetchUserInfo,
-  });
-
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
     try {
       //회원가입
@@ -77,7 +74,10 @@ export function useAuth() {
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
-        alert('회원가입 성공! \n로그인 페이지로 이동합니다!');
+        toast({
+          title: '회원 가입 성공!',
+          description: '로그인 페이지로 이동합니다!',
+        });
         navigate('/login');
       }
 
@@ -86,13 +86,29 @@ export function useAuth() {
         await signInWithEmailAndPassword(auth, data.email, data.password);
         // 로그인시 로컬스토리지에 저장할 유저정보를 페칭한다
         localStorage.setItem('user', JSON.stringify(await fetchUserInfo()));
-        alert('로그인 성공! \n메인 페이지로 이동합니다!');
+        toast({
+          title: '로그인 성공!',
+          description: '메인 페이지로 이동합니다!',
+        });
         navigate('/');
       }
     } catch (e) {
-      console.log(e);
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
     }
   };
+
+  //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
+  const { data: userData } = useQuery({
+    queryKey: USER_INFO_QUERY_KEY,
+    queryFn: fetchUserInfo,
+    enabled: !!auth.currentUser,
+  });
 
   //로그아웃
   const { mutate: logout } = useMutation({
