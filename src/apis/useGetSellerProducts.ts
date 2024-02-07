@@ -14,6 +14,7 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 interface TimeStamp {
   nanoseconds: number;
@@ -68,7 +69,7 @@ export default function useGetSellerProducts() {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: [`products`, storedUserData?.uid],
+    queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid),
     initialPageParam: undefined,
     queryFn: ({
       pageParam,

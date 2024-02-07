@@ -1,6 +1,7 @@
 import { db } from '@/lib/firebase/firebase';
 import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 interface Product {
   id: string;
@@ -34,7 +35,7 @@ export default function useGetHomeProducts(category: string) {
   };
 
   const { data: products } = useQuery({
-    queryKey: [`products`, 'home', category],
+    queryKey: QUERY_KEYS.PRODUCTS.HOME(category),
     queryFn: fetchData,
   });
 

@@ -10,6 +10,7 @@ import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
 import { queryClient } from '@/App.tsx';
 import { FirebaseError } from 'firebase/app';
 import { toast } from '@/components/ui/use-toast.ts';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
@@ -170,7 +171,9 @@ export default function useProductActions(id?: string) {
     const productRef = doc(db, `products/${id}`);
     if (confirm('삭제 하시겠습니까?')) {
       await deleteDoc(productRef);
-      await queryClient.invalidateQueries({ queryKey: [`products`, storedUserData?.uid] });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid),
+      });
       toast({
         description: '상품 삭제에 성공 했습니다.',
       });

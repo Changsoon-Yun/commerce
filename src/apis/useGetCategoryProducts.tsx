@@ -13,6 +13,7 @@ import {
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export interface FilterOptions {
   option: 'updatedAt' | 'price';
@@ -73,7 +74,7 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: [`products`, category, filter],
+    queryKey: QUERY_KEYS.PRODUCTS.CATEGORY(category, filter),
     initialPageParam: undefined,
     queryFn: ({
       pageParam,

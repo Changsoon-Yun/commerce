@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
 import { queryClient } from '@/App';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 interface authServerCallProps {
   type: 'register' | 'login';
@@ -21,7 +22,6 @@ interface authServerCallProps {
   isSeller?: boolean;
 }
 
-const USER_INFO_QUERY_KEY = ['userInfo'];
 export function useAuth() {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -37,10 +37,10 @@ export function useAuth() {
       if (user) {
         const userData = await fetchUserInfo();
         setStoredUserData(userData);
-        queryClient.setQueryData(USER_INFO_QUERY_KEY, userData);
+        queryClient.setQueryData(QUERY_KEYS.AUTH.USER(), userData);
       } else {
         setStoredUserData(null);
-        queryClient.setQueryData(USER_INFO_QUERY_KEY, null);
+        queryClient.setQueryData(QUERY_KEYS.AUTH.USER(), null);
       }
     });
   }, []);
@@ -105,7 +105,7 @@ export function useAuth() {
 
   //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
   const { data: userData } = useQuery({
-    queryKey: USER_INFO_QUERY_KEY,
+    queryKey: QUERY_KEYS.AUTH.USER(),
     queryFn: fetchUserInfo,
     enabled: !!auth.currentUser,
   });
@@ -114,7 +114,7 @@ export function useAuth() {
   const { mutate: logout } = useMutation({
     mutationFn: () => signOut(auth),
     onSuccess() {
-      queryClient.setQueryData(USER_INFO_QUERY_KEY, null);
+      queryClient.setQueryData(QUERY_KEYS.AUTH.USER(), null);
       localStorage.removeItem('user');
       navigate('/');
     },
