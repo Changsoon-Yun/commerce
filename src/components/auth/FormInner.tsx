@@ -53,6 +53,7 @@ export default function FormInner<T extends FieldValues>({
                   <Input
                     type={type}
                     placeholder={placeholder}
+                    autoComplete={'on'}
                     className={
                       '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                     }

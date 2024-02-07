@@ -1,8 +1,13 @@
-export default function SocialLogins() {
+export default function SocialLogins({
+  handleGoogleLogin,
+}: {
+  handleGoogleLogin: () => Promise<void>;
+}) {
   return (
     <>
       <div className={'flex flex-col gap-4 mt-8'}>
         <button
+          onClick={handleGoogleLogin}
           className={
             'flex py-2 justify-center gap-2 items-center rounded-xl w-full bg-transparent border-2'
           }>

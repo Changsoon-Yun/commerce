@@ -11,7 +11,7 @@ import { loginFormSchema } from '@/lib/zod/schemas.ts';
 import { useAuth } from '@/apis/useAuth.ts';
 
 export default function LoginPage() {
-  const { authServerCall } = useAuth();
+  const { authServerCall, handleGoogleLogin } = useAuth();
   const form = useForm({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -52,7 +52,7 @@ export default function LoginPage() {
               <Link to={'/register/select'}> 회원가입 하기</Link>
             </span>
           </p>
-          <SocialLogins />
+          <SocialLogins handleGoogleLogin={handleGoogleLogin} />
         </Form>
       </div>
     </>
