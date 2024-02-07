@@ -1,4 +1,4 @@
-import { FilterOptions } from '@/apis/useGetCategoryProducts.tsx';
+import { FilterOptions } from '@/apis/useGetCategoryProducts.ts';
 
 export const QUERY_KEYS = {
   AUTH: {

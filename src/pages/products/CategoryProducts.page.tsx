@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { convertLabelByValue } from '@/utils/converter.ts';
-import useGetCategoryProducts from '@/apis/useGetCategoryProducts.tsx';
+import useGetCategoryProducts from '@/apis/useGetCategoryProducts.ts';
 import { categories } from '@/constant/categories.ts';
 import { Fragment, useState } from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.tsx';
