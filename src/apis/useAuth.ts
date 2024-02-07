@@ -1,8 +1,10 @@
 import { auth, db } from '@/lib/firebase/firebase';
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -103,6 +105,21 @@ export function useAuth() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider(); // provider 구글 설정
+      const data = await signInWithPopup(auth, provider); // 팝업창 띄워서 로그인
+      localStorage.setItem('user', JSON.stringify(data.user));
+      toast({
+        title: '로그인 성공!',
+        description: '메인 페이지로 이동합니다!',
+      });
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
   const { data: userData } = useQuery({
     queryKey: QUERY_KEYS.AUTH.USER(),
@@ -119,5 +136,5 @@ export function useAuth() {
       navigate('/');
     },
   });
-  return { storedUserData, authServerCall, logout, userData };
+  return { storedUserData, authServerCall, logout, userData, handleGoogleLogin };
 }
