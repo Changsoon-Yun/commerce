@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
 import { queryClient } from '@/App.tsx';
+import { FirebaseError } from 'firebase/app';
+import { toast } from '@/components/ui/use-toast.ts';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
@@ -34,26 +36,41 @@ export default function useProductActions(id?: string) {
   const deleteImageHandler = async (targetSrc: string, id?: string) => {
     if (!targetSrc.startsWith('blob')) {
       if (previewImages.length <= 1) {
-        alert('이미지는 최소 1장이 필요합니다.');
+        toast({
+          title: '에러!',
+          description: '이미지는 최소 한장이 필요합니다',
+          variant: 'destructive',
+        });
         return;
       }
       if (confirm('이미 등록된 사진입니다. \n삭제 하시겠습니까?')) {
-        const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
-        const fileRef = ref(storage, decodedFilePath);
-        const productRef = doc(db, `products/${id}`);
+        try {
+          const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
+          const fileRef = ref(storage, decodedFilePath);
+          const productRef = doc(db, `products/${id}`);
 
-        const updatedImageList = product?.imageList.filter((src: string) => {
-          return src !== targetSrc;
-        });
+          const updatedImageList = product?.imageList.filter((src: string) => {
+            return src !== targetSrc;
+          });
 
-        //
-        await deleteObject(fileRef);
-        await updateDoc(productRef, {
-          ...product,
-          imageList: updatedImageList,
-          updatedAt: serverTimestamp(),
-        });
-        alert('삭제 완료');
+          await deleteObject(fileRef);
+          await updateDoc(productRef, {
+            ...product,
+            imageList: updatedImageList,
+            updatedAt: serverTimestamp(),
+          });
+          toast({
+            description: '이미지 삭제를 성공 했습니다.',
+          });
+        } catch (e) {
+          if (e instanceof FirebaseError) {
+            toast({
+              title: '에러!',
+              description: e.code,
+              variant: 'destructive',
+            });
+          }
+        }
       }
     }
     setUploadImages(
@@ -85,44 +102,68 @@ export default function useProductActions(id?: string) {
   };
 
   const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
-    await uploadHandler(values.title);
-    const imageUrlList = await getImageURL(values.title);
-    const collectionRef = collection(db, `products`);
-    await addDoc(collectionRef, {
-      uid: userData?.uid,
-      title: values.title,
-      desc: values.desc,
-      price: +values.price,
-      category: values.category,
-      condition: values.condition,
-      imageList: imageUrlList,
-      isSold: false,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    });
-    alert('등록 성공');
-    navigate('/seller/dashboard');
-  };
-
-  const editHandler = async (values: z.infer<typeof productFormSchema>) => {
-    await uploadHandler(values.title);
-    const imageUrlList = await getImageURL(values.title);
-
-    const productRef = doc(db, `products/${id}`);
-    if (product) {
-      await updateDoc(productRef, {
-        ...product,
+    try {
+      await uploadHandler(values.title);
+      const imageUrlList = await getImageURL(values.title);
+      const collectionRef = collection(db, `products`);
+      await addDoc(collectionRef, {
+        uid: userData?.uid,
         title: values.title,
         desc: values.desc,
         price: +values.price,
         category: values.category,
         condition: values.condition,
-        imageList: [...product.imageList, ...imageUrlList],
+        imageList: imageUrlList,
+        isSold: false,
+        createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
+      toast({
+        description: '상품 등록을 성공 했습니다. 이전 페이지로 이동합니다.',
+      });
+      navigate('/seller/dashboard');
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
     }
-    alert('수정 완료');
-    navigate('/seller/dashboard');
+  };
+
+  const editHandler = async (values: z.infer<typeof productFormSchema>) => {
+    try {
+      await uploadHandler(values.title);
+      const imageUrlList = await getImageURL(values.title);
+
+      const productRef = doc(db, `products/${id}`);
+      if (product) {
+        await updateDoc(productRef, {
+          ...product,
+          title: values.title,
+          desc: values.desc,
+          price: +values.price,
+          category: values.category,
+          condition: values.condition,
+          imageList: [...product.imageList, ...imageUrlList],
+          updatedAt: serverTimestamp(),
+        });
+      }
+      toast({
+        description: '상품 수정을 성공 했습니다. 이전 페이지로 이동합니다.',
+      });
+      navigate('/seller/dashboard');
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
+    }
   };
 
   const deleteHandler = async (id: string) => {
@@ -130,7 +171,9 @@ export default function useProductActions(id?: string) {
     if (confirm('삭제 하시겠습니까?')) {
       await deleteDoc(productRef);
       await queryClient.invalidateQueries({ queryKey: [`products`, storedUserData?.uid] });
-      alert('삭제 되었습니다.');
+      toast({
+        description: '상품 삭제에 성공 했습니다.',
+      });
     }
   };
 
