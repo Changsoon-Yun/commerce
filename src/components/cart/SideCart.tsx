@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import CartList from './CartList';
 import { IoMdClose } from 'react-icons/io';
+import { Button } from '@/components/ui/button.tsx';
 
 export default function SideCart() {
   const { isOpen, carts, toggleHandler } = useContext(CartContext);
@@ -22,7 +23,7 @@ export default function SideCart() {
             />
           </div>
           <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">
-            찜한 목록
+            장바구니
           </h2>
           <div className={'flex gap-2 flex-wrap py-4'}>
             {carts.map((id) => (
@@ -30,6 +31,9 @@ export default function SideCart() {
             ))}
           </div>
         </div>
+        <Button variant={'outline'} className={'w-full'}>
+          구매하기
+        </Button>
       </div>
     </>
   );
