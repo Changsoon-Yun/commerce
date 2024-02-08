@@ -1,7 +1,9 @@
 export default function SocialLogins({
   handleGoogleLogin,
+  handleGithubLogin,
 }: {
   handleGoogleLogin: () => Promise<void>;
+  handleGithubLogin: () => Promise<void>;
 }) {
   return (
     <>
@@ -23,6 +25,7 @@ export default function SocialLogins({
           </p>
         </button>
         <button
+          onClick={handleGithubLogin}
           className={
             'flex py-2 justify-center gap-2 items-center rounded-xl w-full bg-transparent border-2'
           }>

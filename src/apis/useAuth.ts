@@ -1,6 +1,7 @@
 import { auth, db } from '@/lib/firebase/firebase';
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -105,21 +106,53 @@ export function useAuth() {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleLogin = async (provider: GoogleAuthProvider | GithubAuthProvider) => {
     try {
-      const provider = new GoogleAuthProvider(); // provider 구글 설정
-      const data = await signInWithPopup(auth, provider); // 팝업창 띄워서 로그인
-      localStorage.setItem('user', JSON.stringify(data.user));
+      const userCredential = await signInWithPopup(auth, provider); // 팝업창 띄워서 로그인
+
+      const uid = userCredential.user.uid;
+      console.log(userCredential.user);
+      await setDoc(doc(db, 'users', uid), {
+        email: userCredential.user.email,
+        uid: userCredential.user.uid,
+        isSeller: false,
+        userName: userCredential.user.email,
+        profileImg: '',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      //
+      const q = doc(db, 'users', uid);
+      const querySnapshot = await getDoc(q);
+
+      localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
+      setStoredUserData(querySnapshot.data());
+
       toast({
         title: '로그인 성공!',
         description: '메인 페이지로 이동합니다!',
       });
       navigate('/');
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
     }
   };
 
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider(); // provider 구글 설정
+    await handleLogin(provider);
+  };
+
+  const handleGithubLogin = async () => {
+    const provider = new GithubAuthProvider(); // provider 구글 설정
+    await handleLogin(provider);
+  };
   //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
   const { data: userData } = useQuery({
     queryKey: QUERY_KEYS.AUTH.USER(),
@@ -136,5 +169,5 @@ export function useAuth() {
       navigate('/');
     },
   });
-  return { storedUserData, authServerCall, logout, userData, handleGoogleLogin };
+  return { storedUserData, authServerCall, logout, userData, handleGoogleLogin, handleGithubLogin };
 }
