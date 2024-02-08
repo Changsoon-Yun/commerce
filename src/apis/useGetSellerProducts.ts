@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
-interface TimeStamp {
+export interface TimeStamp {
   nanoseconds: number;
   seconds: number;
 }
