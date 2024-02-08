@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useGetProduct from '@/apis/useGetProduct.ts';
 import {
   Carousel,
@@ -110,7 +110,9 @@ export default function DetailProductPage() {
                 }}>
                 {storedUserData && carts.includes(id) ? '찜취소' : '찜하기'}
               </Button>
-              <Button className={'flex-1'}>구매하기</Button>
+              <Button className={'flex-1'}>
+                <Link to={'/order'}>구매하기</Link>
+              </Button>
             </div>
           </div>
         </div>
