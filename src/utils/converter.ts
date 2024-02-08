@@ -1,5 +1,6 @@
 import { categories } from '@/constant/categories.ts';
 import { conditions } from '@/constant/conditions.ts';
+import { TimeStamp } from '@/apis/useGetSellerProducts.ts';
 
 export const convertLabelByValue = (
   value: string,
@@ -11,4 +12,8 @@ export const convertLabelByValue = (
 
 export const formatNumberWithCommas = (number: number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+export const getDateFromProduct = (createdAt: TimeStamp) => {
+  return (createdAt.seconds + createdAt.nanoseconds / 1000000000) * 1000;
 };
