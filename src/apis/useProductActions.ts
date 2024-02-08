@@ -107,7 +107,7 @@ export default function useProductActions(id?: string) {
       await uploadHandler(values.title);
       const imageUrlList = await getImageURL(values.title);
       const collectionRef = collection(db, `products`);
-      await addDoc(collectionRef, {
+      const docRef = await addDoc(collectionRef, {
         uid: userData?.uid,
         title: values.title,
         desc: values.desc,
@@ -118,6 +118,10 @@ export default function useProductActions(id?: string) {
         isSold: false,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
+      });
+      const productRef = doc(db, `products/${docRef.id}`);
+      await updateDoc(productRef, {
+        id: docRef.id,
       });
       toast({
         description: '상품 등록을 성공 했습니다. 이전 페이지로 이동합니다.',
