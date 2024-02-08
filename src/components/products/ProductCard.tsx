@@ -9,7 +9,7 @@ export default function ProductCard({ targetArr }: { targetArr: IProducts[] }) {
   return (
     <>
       {targetArr?.map(({ title, imageList, id, price }) => (
-        <Card className="max-w-[240px] " key={id}>
+        <Card className={'flex-1'} key={id}>
           <Carousel className="w-full max-w-xs" opts={{ active: imageList.length > 1 }}>
             <CarouselContent>
               {imageList.map((src, index) => (

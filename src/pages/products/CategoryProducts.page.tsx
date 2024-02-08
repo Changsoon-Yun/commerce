@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { convertLabelByValue } from '@/utils/converter.ts';
 import useGetCategoryProducts from '@/apis/useGetCategoryProducts.ts';
 import { categories } from '@/constant/categories.ts';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import ProductCard from '@/components/products/ProductCard.tsx';
@@ -82,11 +82,9 @@ export default function CategoryProductsPage() {
           </RadioGroup>
         </div>
         <div className={'flex-1'}>
-          <div className={'flex flex-wrap gap-2 justify-between '}>
+          <div className={'grid grid-cols-4  gap-2 '}>
             {products?.pages.map((items, idx) => (
-              <Fragment key={idx}>
-                <ProductCard targetArr={items.products as IProducts[]} />
-              </Fragment>
+              <ProductCard targetArr={items.products as IProducts[]} key={idx} />
             ))}
           </div>
           <div ref={inViewRef} className="h-42 w-full">

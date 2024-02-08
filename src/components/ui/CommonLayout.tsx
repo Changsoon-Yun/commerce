@@ -27,7 +27,7 @@ export default function CommonLayout() {
         </div>
         <div
           onClick={toggleHandler}
-          className={`dim absolute top-0 left-0 w-screen h-screen ${isOpen ? 'bg-black opacity-25' : 'hidden'}`}></div>
+          className={`dim fixed top-0 left-0 w-screen h-screen ${isOpen ? 'bg-black opacity-25' : 'hidden'}`}></div>
         <SideCart />
       </div>
     </>

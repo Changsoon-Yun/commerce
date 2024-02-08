@@ -22,8 +22,6 @@ export default function OrderPage() {
       buyer_postcode: '06018', // 구매자 우편번호
     };
 
-    console.log(data);
-
     /* 4. 결제 창 호출하기 */
     IMP.request_pay(data, callback);
   };

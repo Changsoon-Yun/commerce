@@ -71,7 +71,7 @@ export default function DetailProductPage() {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-          <div>
+          <div className={'flex-1'}>
             <div className="mb-4">
               <h2 className={'text-2xl font-semibold'}>{product.title}</h2>
             </div>
@@ -117,7 +117,7 @@ export default function DetailProductPage() {
           </div>
         </div>
         <div className={'pt-16 pb-8 text-zinc-800 text-2xl font-semibold'}>연관 상품</div>
-        <div className={'flex gap-2 justify-between'}>
+        <div className={'flex gap-2 justify-start'}>
           <ProductCard targetArr={recommendedProducts as IProducts[]} />
         </div>
       </div>
