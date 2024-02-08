@@ -11,6 +11,7 @@ export const QUERY_KEYS = {
     SELLER: (uid: string) => [QUERY_KEYS.PRODUCTS.BASE[0], uid] as const,
     CATEGORY: (category: string, filter: FilterOptions) =>
       [QUERY_KEYS.PRODUCTS.BASE[0], category, filter] as const,
+    RELATED: (category: string, id: string) => [QUERY_KEYS.PRODUCTS.BASE[0], category, id] as const,
   },
   PRODUCT: {
     BASE: ['product'] as const,
