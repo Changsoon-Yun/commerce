@@ -15,6 +15,7 @@ export default function SideCart() {
   console.log(products);
 
   useEffect(() => {
+    console.log(carts);
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS.CART() });
   }, [carts]);
   return (
@@ -36,7 +37,7 @@ export default function SideCart() {
             장바구니
           </h2>
           <div className={'flex gap-2 flex-wrap py-4'}>
-            {products?.map((product) => <CartList product={product} />)}
+            {products?.map((product) => <CartList key={product.id} product={product} />)}
           </div>
         </div>
         <div>총가격 : {0}</div>
