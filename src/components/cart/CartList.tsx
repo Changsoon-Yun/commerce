@@ -1,4 +1,3 @@
-import useGetProduct from '@/apis/useGetProduct.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
@@ -6,14 +5,15 @@ import { Link } from 'react-router-dom';
 import { formatNumberWithCommas } from '@/utils/converter';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel.tsx';
 import { Card, CardContent, CardFooter } from '@/components/ui/card.tsx';
+import { IProducts } from '@/apis/useGetSellerProducts.ts';
 
-export default function CartList({ id }: { id: string }) {
-  const { product } = useGetProduct({ id });
+export default function CartList({ product }: { product: IProducts }) {
   const { removeCart, toggleHandler } = useContext(CartContext);
+
   if (!product) {
     return;
   }
-  const { imageList, title, price } = product;
+  const { id, imageList, title, price } = product;
   return (
     <>
       <Card className="w-full" key={id}>

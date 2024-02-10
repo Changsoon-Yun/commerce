@@ -1,12 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import CartList from './CartList';
 import { IoMdClose } from 'react-icons/io';
 import { Button } from '@/components/ui/button.tsx';
+import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import useGetCartProducts from '@/apis/useGetCartProducts.ts';
+import { queryClient } from '@/App.tsx';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export default function SideCart() {
   const { isOpen, carts, toggleHandler } = useContext(CartContext);
+  const [lists, setLists] = useState<IProducts[]>([]);
+  const { products } = useGetCartProducts(carts);
+  console.log(products);
 
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS.CART() });
+  }, [carts]);
   return (
     <>
       <div
@@ -26,11 +36,10 @@ export default function SideCart() {
             장바구니
           </h2>
           <div className={'flex gap-2 flex-wrap py-4'}>
-            {carts.map((id) => (
-              <CartList id={id} key={id} />
-            ))}
+            {products?.map((product) => <CartList product={product} />)}
           </div>
         </div>
+        <div>총가격 : {0}</div>
         <Button variant={'outline'} className={'w-full'}>
           구매하기
         </Button>
