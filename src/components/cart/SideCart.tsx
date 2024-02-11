@@ -1,22 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import CartList from './CartList';
 import { IoMdClose } from 'react-icons/io';
 import { Button } from '@/components/ui/button.tsx';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
-import { queryClient } from '@/App.tsx';
-import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export default function SideCart() {
   const { isOpen, carts, toggleHandler } = useContext(CartContext);
-  const [lists, setLists] = useState<IProducts[]>([]);
-  const { products } = useGetCartProducts(carts);
-  console.log(products);
+  const { products, mutate } = useGetCartProducts(carts);
 
   useEffect(() => {
-    console.log(carts);
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS.CART() });
+    mutate();
   }, [carts]);
   return (
     <>
@@ -40,7 +34,7 @@ export default function SideCart() {
             {products?.map((product) => <CartList key={product.id} product={product} />)}
           </div>
         </div>
-        <div>총가격 : {0}</div>
+        <div>총가격 : {products?.reduce((acc, curr) => acc + curr.price, 0)}</div>
         <Button variant={'outline'} className={'w-full'}>
           구매하기
         </Button>

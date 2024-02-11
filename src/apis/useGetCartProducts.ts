@@ -1,8 +1,9 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { IProducts } from '@/apis/useGetSellerProducts.ts';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
+import { queryClient } from '@/App.tsx';
 
 export default function useGetCartProducts(carts: string[]) {
   const fetchDataById = async (id: string) => {
@@ -13,9 +14,7 @@ export default function useGetCartProducts(carts: string[]) {
   };
   const fetchProductsByIds = async (carts: string[]) => {
     const promises = carts.map((id: string) => fetchDataById(id));
-    const res = await Promise.all(promises);
-    console.log(res);
-    return res;
+    return await Promise.all(promises);
   };
 
   const { data: products } = useQuery({
@@ -24,5 +23,12 @@ export default function useGetCartProducts(carts: string[]) {
     // id가 있을때만 fetching
     enabled: !!carts,
   });
-  return { products };
+
+  const { mutate } = useMutation({
+    mutationFn: () => fetchProductsByIds(carts),
+    onSuccess(data) {
+      queryClient.setQueryData(QUERY_KEYS.PRODUCTS.CART(), data);
+    },
+  });
+  return { products, mutate };
 }

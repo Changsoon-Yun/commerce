@@ -12,7 +12,7 @@ export const QUERY_KEYS = {
     CATEGORY: (category: string, filter: FilterOptions) =>
       [QUERY_KEYS.PRODUCTS.BASE[0], category, filter] as const,
     RELATED: (category: string, id: string) => [QUERY_KEYS.PRODUCTS.BASE[0], category, id] as const,
-    CART: () => [QUERY_KEYS.PRODUCTS.BASE[0], 'CART'],
+    CART: () => [QUERY_KEYS.PRODUCTS.BASE[0], 'cart'],
   },
   PRODUCT: {
     BASE: ['product'] as const,
