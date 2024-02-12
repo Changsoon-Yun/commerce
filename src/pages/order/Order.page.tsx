@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/components/ui/table.tsx';
 import { convertLabelByValue, formatNumberWithCommas } from '@/utils/converter.ts';
 import { conditions } from '@/constant/conditions.ts';
 
