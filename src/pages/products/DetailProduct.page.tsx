@@ -111,7 +111,7 @@ export default function DetailProductPage() {
                 {storedUserData && carts.includes(id) ? '찜취소' : '찜하기'}
               </Button>
               <Button className={'flex-1'} asChild>
-                <Link to={'/order'}>구매하기</Link>
+                <Link to={`/order/${id}`}>구매하기</Link>
               </Button>
             </div>
           </div>
