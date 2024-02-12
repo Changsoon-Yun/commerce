@@ -4,6 +4,7 @@ import CartList from './CartList';
 import { IoMdClose } from 'react-icons/io';
 import { Button } from '@/components/ui/button.tsx';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
+import { Link } from 'react-router-dom';
 
 export default function SideCart() {
   const { isOpen, carts, toggleHandler } = useContext(CartContext);
@@ -35,8 +36,14 @@ export default function SideCart() {
           </div>
         </div>
         <div>총가격 : {products?.reduce((acc, curr) => acc + curr.price, 0)}</div>
-        <Button variant={'outline'} className={'w-full'}>
-          구매하기
+        <Button
+          variant={'outline'}
+          className={'w-full'}
+          asChild
+          onClick={() => {
+            toggleHandler();
+          }}>
+          <Link to={'/order/cart'}>구매하기</Link>
         </Button>
       </div>
     </>
