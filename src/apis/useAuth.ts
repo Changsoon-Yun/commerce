@@ -115,7 +115,7 @@ export function useAuth() {
       await setDoc(doc(db, 'users', uid), {
         email: userCredential.user.email,
         uid: userCredential.user.uid,
-        isSeller: false,
+        isSeller: true,
         userName: userCredential.user.email,
         profileImg: '',
         createdAt: serverTimestamp(),

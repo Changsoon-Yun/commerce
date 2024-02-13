@@ -33,9 +33,9 @@ export const productFormSchema = z.object({
 export const orderDataFormSchema = z.object({
   amount: z.number(),
   name: z.string(),
-  buyer_name: z.string(),
-  buyer_tel: z.string(),
-  buyer_email: z.string().email(),
-  buyer_addr: z.string(),
-  buyer_postcode: z.string(),
+  buyer_name: z.string().min(1, { message: '이름을 입력해 주세요.' }),
+  buyer_tel: z.string().min(1, { message: '전화번호를 입력해 주세요.' }),
+  buyer_email: z.string().email({ message: '이메일 형식에 맞지 않습니다.' }),
+  buyer_addr: z.string().min(1, { message: '배송주소를 입력해 주세요.' }),
+  buyer_postcode: z.string().min(1, { message: '우편번호를 입력해 주세요.' }),
 });

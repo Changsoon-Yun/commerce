@@ -8,7 +8,6 @@ import { IProducts } from '@/apis/useGetSellerProducts.ts';
 import { useEffect } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
@@ -22,11 +21,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/apis/useAuth.ts';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
+import { z } from 'zod';
 
 export default function OrderPage() {
   const { id: pathName } = useParams();
   const { storedUserData } = useAuth();
   const { product } = useGetProduct({ id: pathName });
+
   const {
     onClickPayment,
     products: cartProducts,
@@ -58,15 +59,14 @@ export default function OrderPage() {
           ? checkItems[0] + ' 외' + checkItems.length + ' 건'
           : checkItems[0]?.toString(),
       buyer_name: storedUserData?.userName,
-      buyer_tel: '전화번호를 입력해 주세요',
+      buyer_tel: '',
       buyer_email: storedUserData?.email,
-      buyer_addr: '주소를 입력해 주세요',
-      buyer_postcode: '우편번호를 입력해 주세요',
+      buyer_addr: '',
+      buyer_postcode: '',
     },
   });
 
   useEffect(() => {
-    console.log(checkItems.reduce((prev, curr) => prev + curr.price, 0));
     form.setValue(
       'amount',
       checkItems.reduce((prev, curr) => prev + curr.price, 0)
@@ -78,6 +78,10 @@ export default function OrderPage() {
         : checkItems[0]?.title
     );
   }, [checkItems]);
+
+  const submitHandler = (_values: z.infer<typeof orderDataFormSchema>) => {
+    onClickPayment(form.getValues());
+  };
 
   return (
     <>
@@ -133,12 +137,12 @@ export default function OrderPage() {
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>주문/결제</AlertDialogTitle>
-                  </AlertDialogHeader>
-                  <div>
-                    <Form {...form}>
-                      <form>
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(submitHandler)}>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>주문/결제</AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <div>
                         <FormInner
                           form={form}
                           name={'buyer_name'}
@@ -155,34 +159,27 @@ export default function OrderPage() {
                           form={form}
                           name={'buyer_email'}
                           label={'구매자 이메일'}
-                          placeholder={'example@example.com'}
+                          placeholder={'이메일을 입력해 주세요.'}
                         />
                         <FormInner
                           form={form}
                           name={'buyer_addr'}
                           label={'배송 주소'}
-                          placeholder={''}
+                          placeholder={'배송 받을 주소를 입력해 주세요.'}
                         />
                         <FormInner
                           form={form}
                           name={'buyer_postcode'}
                           label={'배송지 우편번호'}
-                          placeholder={''}
+                          placeholder={'우편번호를 입력해 주세요.'}
                         />
-                      </form>
-                    </Form>
-                  </div>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>취소</AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                      <Button
-                        onClick={() => {
-                          onClickPayment(form.getValues());
-                        }}>
-                        결제하기
-                      </Button>
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
+                      </div>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>취소</AlertDialogCancel>
+                        <Button type={'submit'}>결제하기</Button>
+                      </AlertDialogFooter>
+                    </form>
+                  </Form>
                 </AlertDialogContent>
               </AlertDialog>
             </div>
