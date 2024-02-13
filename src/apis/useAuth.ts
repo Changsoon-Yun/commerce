@@ -31,7 +31,9 @@ export function useAuth() {
 
   //storedUserData의 초기값은 로컬스토리지에 있는 데이터를 사용한다.
   const [storedUserData, setStoredUserData] = useState<DocumentData | undefined | null>(
-    JSON.parse(localStorage.getItem('user') as string)
+    localStorage.getItem('user') === 'undefined'
+      ? null
+      : JSON.parse(localStorage.getItem('user') as string)
   );
 
   //유저 상태가 변경 될때마다 실행되는 Effect
@@ -111,22 +113,24 @@ export function useAuth() {
       const userCredential = await signInWithPopup(auth, provider); // 팝업창 띄워서 로그인
 
       const uid = userCredential.user.uid;
-      console.log(userCredential.user);
-      await setDoc(doc(db, 'users', uid), {
-        email: userCredential.user.email,
-        uid: userCredential.user.uid,
-        isSeller: true,
-        userName: userCredential.user.email,
-        profileImg: '',
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-      //
       const q = doc(db, 'users', uid);
       const querySnapshot = await getDoc(q);
+      if (!querySnapshot.data()) {
+        await setDoc(doc(db, 'users', uid), {
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+          isSeller: false,
+          userName: userCredential.user.email,
+          profileImg: '',
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      }
 
-      localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
-      setStoredUserData(querySnapshot.data());
+      const q2 = doc(db, 'users', uid);
+      const querySnapshot2 = await getDoc(q2);
+      localStorage.setItem('user', JSON.stringify(querySnapshot2.data()));
+      setStoredUserData(querySnapshot2.data());
 
       toast({
         title: '로그인 성공!',
