@@ -29,3 +29,13 @@ export const productFormSchema = z.object({
     )
     .refine((data) => data?.length <= 1, { message: '최소1장 필요' }),
 });
+
+export const orderDataFormSchema = z.object({
+  amount: z.number(),
+  name: z.string(),
+  buyer_name: z.string(),
+  buyer_tel: z.string(),
+  buyer_email: z.string().email(),
+  buyer_addr: z.string(),
+  buyer_postcode: z.string(),
+});
