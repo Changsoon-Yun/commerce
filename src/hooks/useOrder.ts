@@ -7,7 +7,7 @@ import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useAuth } from '@/apis/useAuth.ts';
-import { IProducts, OrderStatus } from '@/apis/types/product';
+import { IProducts, OrderStatus } from '@/types/product.ts';
 
 export default function useOrder() {
   const { carts } = useContext(CartContext);

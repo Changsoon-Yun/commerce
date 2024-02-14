@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import useGetHomeProducts from '@/apis/useGetHomeProducts.ts';
 import { Separator } from '@/components/ui/separator.tsx';
 import ProductCard from '../ProductCard';
-import { IProducts } from '@/apis/types/product.ts';
+import { IProducts } from '@/types/product.ts';
 
 interface CardWithCategoryProps {
   category: { label: string; value: string };

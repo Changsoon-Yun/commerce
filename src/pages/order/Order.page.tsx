@@ -4,7 +4,7 @@ import { formatNumberWithCommas } from '@/utils/converter.ts';
 import { useParams } from 'react-router-dom';
 import OrderItem from '@/components/products/OrderItem';
 import useGetProduct from '@/apis/useGetProduct.ts';
-import { IProducts } from '@/apis/types/product';
+import { IProducts } from '@/types/product.ts';
 import { useEffect, useState } from 'react';
 import {
   AlertDialog,
@@ -61,19 +61,17 @@ export default function OrderPage() {
         checkItems.length > 1
           ? checkItems[0] + ' 외' + checkItems.length + ' 건'
           : checkItems[0]?.toString(),
-      buyer_name: storedUserData?.userName,
+      buyer_name: storedUserData?.userName as string,
       buyer_tel: '',
-      buyer_email: storedUserData?.email,
+      buyer_email: storedUserData?.email as string,
       buyer_addr: '',
       buyer_postcode: '',
     },
   });
 
   useEffect(() => {
-    form.setValue(
-      'amount',
-      checkItems.reduce((prev, curr) => prev + curr.price, 0)
-    );
+    console.log(checkItems);
+    form.setValue('amount', checkItems.reduce((prev, curr) => prev + curr.price, 0) as number);
     form.setValue(
       'name',
       checkItems.length > 1

@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card.tsx';
 import { formatNumberWithCommas } from '@/utils/converter.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { Link } from 'react-router-dom';
-import { IProducts } from '@/apis/types/product';
+import { IProducts } from '@/types/product.ts';
 
 export default function ProductCard({ targetArr }: { targetArr: IProducts[] }) {
   return (

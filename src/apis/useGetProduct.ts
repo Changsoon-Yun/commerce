@@ -1,7 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
-import { IProducts } from '@/apis/types/product';
+import { IProducts } from '@/types/product.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys';
 
 ('./types/product');

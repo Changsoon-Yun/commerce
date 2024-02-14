@@ -15,7 +15,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { IProducts } from '@/apis/types/product';
+import { IProducts } from '@/types/product.ts';
 
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();

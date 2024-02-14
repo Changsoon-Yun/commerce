@@ -22,7 +22,7 @@ import { useAuth } from '@/apis/useAuth.ts';
 import * as dayjs from 'dayjs';
 import { Separator } from '@/components/ui/separator.tsx';
 import useGetRelatedProducts from '@/apis/useGetRelatedProducts.ts';
-import { IProducts } from '@/apis/types/product';
+import { IProducts } from '@/types/product.ts';
 
 export default function DetailProductPage() {
   const { id } = useParams();
