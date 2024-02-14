@@ -9,14 +9,25 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { convertLabelByValue, formatNumberWithCommas } from '@/utils/converter';
+import { convertLabelByValue, formatNumberWithCommas, getDateFromProduct } from '@/utils/converter';
 import useProductActions from '@/apis/useProductActions';
 import { categories } from '@/constant/categories.ts';
 import { conditions } from '@/constant/conditions';
+import * as dayjs from 'dayjs';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { OrderStatus } from '@/types/product.ts';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
-  const { deleteHandler } = useProductActions();
+  const { deleteHandler, updateOrderStatusHandler } = useProductActions();
   return (
     <>
       <div className={'flex justify-center py-16'}>
@@ -30,17 +41,28 @@ export default function SellerDashBoardPage() {
             <TableRow>
               <TableHead className="w-[130px]">대표이미지</TableHead>
               <TableHead className="w-[130px]">제목</TableHead>
-              <TableHead>설명</TableHead>
               <TableHead className="w-[130px]">카테고리</TableHead>
-              <TableHead className="w-[130px]">상태</TableHead>
-              <TableHead className="w-[130px]">비고</TableHead>
-              <TableHead className="text-right w-[130px]">price</TableHead>
+              <TableHead className="w-[130px]">상품 상태</TableHead>
+              <TableHead className="w-[130px]">주문 상태</TableHead>
+              <TableHead className="w-[130px]">주문 날짜</TableHead>
+              <TableHead className="w-[130px]">작업</TableHead>
+              <TableHead className="text-right w-[130px]">가격</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {products?.pages.map((items) =>
               items.products.map(
-                ({ title, desc, imageList, createdAt, id, price, category, condition }) => (
+                ({
+                  title,
+                  imageList,
+                  createdAt,
+                  id,
+                  price,
+                  category,
+                  condition,
+                  orderStatus,
+                  orderedDate,
+                }) => (
                   <TableRow key={createdAt.seconds}>
                     <TableCell>
                       <div className={'w-24 h-24 rounded-2xl border overflow-hidden'}>
@@ -54,11 +76,36 @@ export default function SellerDashBoardPage() {
                     <TableCell>
                       <div className={'line-clamp-4'}>{title}</div>
                     </TableCell>
-                    <TableCell>
-                      <div className={'line-clamp-4'}>{desc}</div>
-                    </TableCell>
                     <TableCell>{convertLabelByValue(category, categories)}</TableCell>
                     <TableCell>{convertLabelByValue(condition, conditions)}</TableCell>
+                    <TableCell>
+                      {orderStatus && (
+                        <Select
+                          onValueChange={(value) => {
+                            updateOrderStatusHandler(value, id);
+                          }}>
+                          <SelectTrigger className="w-[130px]">
+                            <SelectValue placeholder={orderStatus} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>주문 상태</SelectLabel>
+                              {Object.values(OrderStatus).map((status) => (
+                                <SelectItem key={status} value={status}>
+                                  {status}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {dayjs(getDateFromProduct(orderedDate)).format('YYYY-MM-DD') ===
+                      'Invalid Date'
+                        ? ''
+                        : dayjs(getDateFromProduct(orderedDate)).format('YYYY-MM-DD')}
+                    </TableCell>
                     <TableCell>
                       <div className={'flex flex-col flex-wrap gap-3 max-w-sm'}>
                         <Button>
