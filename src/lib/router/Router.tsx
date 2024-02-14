@@ -1,21 +1,24 @@
+import NotFound from '@/components/optimize/NotFound';
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import CommonLayout from '@/components/ui/CommonLayout.tsx';
-import PrivateRouter from '@/lib/router/PrivateRouter.tsx';
-import LoginPage from '@/pages/auth/Login.page.tsx';
-import MobileLayout from '@/components/ui/MobileLayout.tsx';
-import HomePage from '@/pages/Home.page.tsx';
-import RegisterSelectPage from '@/pages/auth/RegisterSelect.page.tsx';
-import RegisterPage from '@/pages/auth/RegisterPage.tsx';
-import SellerRouter from '@/lib/router/SellerRouter.tsx';
-import UserDashBoardPage from '@/pages/dashboard/UserDashBoard.page.tsx';
-import UserDashBoardEditPage from '@/pages/dashboard/UserDashBoardEdit.page.tsx';
-import SellerDashBoardPage from '@/pages/dashboard/SellerDashBoard.page.tsx';
-import SellerProductAddPage from '@/pages/products/SellerProductAdd.page.tsx';
-import SellerProductEditPage from '@/pages/products/SellerProductEdit.page.tsx';
-import CategoryProductsPage from '@/pages/products/CategoryProducts.page.tsx';
-import DetailProductPage from '@/pages/products/DetailProduct.page.tsx';
-import OrderPage from '@/pages/order/Order.page.tsx';
-import OrderedListPage from '@/pages/order/OrderedList.page.tsx';
+
+const CommonLayout = lazy(() => import('@/components/ui/CommonLayout.tsx'));
+const PrivateRouter = lazy(() => import('@/lib/router/PrivateRouter.tsx'));
+const LoginPage = lazy(() => import('@/pages/auth/Login.page.tsx'));
+const MobileLayout = lazy(() => import('@/components/ui/MobileLayout.tsx'));
+const HomePage = lazy(() => import('@/pages/Home.page.tsx'));
+const RegisterSelectPage = lazy(() => import('@/pages/auth/RegisterSelect.page.tsx'));
+const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage.tsx'));
+const SellerRouter = lazy(() => import('@/lib/router/SellerRouter.tsx'));
+const UserDashBoardPage = lazy(() => import('@/pages/dashboard/UserDashBoard.page.tsx'));
+const UserDashBoardEditPage = lazy(() => import('@/pages/dashboard/UserDashBoardEdit.page.tsx'));
+const SellerDashBoardPage = lazy(() => import('@/pages/dashboard/SellerDashBoard.page.tsx'));
+const SellerProductAddPage = lazy(() => import('@/pages/products/SellerProductAdd.page.tsx'));
+const SellerProductEditPage = lazy(() => import('@/pages/products/SellerProductEdit.page.tsx'));
+const CategoryProductsPage = lazy(() => import('@/pages/products/CategoryProducts.page.tsx'));
+const DetailProductPage = lazy(() => import('@/pages/products/DetailProduct.page.tsx'));
+const OrderPage = lazy(() => import('@/pages/order/Order.page.tsx'));
+const OrderedListPage = lazy(() => import('@/pages/order/OrderedList.page.tsx'));
 
 export default function Router() {
   return (
@@ -48,6 +51,7 @@ export default function Router() {
             <Route path={'/user/dashboard/edit'} element={<UserDashBoardEditPage />} />
           </Route>
         </Route>
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
   );
