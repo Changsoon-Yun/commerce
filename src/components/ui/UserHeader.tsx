@@ -44,6 +44,9 @@ export default function UserHeader() {
             <DropdownMenuItem>
               <Link to={'/user/dashboard'}>내 프로필 보기</Link>
             </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to={'/ordered-products'}>주문 내역 보기</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             {storedUserData?.isSeller && (
               <>
