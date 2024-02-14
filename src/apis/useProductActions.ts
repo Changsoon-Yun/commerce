@@ -184,6 +184,28 @@ export default function useProductActions(id?: string) {
     }
   };
 
+  const updateOrderStatusHandler = async (value: string, id: string) => {
+    const productRef = doc(db, `products/${id}`);
+    try {
+      await updateDoc(productRef, {
+        ...product,
+        updatedAt: serverTimestamp(),
+        orderStatus: value,
+      });
+      toast({
+        description: '주문 상태 수정을 성공 했습니다.',
+      });
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
+    }
+  };
+
   return {
     addImgHandler,
     deleteImageHandler,
@@ -195,5 +217,6 @@ export default function useProductActions(id?: string) {
     previewImages,
     editHandler,
     deleteHandler,
+    updateOrderStatusHandler,
   };
 }
