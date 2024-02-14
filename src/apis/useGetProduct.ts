@@ -4,8 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { IProducts } from '@/types/product.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys';
 
-('./types/product');
-
 export default function useGetProduct({ id }: { id?: string }) {
   const fetchData = async () => {
     const q = doc(db, `products/${id}`);
