@@ -92,8 +92,6 @@ export default function useOrder() {
   };
 
   const updateFetcher = async (id: string, idx: number, isSold: boolean) => {
-    // 상수 정의
-
     const productRef = doc(db, `products/${id}`);
     const productSnapshot = await getDoc(productRef);
     const productData = productSnapshot.data() as IProducts;

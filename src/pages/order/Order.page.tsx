@@ -81,7 +81,6 @@ export default function OrderPage() {
   }, [checkItems]);
 
   const submitHandler = async (_values: z.infer<typeof orderDataFormSchema>) => {
-    console.log();
     setOpen(false);
 
     await updateIsSoldProductsByIds(true);
