@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import OrderItem from '@/components/products/OrderItem';
 import useGetProduct from '@/apis/useGetProduct.ts';
 import { IProducts } from '@/apis/useGetSellerProducts.ts';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -34,7 +34,10 @@ export default function OrderPage() {
     checkItems,
     setCheckItems,
     handleSingleCheck,
+    updateIsSoldProductsByIds,
   } = useOrder();
+
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -79,7 +82,11 @@ export default function OrderPage() {
     );
   }, [checkItems]);
 
-  const submitHandler = (_values: z.infer<typeof orderDataFormSchema>) => {
+  const submitHandler = async (_values: z.infer<typeof orderDataFormSchema>) => {
+    console.log();
+    setOpen(false);
+
+    await updateIsSoldProductsByIds(true);
     onClickPayment(form.getValues());
   };
 
@@ -124,7 +131,7 @@ export default function OrderPage() {
               </div>
             </div>
             <div>
-              <AlertDialog>
+              <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger asChild>
                   <Button
                     className={'w-full'}

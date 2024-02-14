@@ -5,10 +5,14 @@ import useGetCartProducts from '@/apis/useGetCartProducts.ts';
 import { CartContext } from '@/context/CartContext.tsx';
 import { z } from 'zod';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
+import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase/firebase.ts';
+import { useAuth } from '@/apis/useAuth.ts';
 
 export default function useOrder() {
   const { carts } = useContext(CartContext);
   const { products } = useGetCartProducts(carts);
+  const { userData } = useAuth();
   const onClickPayment = ({
     amount,
     name,
@@ -42,12 +46,13 @@ export default function useOrder() {
   };
 
   /* 3. 콜백 함수 정의하기 */
-  function callback(response: RequestPayResponse) {
+  async function callback(response: RequestPayResponse) {
     const { success, error_msg } = response;
 
     if (success) {
       alert('결제 성공');
     } else {
+      await updateIsSoldProductsByIds(false);
       alert(`결제 실패: ${error_msg}`);
     }
   }
@@ -81,5 +86,42 @@ export default function useOrder() {
     }
   };
 
-  return { onClickPayment, products, checkItems, setCheckItems, handleSingleCheck, handleAllCheck };
+  const updateFetcher = async (id: string, idx: number, bool: boolean) => {
+    const productRef = doc(db, `products/${id}`);
+    await updateDoc(productRef, {
+      ...checkItems[idx],
+      isSold: bool,
+      updatedAt: serverTimestamp(),
+    });
+    if (userData) {
+      const userRef = doc(db, `users/${userData.uid}`);
+      const userSnapShot = await getDoc(userRef);
+      const originalArr = userSnapShot.data()?.orderedProducts;
+      const addedArr = new Set([...originalArr, ...checkItems.map((item) => item.id)]);
+
+      const checkedArr = checkItems.map((item) => item.id);
+      const filteredArray = originalArr.filter((item: string) => !checkedArr.includes(item));
+
+      await updateDoc(userRef, {
+        ...userSnapShot.data(),
+        orderedProducts: bool ? [...addedArr] : [...filteredArray],
+        updatedAt: serverTimestamp(),
+      });
+    }
+  };
+
+  const updateIsSoldProductsByIds = async (bool: boolean) => {
+    const promises = checkItems.map((id, idx) => updateFetcher(id.id, idx, bool));
+    return await Promise.all(promises);
+  };
+
+  return {
+    onClickPayment,
+    products,
+    checkItems,
+    setCheckItems,
+    handleSingleCheck,
+    handleAllCheck,
+    updateIsSoldProductsByIds,
+  };
 }
