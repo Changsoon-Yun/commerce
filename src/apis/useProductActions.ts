@@ -109,6 +109,7 @@ export default function useProductActions(id?: string) {
       const collectionRef = collection(db, `products`);
       const docRef = await addDoc(collectionRef, {
         uid: userData?.uid,
+        sellerEmail: userData?.email,
         title: values.title,
         desc: values.desc,
         price: +values.price,
