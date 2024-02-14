@@ -11,13 +11,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, DocumentData, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
 import { queryClient } from '@/App';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
+import { UserData } from './types/user';
 
 interface authServerCallProps {
   type: 'register' | 'login';
@@ -30,7 +31,7 @@ export function useAuth() {
   const { toast } = useToast();
 
   //storedUserData의 초기값은 로컬스토리지에 있는 데이터를 사용한다.
-  const [storedUserData, setStoredUserData] = useState<DocumentData | undefined | null>(
+  const [storedUserData, setStoredUserData] = useState<UserData | undefined | null>(
     localStorage.getItem('user') === 'undefined'
       ? null
       : JSON.parse(localStorage.getItem('user') as string)
@@ -56,8 +57,8 @@ export function useAuth() {
     const q = doc(db, 'users', uid);
     const querySnapshot = await getDoc(q);
     localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
-    setStoredUserData(querySnapshot.data());
-    return querySnapshot.data();
+    setStoredUserData(querySnapshot.data() as UserData);
+    return querySnapshot.data() as UserData;
   };
 
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
@@ -130,7 +131,7 @@ export function useAuth() {
       const q2 = doc(db, 'users', uid);
       const querySnapshot2 = await getDoc(q2);
       localStorage.setItem('user', JSON.stringify(querySnapshot2.data()));
-      setStoredUserData(querySnapshot2.data());
+      setStoredUserData(querySnapshot2.data() as UserData);
 
       toast({
         title: '로그인 성공!',

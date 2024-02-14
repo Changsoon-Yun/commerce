@@ -15,6 +15,7 @@ import SellerProductEditPage from '@/pages/products/SellerProductEdit.page.tsx';
 import CategoryProductsPage from '@/pages/products/CategoryProducts.page.tsx';
 import DetailProductPage from '@/pages/products/DetailProduct.page.tsx';
 import OrderPage from '@/pages/order/Order.page.tsx';
+import OrderedListPage from '@/pages/order/OrderedList.page.tsx';
 
 export default function Router() {
   return (
@@ -28,6 +29,7 @@ export default function Router() {
           {/*권한 필요 라우트*/}
           <Route element={<PrivateRouter />}>
             <Route path={'/order/:id'} element={<OrderPage />} />
+            <Route path={'/ordered-products'} element={<OrderedListPage />} />
             <Route element={<SellerRouter />}>
               <Route path={'/seller/dashboard'} element={<SellerDashBoardPage />} />
               <Route path={'/seller/product/add'} element={<SellerProductAddPage />} />

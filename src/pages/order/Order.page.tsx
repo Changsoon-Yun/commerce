@@ -4,7 +4,7 @@ import { formatNumberWithCommas } from '@/utils/converter.ts';
 import { useParams } from 'react-router-dom';
 import OrderItem from '@/components/products/OrderItem';
 import useGetProduct from '@/apis/useGetProduct.ts';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import { IProducts } from '@/apis/types/product';
 import { useEffect, useState } from 'react';
 import {
   AlertDialog,

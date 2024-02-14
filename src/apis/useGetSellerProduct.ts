@@ -15,7 +15,7 @@ export default function useGetSellerProduct({ id }: { id: string }) {
   };
 
   const { data: product } = useQuery({
-    queryKey: QUERY_KEYS.PRODUCT.SELLER(storedUserData?.uid, id),
+    queryKey: QUERY_KEYS.PRODUCT.SELLER(storedUserData?.uid as string, id),
     queryFn: fetchData,
     // id가 있을때만 fetching
     enabled: !!id,

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { formatNumberWithCommas } from '@/utils/converter';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel.tsx';
 import { Card, CardContent, CardFooter } from '@/components/ui/card.tsx';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import { IProducts } from '@/apis/types/product';
 
 export default function CartList({ product }: { product: IProducts }) {
   const { removeCart, toggleHandler } = useContext(CartContext);

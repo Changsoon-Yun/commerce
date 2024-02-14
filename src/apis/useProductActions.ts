@@ -176,7 +176,7 @@ export default function useProductActions(id?: string) {
     if (confirm('삭제 하시겠습니까?')) {
       await deleteDoc(productRef);
       await queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid),
+        queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
       });
       toast({
         description: '상품 삭제에 성공 했습니다.',

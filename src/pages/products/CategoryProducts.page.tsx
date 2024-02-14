@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import ProductCard from '@/components/products/ProductCard.tsx';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import { IProducts } from '@/apis/types/product';
 
 export default function CategoryProductsPage() {
   const { category } = useParams();

@@ -1,18 +1,18 @@
-import { IProducts } from '@/apis/useGetSellerProducts';
 import { RequestPayParams, RequestPayResponse } from '@/types/imp.ts';
 import { useContext, useState } from 'react';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
 import { CartContext } from '@/context/CartContext.tsx';
 import { z } from 'zod';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useAuth } from '@/apis/useAuth.ts';
+import { IProducts, OrderStatus } from '@/apis/types/product';
 
 export default function useOrder() {
   const { carts } = useContext(CartContext);
   const { products } = useGetCartProducts(carts);
-  const { userData } = useAuth();
+  const { storedUserData } = useAuth();
   const onClickPayment = ({
     amount,
     name,
@@ -86,27 +86,21 @@ export default function useOrder() {
     }
   };
 
-  const updateFetcher = async (id: string, idx: number, bool: boolean) => {
+  const updateFetcher = async (id: string, idx: number, isSold: boolean) => {
+    // 상수 정의
     const productRef = doc(db, `products/${id}`);
-    await updateDoc(productRef, {
-      ...checkItems[idx],
-      isSold: bool,
+    const itemToUpdate = checkItems[idx];
+    const newData = {
+      ...itemToUpdate,
+      isSold: isSold,
+      customerData: isSold ? storedUserData : null,
+      orderedDate: serverTimestamp(),
       updatedAt: serverTimestamp(),
-    });
-    if (userData) {
-      const userRef = doc(db, `users/${userData.uid}`);
-      const userSnapShot = await getDoc(userRef);
-      const originalArr = userSnapShot.data()?.orderedProducts;
-      const addedArr = new Set([...originalArr, ...checkItems.map((item) => item.id)]);
+      orderStatus: isSold ? OrderStatus.AWAITING_SHIPMENT : null,
+    };
 
-      const checkedArr = checkItems.map((item) => item.id);
-      const filteredArray = originalArr.filter((item: string) => !checkedArr.includes(item));
-
-      await updateDoc(userRef, {
-        ...userSnapShot.data(),
-        orderedProducts: bool ? [...addedArr] : [...filteredArray],
-        updatedAt: serverTimestamp(),
-      });
+    if (storedUserData) {
+      await updateDoc(productRef, newData);
     }
   };
 

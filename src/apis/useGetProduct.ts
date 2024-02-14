@@ -1,8 +1,10 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import { IProducts } from '@/apis/types/product';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys';
+
+('./types/product');
 
 export default function useGetProduct({ id }: { id?: string }) {
   const fetchData = async () => {

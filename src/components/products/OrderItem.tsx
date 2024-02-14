@@ -6,7 +6,7 @@ import {
 import { Separator } from '@/components/ui/separator.tsx';
 import * as dayjs from 'dayjs';
 import { conditions } from '@/constant/conditions.ts';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import { IProducts } from '@/apis/types/product';
 
 interface OrderItemProps {
   item: IProducts;

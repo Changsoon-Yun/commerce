@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card.tsx';
 import { formatNumberWithCommas } from '@/utils/converter.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { Link } from 'react-router-dom';
-import { IProducts } from '@/apis/useGetSellerProducts.ts';
+import { IProducts } from '@/apis/types/product';
 
 export default function ProductCard({ targetArr }: { targetArr: IProducts[] }) {
   return (
@@ -12,7 +12,7 @@ export default function ProductCard({ targetArr }: { targetArr: IProducts[] }) {
         <Card className={'flex-1'} key={id}>
           <Carousel className="w-full max-w-xs" opts={{ active: imageList.length > 1 }}>
             <CarouselContent>
-              {imageList.map((src, index) => (
+              {imageList.map((src: string, index: number) => (
                 <CarouselItem key={index} className={'border-0'}>
                   <div className={'relative'}>
                     {imageList.length == 1 && (

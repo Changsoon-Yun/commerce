@@ -15,24 +15,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-
-export interface TimeStamp {
-  nanoseconds: number;
-  seconds: number;
-}
-
-export interface IProducts extends DocumentData {
-  title: string;
-  id: string;
-  desc: string;
-  imageList: string[];
-  createdAt: TimeStamp;
-  updatedAt: TimeStamp;
-  category: string;
-  price: number;
-  condition: string;
-  uid: string;
-}
+import { IProducts } from '@/apis/types/product';
 
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();
@@ -69,7 +52,7 @@ export default function useGetSellerProducts() {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid),
+    queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
     initialPageParam: undefined,
     queryFn: ({
       pageParam,
