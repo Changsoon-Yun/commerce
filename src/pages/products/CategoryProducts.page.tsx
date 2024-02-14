@@ -64,7 +64,7 @@ export default function CategoryProductsPage() {
         </h2>
       </div>
       <div className="flex">
-        <div className={'pr-5 flex flex-col gap-2 min-w-[120px]'}>
+        <div className={'sticky top-40 left-0 pr-5 flex h-fit flex-col gap-2 min-w-[120px]'}>
           <RadioGroup
             defaultValue={filterArr[0]}
             className={'flex flex-col gap-4'}
