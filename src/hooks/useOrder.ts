@@ -4,10 +4,15 @@ import useGetCartProducts from '@/apis/useGetCartProducts.ts';
 import { CartContext } from '@/context/CartContext.tsx';
 import { z } from 'zod';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useAuth } from '@/apis/useAuth.ts';
 import { IProducts, OrderStatus } from '@/types/product.ts';
+import { UserData } from '@/types/user.ts';
+import { toast } from '@/components/ui/use-toast.ts';
+import { FirebaseError } from 'firebase/app';
+import { queryClient } from '@/App.tsx';
+import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export default function useOrder() {
   const { carts } = useContext(CartContext);
@@ -88,7 +93,15 @@ export default function useOrder() {
 
   const updateFetcher = async (id: string, idx: number, isSold: boolean) => {
     // 상수 정의
+
     const productRef = doc(db, `products/${id}`);
+    const productSnapshot = await getDoc(productRef);
+    const productData = productSnapshot.data() as IProducts;
+
+    const sellerRef = doc(db, `users/${productData.uid}`);
+    const sellerSnapshot = await getDoc(sellerRef);
+    const sellerData = sellerSnapshot.data() as UserData;
+
     const itemToUpdate = checkItems[idx];
     const newData = {
       ...itemToUpdate,
@@ -96,6 +109,7 @@ export default function useOrder() {
       customerData: isSold ? storedUserData : null,
       orderedDate: serverTimestamp(),
       updatedAt: serverTimestamp(),
+      sellerEmail: sellerData.email,
       orderStatus: isSold ? OrderStatus.AWAITING_SHIPMENT : null,
     };
 
@@ -109,6 +123,34 @@ export default function useOrder() {
     return await Promise.all(promises);
   };
 
+  const cancelOrderById = async (id: string) => {
+    try {
+      const productRef = doc(db, `products/${id}`);
+      const productSnapshot = await getDoc(productRef);
+      const productData = productSnapshot.data() as IProducts;
+      await updateDoc(productRef, {
+        ...productData,
+        orderStatus: OrderStatus.ORDER_CANCELLED,
+        customerData: null,
+        orderedDate: null,
+        isSold: false,
+        updatedAt: serverTimestamp(),
+      });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS.ORDERED() });
+      toast({
+        description: '주문 취소를 성공 했습니다.',
+      });
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
+    }
+  };
+
   return {
     onClickPayment,
     products,
@@ -117,5 +159,6 @@ export default function useOrder() {
     handleSingleCheck,
     handleAllCheck,
     updateIsSoldProductsByIds,
+    cancelOrderById,
   };
 }
