@@ -13,6 +13,7 @@ export const QUERY_KEYS = {
       [QUERY_KEYS.PRODUCTS.BASE[0], category, filter] as const,
     RELATED: (category: string, id: string) => [QUERY_KEYS.PRODUCTS.BASE[0], category, id] as const,
     CART: () => [QUERY_KEYS.PRODUCTS.BASE[0], 'cart'],
+    ORDERED: () => [QUERY_KEYS.PRODUCTS.BASE[0], 'ordered'],
   },
   PRODUCT: {
     BASE: ['product'] as const,
