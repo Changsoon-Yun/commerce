@@ -25,6 +25,7 @@ export interface IProducts extends DocumentData {
   price: number;
   condition: string;
   uid: string;
+  sellerEmail: string;
   customerData: UserData;
   orderStatus: OrderStatus;
   orderedDate: TimeStamp;
