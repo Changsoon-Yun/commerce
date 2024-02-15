@@ -43,8 +43,8 @@ jobs:
 #          aws s3 sync \
 #            ./build s3://$BUCKET_NAME
 #            - name: Checkout
-      - name: Upload /build to S3
+      - name: Upload /dist to S3
         env:
           BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
         run: |
-          aws s3 cp --recursive --region ap-northeast-2 build s3://$BUCKET_NAME
+          aws s3 cp --recursive --region ap-northeast-2 dist s3://$BUCKET_NAME
