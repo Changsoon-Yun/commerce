@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { convertLabelByValue, formatNumberWithCommas, getDateFromProduct } from '@/utils/converter';
-import useProductActions from '@/apis/useProductActions';
+import useProductHandler from '@/hooks/useProductHandler.ts';
 import { categories } from '@/constant/categories.ts';
 import { conditions } from '@/constant/conditions';
 import * as dayjs from 'dayjs';
@@ -27,11 +27,11 @@ import { OrderStatus } from '@/types/product.ts';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
-  const { deleteHandler, updateOrderStatusHandler } = useProductActions();
+  const { deleteHandler, updateOrderStatusHandler } = useProductHandler();
   return (
     <>
       <div className={'flex justify-center py-16'}>
-        <Button>
+        <Button asChild>
           <Link to={'/seller/product/add'}>판매자 상품 등록</Link>
         </Button>
       </div>

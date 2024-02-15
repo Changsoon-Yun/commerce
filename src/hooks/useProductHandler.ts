@@ -1,6 +1,4 @@
-import { ChangeEvent, useState } from 'react';
-import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { db, storage } from '@/lib/firebase/firebase.ts';
+import { db } from '@/lib/firebase/firebase.ts';
 import { z } from 'zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
 import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -11,96 +9,23 @@ import { queryClient } from '@/App.tsx';
 import { FirebaseError } from 'firebase/app';
 import { toast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
+import useImage from '@/hooks/useImage.ts';
+import { IProducts } from '@/types/product.ts';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
-export default function useProductActions(id?: string) {
+export default function useProductHandler(id?: string) {
   const navigate = useNavigate();
   const { userData, storedUserData } = useAuth();
   const { product } = useGetSellerProduct({ id: id as string });
-  const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const addImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const temp = [];
-    const temp2 = [];
-    if (e.target.files) {
-      for (let i = 0; i < e.target.files.length; i++) {
-        const blobImage = URL.createObjectURL(e.target.files[i]);
-        temp.push({ src: blobImage, blob: e.target.files[i] });
-        temp2.push(blobImage);
-      }
-    }
-    setUploadImages([...uploadImages, ...temp]);
-    setPreviewImages([...previewImages, ...temp2]);
-  };
-
-  const deleteImageHandler = async (targetSrc: string, id?: string) => {
-    if (!targetSrc.startsWith('blob')) {
-      if (previewImages.length <= 1) {
-        toast({
-          title: '에러!',
-          description: '이미지는 최소 한장이 필요합니다',
-          variant: 'destructive',
-        });
-        return;
-      }
-      if (confirm('이미 등록된 사진입니다. \n삭제 하시겠습니까?')) {
-        try {
-          const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
-          const fileRef = ref(storage, decodedFilePath);
-          const productRef = doc(db, `products/${id}`);
-
-          const updatedImageList = product?.imageList.filter((src: string) => {
-            return src !== targetSrc;
-          });
-
-          await deleteObject(fileRef);
-          await updateDoc(productRef, {
-            ...product,
-            imageList: updatedImageList,
-            updatedAt: serverTimestamp(),
-          });
-          toast({
-            description: '이미지 삭제를 성공 했습니다.',
-          });
-        } catch (e) {
-          if (e instanceof FirebaseError) {
-            toast({
-              title: '에러!',
-              description: e.code,
-              variant: 'destructive',
-            });
-          }
-        }
-      }
-    }
-    setUploadImages(
-      uploadImages.filter(({ src }) => {
-        return targetSrc != src;
-      })
-    );
-    setPreviewImages(
-      previewImages.filter((src) => {
-        return targetSrc != src;
-      })
-    );
-  };
-
-  const uploadHandler = async (title: string) => {
-    const promises = uploadImages.map(async (data) => {
-      const imageRef = ref(storage, userData?.uid + '/' + title + ` ${data.blob.name}`);
-      return await uploadBytes(imageRef, data.blob);
-    });
-    await Promise.all(promises);
-  };
-
-  const getImageURL = async (title: string) => {
-    const promises = uploadImages.map(async (data) => {
-      const imageRef = ref(storage, userData?.uid + '/' + title + ` ${data.blob.name}`);
-      return await getDownloadURL(imageRef);
-    });
-    return await Promise.all(promises);
-  };
+  const {
+    uploadHandler,
+    getImageURL,
+    addImgHandler,
+    previewImages,
+    setPreviewImages,
+    deleteImageHandler,
+  } = useImage(product as IProducts);
 
   const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
     try {
@@ -208,16 +133,14 @@ export default function useProductActions(id?: string) {
   };
 
   return {
-    addImgHandler,
-    deleteImageHandler,
-    uploadHandler,
-    uploadImages,
+    product,
     submitHandler,
-    setUploadImages,
-    setPreviewImages,
-    previewImages,
     editHandler,
     deleteHandler,
     updateOrderStatusHandler,
+    addImgHandler,
+    previewImages,
+    setPreviewImages,
+    deleteImageHandler,
   };
 }

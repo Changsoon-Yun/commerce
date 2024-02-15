@@ -1,4 +1,4 @@
-import useProductActions from '@/apis/useProductActions.ts';
+import useProductHandler from '@/hooks/useProductHandler.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
@@ -15,8 +15,9 @@ import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 
 export default function SellerProductEditPage() {
   const { id } = useParams();
+
   const { editHandler, addImgHandler, previewImages, setPreviewImages, deleteImageHandler } =
-    useProductActions(id);
+    useProductHandler(id);
   const { product } = useGetSellerProduct({ id: id as string });
 
   const form = useForm({
