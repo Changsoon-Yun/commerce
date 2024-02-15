@@ -51,9 +51,13 @@ export default function UserHeader() {
             {storedUserData?.isSeller && (
               <>
                 <DropdownMenuLabel>판매자 메뉴</DropdownMenuLabel>
-                <Link to={'/seller/dashboard'}>
-                  <DropdownMenuItem>판매 목록</DropdownMenuItem>
-                </Link>
+
+                <DropdownMenuItem asChild>
+                  <Link to={'/seller/dashboard'}>판매 목록</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to={'/seller/product/add'}>상품 등록</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
               </>
             )}

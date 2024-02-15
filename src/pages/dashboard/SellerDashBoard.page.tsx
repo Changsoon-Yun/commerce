@@ -24,18 +24,23 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { OrderStatus } from '@/types/product.ts';
+import { useAuth } from '@/apis/useAuth.ts';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
+  const { storedUserData } = useAuth();
   const { deleteHandler, updateOrderStatusHandler } = useProductHandler();
   return (
     <>
-      <div className={'flex justify-center py-16'}>
-        <Button asChild>
-          <Link to={'/seller/product/add'}>판매자 상품 등록</Link>
-        </Button>
-      </div>
-      <div>
+      <div className={'py-16'}>
+        <div className={'relative flex items-center justify-center pb-16'}>
+          <h2 className="flex-1 scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 text-center">
+            {storedUserData?.userName}님의 판매 상품 목록
+          </h2>
+          <Button variant={'outline'} asChild className={'absolute top-0 right-0'}>
+            <Link to={'/seller/product/add'}>상품 등록</Link>
+          </Button>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
