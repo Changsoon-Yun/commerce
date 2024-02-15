@@ -2,9 +2,8 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from '@/components/ui/Footer.tsx';
 import SideCart from '@/components/cart/SideCart.tsx';
-import { Suspense, useContext } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
-import SuspenseFallback from '@/components/optimize/SuspenseFallback.tsx';
 
 export default function CommonLayout() {
   const { isOpen, toggleHandler } = useContext(CartContext);
@@ -18,9 +17,7 @@ export default function CommonLayout() {
         </header>
         <main className={'max-w-6xl m-auto min-h-screen'}>
           <div className={'m-5'}>
-            <Suspense fallback={<SuspenseFallback />}>
-              <Outlet />
-            </Suspense>
+            <Outlet />
           </div>
         </main>
         <footer className={'border-t border-zinc-200 bg-zinc-50'}>
