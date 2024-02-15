@@ -11,27 +11,27 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-
-      - name: install yarn dependencies
-        run: yarn install
-
-      - name: react build
-        run: yarn build
-
-      # aws에 접근하기 위한 권한을 받아옵니다.
-      - name: Configure AWS credentials
-        uses: configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY_ID }}
-          aws-region: ap-northeast-2
-
-      # S3에 build 파일을 올립니다.
-      - name: Upload to S3
-        env:
-          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
-        run: |
-          aws s3 sync \
-            ./build s3://$BUCKET_NAME
-            - name: Checkout
+#
+#      - name: install yarn dependencies
+#        run: yarn install
+#
+#      - name: react build
+#        run: yarn build
+#
+#      # aws에 접근하기 위한 권한을 받아옵니다.
+#      - name: Configure AWS credentials
+#        uses: configure-aws-credentials@v2
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY_ID }}
+#          aws-region: ap-northeast-2
+#
+#      # S3에 build 파일을 올립니다.
+#      - name: Upload to S3
+#        env:
+#          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
+#        run: |
+#          aws s3 sync \
+#            ./build s3://$BUCKET_NAME
+#            - name: Checkout
 
