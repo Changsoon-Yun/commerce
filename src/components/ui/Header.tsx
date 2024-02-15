@@ -1,9 +1,8 @@
 import { Input } from './input';
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/apis/useAuth.ts';
 
 export default function Header() {
-  const { storedUserData } = useAuth();
+  // const { storedUserData } = useAuth();
 
   return (
     <>
