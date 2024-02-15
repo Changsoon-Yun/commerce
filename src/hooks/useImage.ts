@@ -9,19 +9,26 @@ import { IProducts } from '@/types/product.ts';
 import { useAuth } from '@/apis/useAuth.ts';
 import { queryClient } from '@/App.tsx';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
+import imageCompression from 'browser-image-compression';
 
 export default function useImage(product: IProducts) {
   const { userData } = useAuth();
   const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
-  const addImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const addImgHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const temp: UploadImgListType = [];
     const temp2 = [];
     if (e.target.files) {
       for (let i = 0; i < e.target.files.length; i++) {
-        const blobImage = URL.createObjectURL(e.target.files[i]);
-        temp.push({ src: blobImage, blob: e.target.files[i] });
+        const compressedImage = await imageCompression(e.target.files[i], {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 310,
+          useWebWorker: true,
+        });
+        const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
+
+        temp.push({ src: blobImage, blob: compressedImage });
         temp2.push(blobImage);
       }
     }
@@ -87,7 +94,6 @@ export default function useImage(product: IProducts) {
   };
 
   const uploadHandler = async (title: string) => {
-    console.log(uploadImages);
     const promises = uploadImages.map(async (data) => {
       const imageRef = ref(storage, userData?.uid + '/' + title + ` ${data.blob.name}`);
       return await uploadBytes(imageRef, data.blob);
