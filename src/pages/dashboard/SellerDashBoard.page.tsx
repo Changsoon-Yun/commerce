@@ -13,7 +13,7 @@ import { convertLabelByValue, formatNumberWithCommas, getDateFromProduct } from 
 import useProductHandler from '@/hooks/useProductHandler.ts';
 import { categories } from '@/constant/categories.ts';
 import { conditions } from '@/constant/conditions';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import {
   Select,
   SelectContent,

@@ -1,5 +1,3 @@
-'use client';
-
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form.tsx';

@@ -4,7 +4,7 @@ import {
   getDateFromProduct,
 } from '@/utils/converter.ts';
 import { Separator } from '@/components/ui/separator.tsx';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { conditions } from '@/constant/conditions.ts';
 import { IProducts } from '@/types/product.ts';
 

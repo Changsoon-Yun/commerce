@@ -19,7 +19,7 @@ import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import ProductCard from '@/components/products/ProductCard.tsx';
 import { useAuth } from '@/apis/useAuth.ts';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { Separator } from '@/components/ui/separator.tsx';
 import useGetRelatedProducts from '@/apis/useGetRelatedProducts.ts';
 import { IProducts } from '@/types/product.ts';
