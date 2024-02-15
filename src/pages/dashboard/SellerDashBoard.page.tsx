@@ -72,11 +72,13 @@ export default function SellerDashBoardPage() {
                   <TableRow key={createdAt.seconds}>
                     <TableCell>
                       <div className={'w-24 h-24 rounded-2xl border overflow-hidden'}>
-                        <img
-                          src={imageList[0]}
-                          className={'w-full h-full object-cover'}
-                          alt="상품이미지"
-                        />
+                        <Link to={`/product/${id}`}>
+                          <img
+                            src={imageList[0]}
+                            className={'w-full h-full object-cover'}
+                            alt="상품이미지"
+                          />
+                        </Link>
                       </div>
                     </TableCell>
                     <TableCell>
