@@ -15,7 +15,7 @@ export default function SideCart() {
   }, [carts]);
   return (
     <>
-      <div
+      <aside
         style={{ height: `calc(100vh - 80px)`, transition: '0.3s' }}
         className={`fixed top-[80px]  w-[300px] transition p-4 border-l border-zinc-200  bg-zinc-100 overflow-auto ${isOpen ? 'right-[0px]' : 'right-[-300px]'}`}>
         <div className={'relative'}>
@@ -45,7 +45,7 @@ export default function SideCart() {
           }}>
           <Link to={'/order/cart'}>구매하기</Link>
         </Button>
-      </div>
+      </aside>
     </>
   );
 }
