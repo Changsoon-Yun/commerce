@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select';
 import { OrderStatus } from '@/types/product.ts';
 import { useAuth } from '@/apis/useAuth.ts';
+import PageTitle from '@/components/PageTitle.tsx';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
@@ -33,14 +34,14 @@ export default function SellerDashBoardPage() {
   return (
     <>
       <div className={'py-16'}>
-        <div className={'relative flex items-center justify-center pb-16'}>
-          <h2 className="flex-1 scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 text-center">
-            {storedUserData?.userName}님의 판매 상품 목록
-          </h2>
-          <Button variant={'outline'} asChild className={'absolute top-0 right-0'}>
-            <Link to={'/seller/product/add'}>상품 등록</Link>
-          </Button>
-        </div>
+        <PageTitle
+          title={`${storedUserData?.userName}님의 판매 상품 목록`}
+          children={
+            <Button variant={'outline'} asChild className={'absolute top-0 right-0'}>
+              <Link to={'/seller/product/add'}>상품 등록</Link>
+            </Button>
+          }
+        />
         <Table>
           <TableHeader>
             <TableRow>

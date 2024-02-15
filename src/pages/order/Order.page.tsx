@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/apis/useAuth.ts';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
 import { z } from 'zod';
+import PageTitle from '@/components/PageTitle.tsx';
 
 export default function OrderPage() {
   const { id: pathName } = useParams();
@@ -89,103 +90,108 @@ export default function OrderPage() {
 
   return (
     <>
-      <div className={'flex'}>
-        <div className={'w-[800px] mr-4'}>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight  border border-zinc-300 rounded-t-md  p-4">
-            찜한 상품 목록
-          </h4>
-          {cartProducts?.map((item) => (
-            <OrderItem
-              item={item}
-              handleSingleCheck={handleSingleCheck}
-              checkItems={checkItems}
-              key={item.id}
-            />
-          ))}
-          {pathName !== 'cart' && product && (
-            <>
-              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight  border border-t-0 border-zinc-300 p-4">
-                방금 보신 상품
-              </h4>
+      <div className={'py-16'}>
+        <PageTitle title={'상품 주문'} />
+        <div className={'flex'}>
+          <div className={'w-[800px] mr-4'}>
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight  border border-zinc-300 rounded-t-md  p-4">
+              찜한 상품 목록
+            </h4>
+            {cartProducts?.map((item) => (
               <OrderItem
-                item={product as IProducts}
+                item={item}
                 handleSingleCheck={handleSingleCheck}
                 checkItems={checkItems}
+                key={item.id}
               />
-            </>
-          )}
-        </div>
-        <div className={'flex-1 sticky top-[100px] h-fit'}>
-          <div className={'flex flex-col gap-4 border border-zinc-300 rounded-t-md p-4'}>
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">주문 예상 금액</h4>
-            <div>
-              <div className={'flex justify-between gap-2'}>
-                <p>총 상품 가격</p>
-                <p>
-                  {formatNumberWithCommas(checkItems.reduce((prev, curr) => prev + curr.price, 0))}{' '}
-                  원
-                </p>
+            ))}
+            {pathName !== 'cart' && product && (
+              <>
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight  border border-t-0 border-zinc-300 p-4">
+                  방금 보신 상품
+                </h4>
+                <OrderItem
+                  item={product as IProducts}
+                  handleSingleCheck={handleSingleCheck}
+                  checkItems={checkItems}
+                />
+              </>
+            )}
+          </div>
+          <div className={'flex-1 sticky top-[100px] h-fit'}>
+            <div className={'flex flex-col gap-4 border border-zinc-300 rounded-t-md p-4'}>
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">주문 예상 금액</h4>
+              <div>
+                <div className={'flex justify-between gap-2'}>
+                  <p>총 상품 가격</p>
+                  <p>
+                    {formatNumberWithCommas(
+                      checkItems.reduce((prev, curr) => prev + curr.price, 0)
+                    )}{' '}
+                    원
+                  </p>
+                </div>
               </div>
-            </div>
-            <div>
-              <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    className={'w-full'}
-                    disabled={
-                      formatNumberWithCommas(
-                        checkItems.reduce((prev, curr) => prev + curr.price, 0)
-                      ) === '0'
-                    }>
-                    결제하기
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(submitHandler)}>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>주문/결제</AlertDialogTitle>
-                      </AlertDialogHeader>
-                      <div>
-                        <FormInner
-                          form={form}
-                          name={'buyer_name'}
-                          label={'구매자 이름'}
-                          placeholder={'차은우'}
-                        />
-                        <FormInner
-                          form={form}
-                          name={'buyer_tel'}
-                          label={'구매자 전화번호'}
-                          placeholder={'01012345678'}
-                        />
-                        <FormInner
-                          form={form}
-                          name={'buyer_email'}
-                          label={'구매자 이메일'}
-                          placeholder={'이메일을 입력해 주세요.'}
-                        />
-                        <FormInner
-                          form={form}
-                          name={'buyer_addr'}
-                          label={'배송 주소'}
-                          placeholder={'배송 받을 주소를 입력해 주세요.'}
-                        />
-                        <FormInner
-                          form={form}
-                          name={'buyer_postcode'}
-                          label={'배송지 우편번호'}
-                          placeholder={'우편번호를 입력해 주세요.'}
-                        />
-                      </div>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>취소</AlertDialogCancel>
-                        <Button type={'submit'}>결제하기</Button>
-                      </AlertDialogFooter>
-                    </form>
-                  </Form>
-                </AlertDialogContent>
-              </AlertDialog>
+              <div>
+                <AlertDialog open={open} onOpenChange={setOpen}>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      className={'w-full'}
+                      disabled={
+                        formatNumberWithCommas(
+                          checkItems.reduce((prev, curr) => prev + curr.price, 0)
+                        ) === '0'
+                      }>
+                      결제하기
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(submitHandler)}>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>주문/결제</AlertDialogTitle>
+                        </AlertDialogHeader>
+                        <div>
+                          <FormInner
+                            form={form}
+                            name={'buyer_name'}
+                            label={'구매자 이름'}
+                            placeholder={'차은우'}
+                          />
+                          <FormInner
+                            form={form}
+                            name={'buyer_tel'}
+                            label={'구매자 전화번호'}
+                            placeholder={'01012345678'}
+                          />
+                          <FormInner
+                            form={form}
+                            name={'buyer_email'}
+                            label={'구매자 이메일'}
+                            placeholder={'이메일을 입력해 주세요.'}
+                          />
+                          <FormInner
+                            form={form}
+                            name={'buyer_addr'}
+                            label={'배송 주소'}
+                            placeholder={'배송 받을 주소를 입력해 주세요.'}
+                          />
+                          <FormInner
+                            form={form}
+                            name={'buyer_postcode'}
+                            label={'배송지 우편번호'}
+                            placeholder={'우편번호를 입력해 주세요.'}
+                          />
+                        </div>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>취소</AlertDialogCancel>
+                          <Button type={'submit'}>결제하기</Button>
+                        </AlertDialogFooter>
+                      </form>
+                    </Form>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             </div>
           </div>
         </div>
