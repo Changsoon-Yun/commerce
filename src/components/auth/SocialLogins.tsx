@@ -17,6 +17,9 @@ export default function SocialLogins({
           <p className="font-semibold text-zinc-600 text-sm">구글로 시작하기</p>
         </button>
         <button
+          onClick={() => {
+            alert('현재 준비중인 서비스 입니다');
+          }}
           className={'flex justify-center gap-2 items-center rounded-xl w-full'}
           style={{ backgroundColor: '#F7E409', border: '1px solid #F7E409' }}>
           <img src="/img/k-logo.png" alt="kakao" className={'w-10 h-10'} />
