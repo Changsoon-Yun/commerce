@@ -1,4 +1,4 @@
-name: Front Deployment
+name: front-build
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: checkout Github Action
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: install yarn dependencies
         run: yarn install
