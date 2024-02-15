@@ -31,6 +31,7 @@ export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
   const { storedUserData } = useAuth();
   const { deleteHandler, updateOrderStatusHandler } = useProductHandler();
+
   return (
     <>
       <div className={'py-16'}>
@@ -136,7 +137,7 @@ export default function SellerDashBoardPage() {
           </TableBody>
         </Table>
       </div>
-      <div ref={inViewRef} className="h-42 w-full">
+      <div ref={inViewRef} className="">
         {isFetchingNextPage && <p>loading...</p>}
       </div>
     </>

@@ -17,6 +17,8 @@ import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
 
+const PAGE_LIMIT = 4;
+
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();
 
@@ -28,14 +30,14 @@ export default function useGetSellerProducts() {
           collection(db, `products`),
           where('uid', '==', storedUserData?.uid),
           orderBy('updatedAt', 'desc'),
-          limit(10)
+          limit(PAGE_LIMIT)
         )
       : query(
           collection(db, `products`),
           where('uid', '==', storedUserData?.uid),
           orderBy('updatedAt', 'desc'),
           startAfter(lastVisible),
-          limit(10)
+          limit(PAGE_LIMIT)
         );
     const querySnapshot = await getDocs(q);
     const products: IProducts[] = [];
@@ -61,7 +63,7 @@ export default function useGetSellerProducts() {
     }) => fetchData(pageParam),
     getNextPageParam: (lastPage) => {
       const lastVisible = lastPage.querySnapshot.docs[lastPage.querySnapshot.docs.length - 1];
-      if (lastPage.querySnapshot.size < 10) {
+      if (lastPage.querySnapshot.size < PAGE_LIMIT) {
         return undefined;
       } else {
         return lastVisible;
@@ -77,5 +79,11 @@ export default function useGetSellerProducts() {
     }
   }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
-  return { products, fetchNextPage, isFetchingNextPage, hasNextPage, inViewRef };
+  return {
+    products,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    inViewRef,
+  };
 }
