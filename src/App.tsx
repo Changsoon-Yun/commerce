@@ -6,6 +6,10 @@ import { CartProvider } from '@/context/CartContext.tsx';
 import { Toaster } from './components/ui/toaster';
 import { FirebaseError } from 'firebase/app';
 import { Toast, toast, ToasterToast } from './components/ui/use-toast';
+import ErrorFallbackPage from '@/components/optimize/ErrorFallback.page.tsx';
+import { ErrorBoundary } from 'react-error-boundary';
+import SuspenseFallback from '@/components/optimize/SuspenseFallback.tsx';
+import { Suspense } from 'react';
 
 const queryErrorHandler = (
   toast: ({ ...props }: Toast) => {
@@ -36,14 +40,18 @@ export const queryClient = new QueryClient({
 export default function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <ScrollTop />
-        <CartProvider>
-          <Router />
-          <Toaster />
-          <ReactQueryDevtools />
-        </CartProvider>
-      </QueryClientProvider>
+      <ErrorBoundary fallbackRender={ErrorFallbackPage}>
+        <Suspense fallback={<SuspenseFallback />}>
+          <QueryClientProvider client={queryClient}>
+            <ScrollTop />
+            <CartProvider>
+              <Router />
+              <Toaster />
+              <ReactQueryDevtools />
+            </CartProvider>
+          </QueryClientProvider>
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }

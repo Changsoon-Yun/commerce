@@ -18,7 +18,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className={'flex'}>
-        <div className={'pr-5 flex flex-col gap-2 min-w-[120px]'}>
+        <div className={'sticky top-40 pr-5 flex flex-col gap-2 min-w-[120px] h-fit'}>
           <p className={'font-semibold'}>카테고리</p>
           {categories.map((category) => (
             <Link to={`products/${category.value}`} key={category.value}>
@@ -28,7 +28,7 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-        <div>
+        <div className={'flex-1'}>
           {categories.map((category) => (
             <div key={category.value}>
               <CardWithCategory category={category} />
