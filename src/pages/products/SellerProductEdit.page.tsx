@@ -16,8 +16,14 @@ import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 export default function SellerProductEditPage() {
   const { id } = useParams();
 
-  const { editHandler, addImgHandler, previewImages, setPreviewImages, deleteImageHandler } =
-    useProductHandler(id);
+  const {
+    editHandler,
+    addImgHandler,
+    previewImages,
+    setPreviewImages,
+    deleteImageHandler,
+    isLoading,
+  } = useProductHandler(id);
   const { product } = useGetSellerProduct({ id: id as string });
 
   const form = useForm({
@@ -78,7 +84,7 @@ export default function SellerProductEditPage() {
           />
           <FormComboxInner form={form} name={'category'} label={'카테고리'} />
           <FormRadioGroup form={form} name={'condition'} label={'상태'} />
-          <Button className={'w-full mt-10 py-6'} type={'submit'}>
+          <Button className={'w-full mt-10 py-6'} type={'submit'} disabled={isLoading}>
             수정 하기
           </Button>
         </form>

@@ -11,6 +11,7 @@ import { toast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import useImage from '@/hooks/useImage.ts';
 import { IProducts } from '@/types/product.ts';
+import { useState } from 'react';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
@@ -26,9 +27,11 @@ export default function useProductHandler(id?: string) {
     setPreviewImages,
     deleteImageHandler,
   } = useImage(product as IProducts);
+  const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
     try {
+      setIsLoading(true);
       await uploadHandler(values.title);
       const imageUrlList = await getImageURL(values.title);
       const collectionRef = collection(db, `products`);
@@ -61,11 +64,14 @@ export default function useProductHandler(id?: string) {
           variant: 'destructive',
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const editHandler = async (values: z.infer<typeof productFormSchema>) => {
     try {
+      setIsLoading(true);
       await uploadHandler(values.title);
       const imageUrlList = await getImageURL(values.title);
 
@@ -94,19 +100,31 @@ export default function useProductHandler(id?: string) {
           variant: 'destructive',
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const deleteHandler = async (id: string) => {
     const productRef = doc(db, `products/${id}`);
     if (confirm('삭제 하시겠습니까?')) {
-      await deleteDoc(productRef);
-      await queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
-      });
-      toast({
-        description: '상품 삭제에 성공 했습니다.',
-      });
+      try {
+        await deleteDoc(productRef);
+        await queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
+        });
+        toast({
+          description: '상품 삭제에 성공 했습니다.',
+        });
+      } catch (e) {
+        if (e instanceof FirebaseError) {
+          toast({
+            title: '에러!',
+            description: e.code,
+            variant: 'destructive',
+          });
+        }
+      }
     }
   };
 
@@ -133,6 +151,7 @@ export default function useProductHandler(id?: string) {
   };
 
   return {
+    isLoading,
     product,
     submitHandler,
     editHandler,

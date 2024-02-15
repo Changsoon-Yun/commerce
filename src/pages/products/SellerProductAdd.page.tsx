@@ -11,7 +11,8 @@ import FormComboxInner from '@/components/products/form/FormComboxInner.tsx';
 import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 
 export default function SellerProductAddPage() {
-  const { submitHandler, addImgHandler, previewImages, deleteImageHandler } = useProductHandler();
+  const { submitHandler, addImgHandler, previewImages, deleteImageHandler, isLoading } =
+    useProductHandler();
   const form = useForm({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
@@ -54,7 +55,7 @@ export default function SellerProductAddPage() {
           />
           <FormComboxInner form={form} name={'category'} label={'카테고리'} />
           <FormRadioGroup form={form} name={'condition'} label={'상태'} />
-          <Button className={'w-full mt-10 py-6'} type={'submit'}>
+          <Button className={'w-full mt-10 py-6'} type={'submit'} disabled={isLoading}>
             등록 하기
           </Button>
         </form>
