@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
@@ -12,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import { useAuth } from '@/apis/useAuth.ts';
+import SellerHeader from '@/components/ui/SellerHeader.tsx';
 
 export default function UserHeader() {
   const { storedUserData, logout } = useAuth();
@@ -41,26 +41,14 @@ export default function UserHeader() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link to={'/user/dashboard'}>내 프로필 보기</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link to={'/ordered-products'}>주문 내역 보기</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {storedUserData?.isSeller && (
-              <>
-                <DropdownMenuLabel>판매자 메뉴</DropdownMenuLabel>
-
-                <DropdownMenuItem asChild>
-                  <Link to={'/seller/dashboard'}>판매 목록</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to={'/seller/product/add'}>상품 등록</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </>
-            )}
+            <SellerHeader isSeller={storedUserData?.isSeller as boolean} />
             <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
