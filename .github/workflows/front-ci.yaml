@@ -7,8 +7,8 @@ on:
       - feat/*
 
 jobs:
-  build:
-    name: react build & deploy
+  test:
+    name: react deploy
     runs-on: ubuntu-latest
 
     steps:
