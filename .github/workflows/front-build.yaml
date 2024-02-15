@@ -7,17 +7,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    name: react build & deploy
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
-#
-#      - name: install yarn dependencies
-#        run: yarn install
-#
-#      - name: react build
-#        run: yarn build
-#
+      - name: checkout Github Action
+        uses: actions/checkout@v4.1.1
+
+      - name: install yarn dependencies
+        run: yarn install
+
+      - name: react build
+        run: yarn build
+
 #      # aws에 접근하기 위한 권한을 받아옵니다.
 #      - name: Configure AWS credentials
 #        uses: configure-aws-credentials@v2
@@ -34,4 +36,4 @@ jobs:
 #          aws s3 sync \
 #            ./build s3://$BUCKET_NAME
 #            - name: Checkout
-
+#
