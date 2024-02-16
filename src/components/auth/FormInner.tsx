@@ -61,7 +61,7 @@ export default function FormInner<T extends FieldValues>({
                   />
                 )}
               </FormControl>
-              <FormMessage />
+              <FormMessage data-cy={`${name}-error-msg`} />
             </FormItem>
           )}
         />

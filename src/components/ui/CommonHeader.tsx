@@ -10,7 +10,9 @@ export default function CommonHeader() {
     <>
       <NavigationMenuItem className={navigationMenuTriggerStyle() + ' px-0 bg-transparent'}>
         <Link to={'/login'}>
-          <Button variant={'outline'}>로그인</Button>
+          <Button data-cy={'to-login'} variant={'outline'}>
+            로그인
+          </Button>
         </Link>
       </NavigationMenuItem>
     </>
