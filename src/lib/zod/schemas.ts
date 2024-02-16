@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const loginFormSchema = z.object({
   email: z.string().email({ message: '이메일 형식에 맞지 않습니다.' }),
   // password: z.string().regex(regex, { message: '비밀번호 형식에 맞지 않습니다.' }),
-  password: z.string(),
+  password: z.string().min(4, { message: '비밀번호 형식에 맞지 않습니다.' }),
 });
 
 export const registerFormSchema = loginFormSchema.extend({
