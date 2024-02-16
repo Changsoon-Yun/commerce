@@ -3,10 +3,12 @@ import { convertLabelByValue } from '@/utils/converter.ts';
 import useGetCategoryProducts from '@/apis/useGetCategoryProducts.ts';
 import { categories } from '@/constant/categories.ts';
 import { useState } from 'react';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.tsx';
-import { Label } from '@/components/ui/label.tsx';
 import ProductCard from '@/components/products/ProductCard.tsx';
 import { IProducts } from '@/types/product.ts';
+import CategoryNav from '@/components/products/home/CategoryNav.tsx';
+import FilterList from '@/components/products/FilterList.tsx';
+
+export const filterArr = ['최신순', '오래된순', '낮은 가격순', '높은 가격순'] as const;
 
 export default function CategoryProductsPage() {
   const { category } = useParams();
@@ -20,8 +22,6 @@ export default function CategoryProductsPage() {
       direction,
     },
   });
-
-  const filterArr = ['최신순', '오래된순', '낮은 가격순', '높은 가격순'];
 
   const onChangeFilterHandler = (item: string) => {
     console.log('item', item);
@@ -64,24 +64,12 @@ export default function CategoryProductsPage() {
         </h2>
       </div>
       <div className="flex">
-        <div className={'sticky top-40 left-0 pr-5 flex h-fit flex-col gap-2 min-w-[120px]'}>
-          <RadioGroup
-            defaultValue={filterArr[0]}
-            className={'flex flex-col gap-4'}
-            onValueChange={onChangeFilterHandler}>
-            {filterArr.map((item) => (
-              <div className="flex items-center space-x-2" key={item}>
-                <RadioGroupItem value={item} id={item} className={'hidden'} />
-                <Label
-                  htmlFor={item}
-                  className={`cursor-pointer pb-1 ${selectedFilter === item ? 'font-bold border-b border-gray-600' : 'font-medium'}`}>
-                  {item}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-        </div>
+        <CategoryNav />
         <div className={'flex-1'}>
+          <FilterList
+            selectedFilter={selectedFilter}
+            onChangeFilterHandler={onChangeFilterHandler}
+          />
           <div className={'grid grid-cols-4  gap-2 '}>
             {products?.pages.map((items, idx) => (
               <ProductCard targetArr={items.products as IProducts[]} key={idx} />

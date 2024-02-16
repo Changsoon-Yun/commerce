@@ -31,6 +31,7 @@ export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
   const { storedUserData } = useAuth();
   const { deleteHandler, updateOrderStatusHandler } = useProductHandler();
+
   return (
     <>
       <div className={'py-16'}>
@@ -72,11 +73,13 @@ export default function SellerDashBoardPage() {
                   <TableRow key={createdAt.seconds}>
                     <TableCell>
                       <div className={'w-24 h-24 rounded-2xl border overflow-hidden'}>
-                        <img
-                          src={imageList[0]}
-                          className={'w-full h-full object-cover'}
-                          alt="상품이미지"
-                        />
+                        <Link to={`/product/${id}`}>
+                          <img
+                            src={imageList[0]}
+                            className={'w-full h-full object-cover'}
+                            alt="상품이미지"
+                          />
+                        </Link>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -134,7 +137,7 @@ export default function SellerDashBoardPage() {
           </TableBody>
         </Table>
       </div>
-      <div ref={inViewRef} className="h-42 w-full">
+      <div ref={inViewRef} className="">
         {isFetchingNextPage && <p>loading...</p>}
       </div>
     </>

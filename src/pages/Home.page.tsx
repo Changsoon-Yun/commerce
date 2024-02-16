@@ -1,7 +1,7 @@
 import { categories } from '@/constant/categories.ts';
 import CardWithCategory from '@/components/products/home/CardWithCategory.tsx';
 import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import CategoryNav from '@/components/products/home/CategoryNav.tsx';
 
 export default function HomePage() {
   return (
@@ -18,16 +18,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className={'flex'}>
-        <div className={'sticky top-40 pr-5 flex flex-col gap-2 min-w-[120px] h-fit'}>
-          <p className={'font-semibold'}>카테고리</p>
-          {categories.map((category) => (
-            <Link to={`products/${category.value}`} key={category.value}>
-              <div className={'cursor-pointer hover:font-semibold transition'}>
-                <small>{category.label}</small>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <CategoryNav />
         <div className={'flex-1'}>
           {categories.map((category) => (
             <div key={category.value}>
