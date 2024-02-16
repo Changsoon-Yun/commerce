@@ -24,3 +24,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# cypress
+1-getting-started
+2-advanced-examples
