@@ -1,4 +1,21 @@
 /// <reference types="cypress" />
+
+Cypress.Commands.add('signInWithEmailAndPassword', (email: string, password: string) => {
+  cy.visit('/login');
+
+  cy.get('input[name="email"]').type(email);
+  cy.get('input[name="email"]').invoke('val').should('eq', email);
+
+  cy.get('input[name="password"]').type(password);
+  cy.get('input[name="password"]').invoke('val').should('eq', password);
+
+  cy.get('[data-cy="login-button"]').should('exist').click();
+  cy.url().should('eq', 'http://localhost:5173/');
+});
+// Cypress.Commands.add('signOut', () => {
+//   return firebase.auth().signOut();
+// });
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
