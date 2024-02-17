@@ -1,7 +1,7 @@
 import { user } from '../../fixtures/user.ts';
 
 describe('로그인 테스트', () => {
-  const { email, password } = user;
+  const { seller } = user;
 
   beforeEach(() => {
     cy.visit('/login');
@@ -12,11 +12,11 @@ describe('로그인 테스트', () => {
     cy.get('[data-cy="login-button"]').as('login-button').should('exist');
   });
   it('정상적인 로그인 시도', () => {
-    cy.get('@email-input').type(email);
-    cy.get('@email-input').invoke('val').should('eq', email);
+    cy.get('@email-input').type(seller.email);
+    cy.get('@email-input').invoke('val').should('eq', seller.email);
 
-    cy.get('@password-input').type(password);
-    cy.get('@password-input').invoke('val').should('eq', password);
+    cy.get('@password-input').type(seller.email);
+    cy.get('@password-input').invoke('val').should('eq', seller.password);
 
     cy.get('@login-button').click();
     cy.url().should('eq', 'http://localhost:5173/');
@@ -30,7 +30,7 @@ describe('로그인 테스트', () => {
     });
 
     it('비밀번호 에러 메세지 출력', () => {
-      cy.get('@email-input').type(email);
+      cy.get('@email-input').type(seller.email);
       cy.get('[data-cy="email-error-msg"]').should('not.exist');
 
       cy.get('@password-input').type('1q');
