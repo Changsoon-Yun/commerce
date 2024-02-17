@@ -1,4 +1,10 @@
 export const user = {
-  email: 'test@naver.com',
-  password: '1q2w3e4r!',
+  seller: {
+    email: 'seller@gmail.com',
+    password: '1q2w3e4r!A',
+  },
+  customer: {
+    email: 'customer@gmail.com',
+    password: '1q2w3e4r!A',
+  },
 };
