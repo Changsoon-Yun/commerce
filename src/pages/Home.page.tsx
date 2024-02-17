@@ -8,7 +8,9 @@ export default function HomePage() {
     <>
       <div className={'py-10 flex justify-between items-center'}>
         <h2 className="scroll-m-20 tracking-tight first:mt-0 pb-10">
-          <span className={'text-2xl '}>카테고리별 </span>
+          <span className={'text-2xl '} data-cy={'home'}>
+            카테고리별{' '}
+          </span>
           <span className={'text-3xl font-semibold '}>추천 상품</span>
         </h2>
         <div className={'flex gap-4'}>

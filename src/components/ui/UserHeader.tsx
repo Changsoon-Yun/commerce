@@ -35,7 +35,9 @@ export default function UserHeader() {
           )}
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className={'focus-visible:outline-none'}>
+          <DropdownMenuTrigger
+            data-cy={'header-dropdown-trigger'}
+            className={'focus-visible:outline-none'}>
             <Avatar>
               <AvatarImage src="/img/defaultProfileImage.png" />
             </Avatar>
@@ -49,7 +51,9 @@ export default function UserHeader() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <SellerHeader isSeller={storedUserData?.isSeller as boolean} />
-            <DropdownMenuItem onClick={() => logout()}>로그아웃</DropdownMenuItem>
+            <DropdownMenuItem data-cy={'sign-out-button'} onClick={() => logout()}>
+              로그아웃
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
