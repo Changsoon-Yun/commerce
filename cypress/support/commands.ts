@@ -1,6 +1,10 @@
 /// <reference types="cypress" />
 
-Cypress.Commands.add('signInWithEmailAndPassword', (email: string, password: string) => {
+import { user } from '../fixtures/user.ts';
+
+Cypress.Commands.add('signInWithEmailAndPassword', (type) => {
+  const { email, password } = type === 'customer' ? user.customer : user.seller;
+
   cy.visit('/login');
 
   cy.get('input[name="email"]').type(email);

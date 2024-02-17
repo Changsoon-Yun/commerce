@@ -15,7 +15,7 @@ describe('로그인 테스트', () => {
     cy.get('@email-input').type(seller.email);
     cy.get('@email-input').invoke('val').should('eq', seller.email);
 
-    cy.get('@password-input').type(seller.email);
+    cy.get('@password-input').type(seller.password);
     cy.get('@password-input').invoke('val').should('eq', seller.password);
 
     cy.get('@login-button').click();
