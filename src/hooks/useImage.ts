@@ -20,32 +20,32 @@ export default function useImage(product: IProducts) {
     const temp: UploadImgListType = [];
     const temp2 = [];
     if (e.target.files) {
-      for (let i = 0; i < e.target.files.length; i++) {
-        const compressedImage = await imageCompression(e.target.files[i], {
+      // 파일 배열 생성
+      const files = Array.from(e.target.files);
+
+      // 파일 압축 및 데이터 URL 생성을 위한 Promise 배열 생성
+      const compressPromises = files.map(async (file) => {
+        const compressedImage = await imageCompression(file, {
           maxSizeMB: 1,
           maxWidthOrHeight: 310,
           useWebWorker: true,
         });
         const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
+        return { src: blobImage, blob: compressedImage };
+      });
+      const compressedImages = await Promise.all(compressPromises);
+      const blobImages = compressedImages.map((image) => image.src);
 
-        temp.push({ src: blobImage, blob: compressedImage });
-        temp2.push(blobImage);
-      }
+      temp.push(...compressedImages);
+      temp2.push(...blobImages);
     }
+
     setUploadImages([...uploadImages, ...temp]);
     setPreviewImages([...previewImages, ...temp2]);
   };
 
   const deleteImageHandler = async (targetSrc: string, id?: string) => {
-    if (!targetSrc.startsWith('blob')) {
-      if (previewImages.length <= 1) {
-        toast({
-          title: '에러!',
-          description: '이미지는 최소 한장이 필요합니다',
-          variant: 'destructive',
-        });
-        return;
-      }
+    if (targetSrc.startsWith('https://firebasestorage')) {
       if (confirm('이미 등록된 사진입니다. \n삭제 하시겠습니까?')) {
         try {
           const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
@@ -56,20 +56,29 @@ export default function useImage(product: IProducts) {
             return src !== targetSrc;
           });
 
-          console.log(updatedImageList, id);
-
           await deleteObject(fileRef);
           await updateDoc(productRef, {
             ...product,
             imageList: updatedImageList,
             updatedAt: serverTimestamp(),
           });
-          queryClient.invalidateQueries({
+          await queryClient.invalidateQueries({
             queryKey: QUERY_KEYS.PRODUCT.SELLER(userData?.uid as string, id as string),
           });
           toast({
             description: '이미지 삭제를 성공 했습니다.',
           });
+
+          setUploadImages(
+            uploadImages.filter(({ src }) => {
+              return targetSrc != src;
+            })
+          );
+          setPreviewImages(
+            previewImages.filter((src) => {
+              return targetSrc != src;
+            })
+          );
         } catch (e) {
           if (e instanceof FirebaseError) {
             toast({
@@ -80,17 +89,18 @@ export default function useImage(product: IProducts) {
           }
         }
       }
+    } else {
+      setUploadImages(
+        uploadImages.filter(({ src }) => {
+          return targetSrc != src;
+        })
+      );
+      setPreviewImages(
+        previewImages.filter((src) => {
+          return targetSrc != src;
+        })
+      );
     }
-    setUploadImages(
-      uploadImages.filter(({ src }) => {
-        return targetSrc != src;
-      })
-    );
-    setPreviewImages(
-      previewImages.filter((src) => {
-        return targetSrc != src;
-      })
-    );
   };
 
   const uploadHandler = async (title: string) => {
