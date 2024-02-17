@@ -12,6 +12,12 @@ Cypress.Commands.add('signInWithEmailAndPassword', (email: string, password: str
   cy.get('[data-cy="login-button"]').should('exist').click();
   cy.url().should('eq', 'http://localhost:5173/');
 });
+
+Cypress.Commands.add('signOut', () => {
+  cy.visit('/');
+  cy.get('[data-cy="header-dropdown-trigger"]').should('exist').click();
+  cy.get('[data-cy="sign-out-button"]').should('exist').click();
+});
 // Cypress.Commands.add('signOut', () => {
 //   return firebase.auth().signOut();
 // });
