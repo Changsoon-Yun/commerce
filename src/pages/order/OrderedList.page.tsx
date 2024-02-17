@@ -7,7 +7,6 @@ export default function OrderedListPage() {
   const { products } = useGetOrderedProducts();
   const { cancelOrderById } = useOrder();
 
-  console.log(products);
   return (
     <>
       <div className={'py-16'}>

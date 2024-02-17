@@ -9,7 +9,7 @@ export default function ProductImgList({ previewImages, deleteImageHandler }: Pr
   const { id } = useParams();
   return (
     <>
-      <div className={'flex flex-1 overflow-auto'}>
+      <div className={'flex flex-1 overflow-auto'} data-cy={'image-list'}>
         {previewImages.map((src) => (
           <div className={'relative p-3'} key={src}>
             <div className={'w-20 h-20 border-2 border-zinc-300 rounded overflow-hidden'}>

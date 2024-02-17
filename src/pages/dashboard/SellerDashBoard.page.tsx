@@ -38,7 +38,11 @@ export default function SellerDashBoardPage() {
         <PageTitle
           title={`${storedUserData?.userName}님의 판매 상품 목록`}
           children={
-            <Button variant={'outline'} asChild className={'absolute top-0 right-0'}>
+            <Button
+              data-cy={'add-button'}
+              variant={'outline'}
+              asChild
+              className={'absolute top-0 right-0'}>
               <Link to={'/seller/product/add'}>상품 등록</Link>
             </Button>
           }
@@ -70,7 +74,7 @@ export default function SellerDashBoardPage() {
                   orderStatus,
                   orderedDate,
                 }) => (
-                  <TableRow key={createdAt.seconds}>
+                  <TableRow key={createdAt.seconds} data-cy={'seller-product'}>
                     <TableCell>
                       <div className={'w-24 h-24 rounded-2xl border overflow-hidden'}>
                         <Link to={`/product/${id}`}>

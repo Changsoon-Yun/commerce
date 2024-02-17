@@ -1,4 +1,4 @@
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
+import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form';
 import {
   Command,
   CommandEmpty,
@@ -59,11 +59,12 @@ export default function FormComboxInner<T extends FieldValues>({
                     <CommandGroup>
                       {categories.map((category) => (
                         <CommandItem
+                          data-cy={category.value}
                           value={category.label}
                           key={category.value}
                           onSelect={() => {
-                            // @ts-ignore
-                            form.setValue(name, category.value);
+                            form.setValue(name, category.value as PathValue<T, Path<T>>);
+                            setOpen(false);
                           }}>
                           <Check
                             className={cn(
