@@ -121,10 +121,11 @@ export default function SellerDashBoardPage() {
                     </TableCell>
                     <TableCell>
                       <div className={'flex flex-col flex-wrap gap-3 max-w-sm'}>
-                        <Button>
+                        <Button data-cy={'edit-button'}>
                           <Link to={`/seller/product/edit/${id}`}>수정하기</Link>
                         </Button>
                         <Button
+                          data-cy={'delete-button'}
                           variant={'destructive'}
                           onClick={() => {
                             deleteHandler(id);
