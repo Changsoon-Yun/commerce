@@ -24,8 +24,6 @@ export default function CategoryProductsPage() {
   });
 
   const onChangeFilterHandler = (item: string) => {
-    console.log('item', item);
-    console.log('selectedFilter', selectedFilter);
     switch (item) {
       case '최신순':
         setSelectedFilter(item);
