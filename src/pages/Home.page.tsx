@@ -23,7 +23,7 @@ export default function HomePage() {
         <CategoryNav />
         <div className={'flex-1'}>
           {categories.map((category) => (
-            <div key={category.value}>
+            <div key={category.value} data-cy={'category-product-list'}>
               <CardWithCategory category={category} />
             </div>
           ))}
