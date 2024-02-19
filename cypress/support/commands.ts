@@ -19,8 +19,25 @@ Cypress.Commands.add('signInWithEmailAndPassword', (type) => {
 
 Cypress.Commands.add('signOut', () => {
   cy.visit('/');
-  cy.get('[data-cy="header-dropdown-trigger"]').should('exist').click();
-  cy.get('[data-cy="sign-out-button"]').should('exist').click();
+  cy.signInWithEmailAndPassword('seller');
+  cy.get('[data-cy="header-dropdown-trigger"]').should('be.visible').click();
+  cy.get('[data-cy="sign-out-button"]').should('be.visible').click();
+});
+
+Cypress.Commands.add('sortAndVerify', (sortOption, sortingCriteria, compareFunction) => {
+  cy.get(`[data-cy="filter-button-${sortOption}"]`).click();
+  cy.get('[data-cy="product-card"]').then(($products) => {
+    const initialSortingCriteria = $products
+      .map((_index, element) => Cypress.$(element).find(`[data-cy="${sortingCriteria}"]`).text())
+      .get();
+    const sortedSortingCriteria = [...initialSortingCriteria].sort(compareFunction);
+
+    cy.get('[data-cy="product-card"]').each(($product, index) => {
+      cy.wrap($product)
+        .find(`[data-cy="${sortingCriteria}"]`)
+        .should('contain', sortedSortingCriteria[index]);
+    });
+  });
 });
 // Cypress.Commands.add('signOut', () => {
 //   return firebase.auth().signOut();
