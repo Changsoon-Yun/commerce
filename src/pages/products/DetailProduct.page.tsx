@@ -43,7 +43,7 @@ export default function DetailProductPage() {
         addCart(id);
       }
     } else {
-      alert('로그인한 유저만 가능합니다');
+      alert('로그인한 유저만 가능합니다.');
     }
   };
   if (!product || !id) {
@@ -61,7 +61,12 @@ export default function DetailProductPage() {
                   <div className="p-1">
                     <Card className={'overflow-hidden'}>
                       <CardContent className="flex aspect-square items-center justify-center p-0">
-                        <img src={src} alt="img" className={'w-full h-full object-cover'} />
+                        <img
+                          data-cy={'product-img'}
+                          src={src}
+                          alt="img"
+                          className={'w-full h-full object-cover'}
+                        />
                       </CardContent>
                     </Card>
                   </div>
@@ -73,7 +78,9 @@ export default function DetailProductPage() {
           </Carousel>
           <div className={'flex-1'}>
             <div className="mb-4">
-              <h2 className={'text-2xl font-semibold'}>{product.title}</h2>
+              <h2 data-cy={'product-title'} className={'text-2xl font-semibold'}>
+                {product.title}
+              </h2>
             </div>
             <div className="mb-4">
               <h2 className={'text-3xl font-semibold'}>
@@ -85,7 +92,7 @@ export default function DetailProductPage() {
             <div className="flex gap-2 mb-4 text-sm">
               <span className={'text-zinc-400 min-w-[70px]'}>등록일</span>
               <span>:</span>
-              <span className={'text-zinc-600 font-semibold'}>
+              <span data-cy={'product-date'} className={'text-zinc-600 font-semibold'}>
                 {dayjs(getDateFromProduct(product.createdAt)).format('YYYY년 MM월 DD일')}
               </span>
             </div>
@@ -93,26 +100,31 @@ export default function DetailProductPage() {
             <div className="flex gap-2 mb-4 text-sm">
               <span className={'text-zinc-400 min-w-[70px]'}>상품 상태</span>
               <span>:</span>
-              <span className={'text-zinc-600 font-semibold'}>
+              <span data-cy={'product-condition'} className={'text-zinc-600 font-semibold'}>
                 {convertLabelByValue(product.condition, conditions)}
               </span>
             </div>
             <div className="flex gap-2 mb-8 text-sm">
               <span className={'text-zinc-400 min-w-[70px]'}>상품 정보</span>
               <span>:</span>
-              <span className={'text-zinc-600 font-semibold'}>{product.desc}</span>
+              <span data-cy={'product-desc'} className={'text-zinc-600 font-semibold'}>
+                {product.desc}
+              </span>
             </div>
             <div className={'flex gap-2'}>
               <Button
+                data-cy={'cart-button'}
                 className={'flex-1'}
                 onClick={() => {
                   handleCartButtonClick(id);
                 }}>
                 {storedUserData && carts.includes(id) ? '찜취소' : '찜하기'}
               </Button>
-              <Button className={'flex-1'} asChild>
-                <Link to={`/order/${id}`}>구매하기</Link>
-              </Button>
+              {storedUserData && (
+                <Button data-cy={'buy-button'} className={'flex-1'} asChild>
+                  <Link to={`/order/${id}`}>구매하기</Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>
