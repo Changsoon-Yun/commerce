@@ -42,5 +42,7 @@ describe('로그인 테스트', () => {
     });
   });
 
-  afterEach(() => {});
+  afterEach(() => {
+    cy.signOut();
+  });
 });
