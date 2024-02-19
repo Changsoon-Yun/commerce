@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { convertLabelByValue } from '@/utils/converter.ts';
 import useGetCategoryProducts from '@/apis/useGetCategoryProducts.ts';
 import { categories } from '@/constant/categories.ts';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ProductCard from '@/components/products/ProductCard.tsx';
 import { IProducts } from '@/types/product.ts';
 import CategoryNav from '@/components/products/home/CategoryNav.tsx';
@@ -23,30 +23,37 @@ export default function CategoryProductsPage() {
     },
   });
 
-  const onChangeFilterHandler = (item: string) => {
-    switch (item) {
-      case '최신순':
-        setSelectedFilter(item);
-        setOption('updatedAt');
-        setDirection('desc');
-        break;
-      case '오래된순':
-        setSelectedFilter(item);
-        setOption('updatedAt');
-        setDirection('asc');
-        break;
-      case '낮은 가격순':
-        setSelectedFilter(item);
-        setOption('price');
-        setDirection('asc');
-        break;
-      case '높은 가격순':
-        setSelectedFilter(item);
-        setOption('price');
-        setDirection('desc');
-        break;
-    }
-  };
+  const onChangeFilterHandler = useCallback(
+    (item: string) => {
+      switch (item) {
+        case '최신순':
+          setSelectedFilter(item);
+          setOption('updatedAt');
+          setDirection('desc');
+          break;
+        case '오래된순':
+          setSelectedFilter(item);
+          setOption('updatedAt');
+          setDirection('asc');
+          break;
+        case '낮은 가격순':
+          setSelectedFilter(item);
+          setOption('price');
+          setDirection('asc');
+          break;
+        case '높은 가격순':
+          setSelectedFilter(item);
+          setOption('price');
+          setDirection('desc');
+          break;
+      }
+    },
+    [setSelectedFilter, setOption, setDirection]
+  );
+  const categoryLabel = useMemo(
+    () => convertLabelByValue(category as string, categories),
+    [category]
+  );
 
   if (!category) {
     return;
@@ -56,9 +63,7 @@ export default function CategoryProductsPage() {
     <>
       <div className={'py-10 flex justify-between items-center'}>
         <h2 className="scroll-m-20 tracking-tight first:mt-0 pb-10">
-          <span className={'text-3xl font-semibold '}>
-            {convertLabelByValue(category, categories)}
-          </span>
+          <span className={'text-3xl font-semibold '}>{categoryLabel}</span>
         </h2>
       </div>
       <div className="flex">
