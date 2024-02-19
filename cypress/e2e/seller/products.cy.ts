@@ -19,7 +19,9 @@ describe('판매자 상품 관련 테스트', () => {
     cy.get('[data-cy="image-list"]').children().should('have.length', 2);
 
     cy.get('input[name="title"]').should('be.visible').type(content);
-    cy.get('input[name="price"]').should('be.visible').type('100');
+    cy.get('input[name="price"]')
+      .should('be.visible')
+      .type((Math.floor(Math.random() * (20000 - 100 + 1)) + 100).toString());
     cy.get('textarea[name="desc"]').should('be.visible').type(content);
 
     cy.get('button[role="combobox"]').as('select-trigger').should('be.visible').click();
