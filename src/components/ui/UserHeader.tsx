@@ -27,6 +27,7 @@ export default function UserHeader() {
           <FaRegHeart size={24} />
           {carts.length > 0 && (
             <div
+              data-cy={'cart-count'}
               className={
                 'absolute top-0 right-0 rounded-full w-[24px] h-[24px] flex items-center justify-center bg-[#f6d0cb] text-sm'
               }>

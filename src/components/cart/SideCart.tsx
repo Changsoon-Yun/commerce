@@ -15,7 +15,11 @@ export default function SideCart() {
   }, [carts]);
   return (
     <>
+      <div
+        onClick={toggleHandler}
+        className={`dim fixed top-0 left-0 w-screen h-screen ${isOpen ? 'bg-black opacity-25' : 'hidden'}`}></div>
       <aside
+        data-cy={'side-cart'}
         style={{ height: `calc(100vh - 80px)`, transition: '0.3s' }}
         className={`fixed top-[80px]  w-[300px] transition p-4 border-l border-zinc-200  bg-zinc-100 overflow-auto ${isOpen ? 'right-[0px]' : 'right-[-300px]'}`}>
         <div className={'relative'}>
@@ -31,7 +35,7 @@ export default function SideCart() {
           <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">
             장바구니
           </h2>
-          <div className={'flex gap-2 flex-wrap py-4'}>
+          <div className={'flex gap-2 flex-wrap py-4'} data-cy={'cart-item-list'}>
             {products?.map((product) => <CartList key={product.id} product={product} />)}
           </div>
         </div>

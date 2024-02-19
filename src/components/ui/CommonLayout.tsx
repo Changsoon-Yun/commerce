@@ -2,11 +2,8 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from '@/components/ui/Footer.tsx';
 import SideCart from '@/components/cart/SideCart.tsx';
-import { useContext } from 'react';
-import { CartContext } from '@/context/CartContext.tsx';
 
 export default function CommonLayout() {
-  const { isOpen, toggleHandler } = useContext(CartContext);
   return (
     <>
       <div className={`relative`}>
@@ -25,9 +22,6 @@ export default function CommonLayout() {
             <Footer />
           </div>
         </footer>
-        <div
-          onClick={toggleHandler}
-          className={`dim fixed top-0 left-0 w-screen h-screen ${isOpen ? 'bg-black opacity-25' : 'hidden'}`}></div>
         <SideCart />
       </div>
     </>

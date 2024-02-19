@@ -16,7 +16,7 @@ export default function CartList({ product }: { product: IProducts }) {
   const { id, imageList, title, price } = product;
   return (
     <>
-      <Card className="w-full" key={id}>
+      <Card className="w-full" key={id} data-cy={'cart-item'}>
         <Carousel className="w-full max-w-xs" opts={{ active: imageList.length > 1 }}>
           <CarouselContent>
             {imageList.map((src, index) => (
@@ -56,6 +56,7 @@ export default function CartList({ product }: { product: IProducts }) {
             <Link to={`/product/${id}`}>상세보기</Link>
           </Button>
           <Button
+            data-cy={'delete-button'}
             onClick={() => {
               removeCart(id);
             }}>
