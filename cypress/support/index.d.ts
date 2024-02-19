@@ -7,5 +7,6 @@ declare namespace Cypress {
       sortingCriteria: 'product-price' | 'product-date',
       compareFunction: ((a: string, b: string) => number) | undefined
     ): void;
+    addCart(): void;
   }
 }

@@ -39,6 +39,33 @@ Cypress.Commands.add('sortAndVerify', (sortOption, sortingCriteria, compareFunct
     });
   });
 });
+
+Cypress.Commands.add('addCart', () => {
+  cy.signInWithEmailAndPassword('seller');
+  cy.visit('/');
+  cy.get('[data-cy="category-product-list"]')
+    .first()
+    .find('[data-cy="product-card"]')
+    .first()
+    .click();
+
+  cy.get('[data-cy="cart-button"]').should('be.visible').should('have.text', '찜하기').click();
+  cy.window().then((win) => {
+    const localStorageValue = win.localStorage.getItem('cart');
+    cy.url().then((url) => {
+      const urlParts = url.split('/');
+      const productId = urlParts[urlParts.length - 1];
+
+      if (localStorageValue !== null) {
+        const productIdArray = JSON.parse(localStorageValue);
+        const productIdExists = productIdArray.includes(productId);
+        expect(productIdExists).to.be.true;
+      } else {
+        expect.fail('로컬 스토리지에 productId가 존재하지 않습니다.');
+      }
+    });
+  });
+});
 // Cypress.Commands.add('signOut', () => {
 //   return firebase.auth().signOut();
 // });
