@@ -3,6 +3,7 @@ import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
+import { useMemo } from 'react';
 
 export default function useGetRelatedProducts(category: string, id: string) {
   const fetchData = async () => {
@@ -26,7 +27,7 @@ export default function useGetRelatedProducts(category: string, id: string) {
   };
 
   const { data: products } = useQuery({
-    queryKey: QUERY_KEYS.PRODUCTS.RELATED(category, id),
+    queryKey: useMemo(() => QUERY_KEYS.PRODUCTS.RELATED(category, id), [category, id]),
     queryFn: fetchData,
     enabled: !!category,
   });

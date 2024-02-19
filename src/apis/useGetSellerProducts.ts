@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
@@ -54,7 +54,10 @@ export default function useGetSellerProducts() {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
+    queryKey: useMemo(
+      () => QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
+      [storedUserData]
+    ),
     initialPageParam: undefined,
     queryFn: ({
       pageParam,

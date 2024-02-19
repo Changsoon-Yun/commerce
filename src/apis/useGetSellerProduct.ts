@@ -3,6 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
+import { useMemo } from 'react';
 
 export default function useGetSellerProduct({ id }: { id: string }) {
   const { storedUserData } = useAuth();
@@ -15,7 +16,10 @@ export default function useGetSellerProduct({ id }: { id: string }) {
   };
 
   const { data: product } = useQuery({
-    queryKey: QUERY_KEYS.PRODUCT.SELLER(storedUserData?.uid as string, id),
+    queryKey: useMemo(
+      () => QUERY_KEYS.PRODUCT.SELLER(storedUserData?.uid as string, id),
+      [storedUserData, id]
+    ),
     queryFn: fetchData,
     // id가 있을때만 fetching
     enabled: !!id,

@@ -3,6 +3,7 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { IProducts } from '@/types/product.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys';
+import { useMemo } from 'react';
 
 export default function useGetProduct({ id }: { id?: string }) {
   const fetchData = async () => {
@@ -13,7 +14,7 @@ export default function useGetProduct({ id }: { id?: string }) {
   };
 
   const { data: product } = useQuery({
-    queryKey: QUERY_KEYS.PRODUCT.DETAIL(id as string),
+    queryKey: useMemo(() => QUERY_KEYS.PRODUCT.DETAIL(id as string), [id]),
     queryFn: fetchData,
     // id가 cart가 아닐때 &&  id가 있을때만 fetching
     enabled: id !== 'cart' && !!id,

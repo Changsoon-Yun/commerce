@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export interface FilterOptions {
@@ -74,7 +74,7 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: QUERY_KEYS.PRODUCTS.CATEGORY(category, filter),
+    queryKey: useMemo(() => QUERY_KEYS.PRODUCTS.CATEGORY(category, filter), [category, filter]),
     initialPageParam: undefined,
     queryFn: ({
       pageParam,
