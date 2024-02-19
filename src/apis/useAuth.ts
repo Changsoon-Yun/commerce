@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
 import { queryClient } from '@/App';
@@ -52,14 +52,14 @@ export function useAuth() {
   }, []);
 
   //유저정보를 페칭한다면 로컬스토리지, storedUserData 및 쿼리데이터 변경
-  const fetchUserInfo = async () => {
+  const fetchUserInfo = useCallback(async () => {
     const uid = auth.currentUser?.uid || '';
     const q = doc(db, 'users', uid);
     const querySnapshot = await getDoc(q);
     localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
     setStoredUserData(querySnapshot.data() as UserData);
     return querySnapshot.data() as UserData;
-  };
+  }, []);
 
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
     try {
