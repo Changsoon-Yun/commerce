@@ -14,7 +14,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
       <div className={'pb-20'}>
         <div className={'flex flex-col justify-center items-center pb-8 gap-4'}>
           <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            <Link to={`products/${category.value}`}>
+            <Link to={`products/${category.value}`} data-cy={`category-link-${category.value}`}>
               <div className={'pb-2'}>{category.label}</div>
             </Link>
             <Separator className={'h-0.5 bg-zinc-300'} />
