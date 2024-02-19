@@ -10,7 +10,7 @@ export default function useGetCartProducts(carts: string[]) {
   const fetchDataById = async (id: string) => {
     const q = doc(db, `products/${id}`);
     const querySnapshot = await getDoc(q);
-    return querySnapshot.exists() ? (querySnapshot.data() as IProducts) : null;
+    return querySnapshot.data() as IProducts;
   };
 
   const fetchProductsByIds = useMemo(

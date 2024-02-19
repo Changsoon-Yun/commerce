@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import AuthHeading from '@/components/auth/AuthHeading.tsx';
 import { loginFormSchema } from '@/lib/zod/schemas.ts';
 import { useAuth } from '@/apis/useAuth.ts';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export default function LoginPage() {
   const { authServerCall, handleGoogleLogin, handleGithubLogin } = useAuth();
@@ -25,6 +26,7 @@ export default function LoginPage() {
   };
   return (
     <>
+      <Metatags title={`Seconds: 중고거래 - 로그인`} desc={'로그인 페이지 입니다.'} />
       <div className={'pb-6'}>
         <AuthHeading text={'로그인'} />
         <Form {...form}>

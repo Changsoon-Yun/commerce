@@ -10,6 +10,7 @@ import ProductImgList from '@/components/products/form/ProductImgList.tsx';
 import FormComboxInner from '@/components/products/form/FormComboxInner.tsx';
 import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 import PageTitle from '@/components/PageTitle.tsx';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export default function SellerProductAddPage() {
   const { submitHandler, addImgHandler, previewImages, deleteImageHandler, isLoading } =
@@ -28,6 +29,7 @@ export default function SellerProductAddPage() {
 
   return (
     <>
+      <Metatags title={`Seconds: 중고거래 - 상품 추가`} desc={'상품 추가 페이지 입니다.'} />
       <div className={'py-16'}>
         <PageTitle title={'상품 등록'} />
         <Form {...form}>

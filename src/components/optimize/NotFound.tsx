@@ -1,8 +1,14 @@
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 export default function NotFound() {
   return (
     <>
+      <Helmet>
+        <meta property="og:title" content="페이지를 찾을 수 없습니다." />
+        <meta property="og:description" content="죄송합니다. 요청하신 페이지를 찾을 수 없습니다." />
+        <title>Seconds: 중고거래 - 404</title>
+      </Helmet>
       <main className="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
           <p className="text-base font-semibold text-indigo-600">404</p>

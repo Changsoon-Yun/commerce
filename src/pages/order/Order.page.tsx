@@ -23,6 +23,7 @@ import { useAuth } from '@/apis/useAuth.ts';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
 import { z } from 'zod';
 import PageTitle from '@/components/PageTitle.tsx';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export default function OrderPage() {
   const { id: pathName } = useParams();
@@ -52,7 +53,7 @@ export default function OrderPage() {
         setCheckItems([...cartProducts]);
       }
     }
-  }, [cartProducts]);
+  }, [cartProducts, pathName]);
 
   const form = useForm({
     resolver: zodResolver(orderDataFormSchema),
@@ -81,6 +82,7 @@ export default function OrderPage() {
     );
   }, [checkItems]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const submitHandler = async (_values: z.infer<typeof orderDataFormSchema>) => {
     setOpen(false);
 
@@ -90,6 +92,10 @@ export default function OrderPage() {
 
   return (
     <>
+      <Metatags
+        title={`Seconds: 중고거래 - 주문 상세 정보`}
+        desc={'주문 상세 정보 페이지 입니다.'}
+      />
       <div className={'py-16'}>
         <PageTitle title={'상품 주문'} />
         <div className={'flex'}>

@@ -23,6 +23,7 @@ import dayjs from 'dayjs';
 import { Separator } from '@/components/ui/separator.tsx';
 import useGetRelatedProducts from '@/apis/useGetRelatedProducts.ts';
 import { IProducts } from '@/types/product.ts';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export default function DetailProductPage() {
   const { id } = useParams();
@@ -52,6 +53,7 @@ export default function DetailProductPage() {
 
   return (
     <>
+      <Metatags title={`Seconds: 중고거래 - ${product.title}`} desc={product.desc} />
       <div className={'pt-10 pr-10'}>
         <div className={'flex gap-4'}>
           <Carousel className="w-full max-w-xs mx-16">

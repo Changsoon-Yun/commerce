@@ -26,6 +26,7 @@ import {
 import { OrderStatus } from '@/types/product.ts';
 import { useAuth } from '@/apis/useAuth.ts';
 import PageTitle from '@/components/PageTitle.tsx';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
@@ -34,6 +35,10 @@ export default function SellerDashBoardPage() {
 
   return (
     <>
+      <Metatags
+        title={`Seconds: 중고거래 - 판매자 대시보드`}
+        desc={'판매자 대시보드 페이지 입니다.'}
+      />
       <div className={'py-16'}>
         <PageTitle
           title={`${storedUserData?.userName}님의 판매 상품 목록`}

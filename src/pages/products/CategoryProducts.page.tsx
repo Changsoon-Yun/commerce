@@ -7,6 +7,7 @@ import ProductCard from '@/components/products/ProductCard.tsx';
 import { IProducts } from '@/types/product.ts';
 import CategoryNav from '@/components/products/home/CategoryNav.tsx';
 import FilterList from '@/components/products/FilterList.tsx';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export const filterArr = ['최신순', '오래된순', '낮은 가격순', '높은 가격순'] as const;
 
@@ -61,6 +62,7 @@ export default function CategoryProductsPage() {
 
   return (
     <>
+      <Metatags title={`Seconds: 중고거래 - ${categoryLabel}`} desc={categoryLabel as string} />
       <div className={'py-10 flex justify-between items-center'}>
         <h2 className="scroll-m-20 tracking-tight first:mt-0 pb-10">
           <span className={'text-3xl font-semibold '}>{categoryLabel}</span>

@@ -1,9 +1,11 @@
 import AuthHeading from '@/components/auth/AuthHeading.tsx';
 import { Link } from 'react-router-dom';
+import { Metatags } from '@/metadatas/metadatas.tsx';
 
 export default function RegisterSelectPage() {
   return (
     <>
+      <Metatags title={`Seconds: 중고거래 - 회원가입 선택`} desc={'회원가입 선택 페이지 입니다.'} />
       <div className={'pb-6'}>
         <AuthHeading text={'회원가입'} />
         <div className={'flex justify-center gap-4 mt-20'}>
