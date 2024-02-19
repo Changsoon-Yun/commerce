@@ -3,15 +3,17 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { IProducts } from '@/types/product.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export default function useGetProduct({ id }: { id?: string }) {
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    if (!id) return null; // id가 없으면 fetchData 실행하지 않음
+
     const q = doc(db, `products/${id}`);
     const querySnapshot = await getDoc(q);
 
     return querySnapshot.data() as IProducts;
-  };
+  }, [id]);
 
   const { data: product } = useQuery({
     queryKey: useMemo(() => QUERY_KEYS.PRODUCT.DETAIL(id as string), [id]),

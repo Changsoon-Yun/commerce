@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
@@ -22,31 +22,32 @@ const PAGE_LIMIT = 10;
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();
 
-  const fetchData = async (
-    lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
-  ) => {
-    const q = !lastVisible
-      ? query(
-          collection(db, `products`),
-          where('uid', '==', storedUserData?.uid),
-          orderBy('updatedAt', 'desc'),
-          limit(PAGE_LIMIT)
-        )
-      : query(
-          collection(db, `products`),
-          where('uid', '==', storedUserData?.uid),
-          orderBy('updatedAt', 'desc'),
-          startAfter(lastVisible),
-          limit(PAGE_LIMIT)
-        );
-    const querySnapshot = await getDocs(q);
-    const products: IProducts[] = [];
-    querySnapshot.forEach((doc) => {
-      products.push({ id: doc.id, ...doc.data() } as IProducts);
-    });
+  const fetchData = useCallback(
+    async (lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined) => {
+      const q = !lastVisible
+        ? query(
+            collection(db, `products`),
+            where('uid', '==', storedUserData?.uid),
+            orderBy('updatedAt', 'desc'),
+            limit(PAGE_LIMIT)
+          )
+        : query(
+            collection(db, `products`),
+            where('uid', '==', storedUserData?.uid),
+            orderBy('updatedAt', 'desc'),
+            startAfter(lastVisible),
+            limit(PAGE_LIMIT)
+          );
+      const querySnapshot = await getDocs(q);
+      const products: IProducts[] = [];
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() } as IProducts);
+      });
 
-    return { products, querySnapshot };
-  };
+      return { products, querySnapshot };
+    },
+    [storedUserData]
+  );
 
   const {
     data: products,

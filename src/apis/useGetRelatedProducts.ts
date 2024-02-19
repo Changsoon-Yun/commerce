@@ -3,10 +3,12 @@ import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export default function useGetRelatedProducts(category: string, id: string) {
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    if (!category || !id) return null; // 카테고리 또는 아이디가 없으면 fetchData 실행하지 않음
+
     // 모든 상품을 가져오는 쿼리
     const q = query(
       collection(db, 'products'),
@@ -24,7 +26,7 @@ export default function useGetRelatedProducts(category: string, id: string) {
     });
 
     return products;
-  };
+  }, [category, id]);
 
   const { data: products } = useQuery({
     queryKey: useMemo(() => QUERY_KEYS.PRODUCTS.RELATED(category, id), [category, id]),

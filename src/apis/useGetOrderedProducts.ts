@@ -4,11 +4,12 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
+import { useCallback } from 'react';
 
 export default function useGetOrderedProducts() {
   const { storedUserData } = useAuth();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const q = query(collection(db, 'products'), where('isSold', '==', true));
     const querySnapshot = await getDocs(q);
 
@@ -20,7 +21,7 @@ export default function useGetOrderedProducts() {
     return products.filter((product) => {
       return product.customerData.uid === storedUserData?.uid && product;
     });
-  };
+  }, [storedUserData]);
 
   const { data: products } = useQuery({
     queryKey: QUERY_KEYS.PRODUCTS.ORDERED(),
