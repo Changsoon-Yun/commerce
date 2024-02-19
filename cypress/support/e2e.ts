@@ -18,3 +18,8 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// firebase fetch Cypress log가 계속 나와서 우선 log : false처리
+beforeEach(() => {
+  cy.intercept({ resourceType: /xhr|fetch/ }, { log: false });
+});
