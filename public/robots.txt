@@ -1,0 +1,3 @@
+Sitemap: https://www.secondmarket.store/sitemap.xml     // 제작된 sitemap 경로
+User-agent: *
+Allow: /
