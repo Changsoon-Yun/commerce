@@ -4,24 +4,29 @@ import { IProducts } from '@/types/product.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { queryClient } from '@/App.tsx';
+import { useMemo } from 'react';
 
 export default function useGetCartProducts(carts: string[]) {
   const fetchDataById = async (id: string) => {
     const q = doc(db, `products/${id}`);
     const querySnapshot = await getDoc(q);
+    return querySnapshot.exists() ? (querySnapshot.data() as IProducts) : null;
+  };
 
-    return querySnapshot.data() as IProducts;
-  };
-  const fetchProductsByIds = async (carts: string[]) => {
-    const promises = carts.map((id: string) => fetchDataById(id));
-    return await Promise.all(promises);
-  };
+  const fetchProductsByIds = useMemo(
+    () => async (carts: string[]) => {
+      if (carts.length === 0) return [];
+      const promises = carts.map((id: string) => fetchDataById(id));
+      return await Promise.all(promises);
+    },
+    [carts]
+  );
 
   const { data: products } = useQuery({
     queryKey: QUERY_KEYS.PRODUCTS.CART(),
     queryFn: () => fetchProductsByIds(carts),
-    // id가 있을때만 fetching
-    enabled: !!carts,
+    // 카트에 아이템이 있을 때만 fetching
+    enabled: carts.length > 0,
   });
 
   const { mutate } = useMutation({
