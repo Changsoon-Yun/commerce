@@ -37,6 +37,16 @@ export function useAuth() {
       : JSON.parse(localStorage.getItem('user') as string)
   );
 
+  //유저정보를 페칭한다면 로컬스토리지, storedUserData 및 쿼리데이터 변경
+  const fetchUserInfo = useCallback(async () => {
+    const uid = auth.currentUser?.uid || '';
+    const q = doc(db, 'users', uid);
+    const querySnapshot = await getDoc(q);
+    localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
+    setStoredUserData(querySnapshot.data() as UserData);
+    return querySnapshot.data() as UserData;
+  }, []);
+
   //유저 상태가 변경 될때마다 실행되는 Effect
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -49,17 +59,7 @@ export function useAuth() {
         queryClient.setQueryData(QUERY_KEYS.AUTH.USER(), null);
       }
     });
-  }, []);
-
-  //유저정보를 페칭한다면 로컬스토리지, storedUserData 및 쿼리데이터 변경
-  const fetchUserInfo = useCallback(async () => {
-    const uid = auth.currentUser?.uid || '';
-    const q = doc(db, 'users', uid);
-    const querySnapshot = await getDoc(q);
-    localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
-    setStoredUserData(querySnapshot.data() as UserData);
-    return querySnapshot.data() as UserData;
-  }, []);
+  }, [fetchUserInfo]);
 
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
     try {

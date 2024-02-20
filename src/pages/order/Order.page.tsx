@@ -46,7 +46,7 @@ export default function OrderPage() {
     if (product) {
       setCheckItems([product]);
     }
-  }, [product]);
+  }, [product, setCheckItems]);
 
   useEffect(() => {
     if (pathName === 'cart') {
@@ -54,7 +54,7 @@ export default function OrderPage() {
         setCheckItems([...cartProducts]);
       }
     }
-  }, [cartProducts, pathName]);
+  }, [cartProducts, pathName, setCheckItems]);
 
   const form = useForm({
     resolver: zodResolver(orderDataFormSchema),
@@ -81,7 +81,7 @@ export default function OrderPage() {
         ? checkItems[0]?.title + ' 외 ' + (checkItems.length - 1) + ' 건'
         : checkItems[0]?.title
     );
-  }, [checkItems]);
+  }, [checkItems, form]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const submitHandler = async (_values: z.infer<typeof orderDataFormSchema>) => {

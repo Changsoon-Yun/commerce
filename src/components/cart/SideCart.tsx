@@ -12,7 +12,7 @@ export default function SideCart() {
 
   useEffect(() => {
     mutate();
-  }, [carts]);
+  }, [carts, mutate]);
   return (
     <>
       <aside

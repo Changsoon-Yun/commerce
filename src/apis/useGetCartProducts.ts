@@ -3,8 +3,8 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { IProducts } from '@/types/product.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { queryClient } from '@/lib/router/Providers.tsx';
 import { useMemo } from 'react';
+import { queryClient } from '@/lib/react-query/queryClient.ts';
 
 export default function useGetCartProducts(carts: string[]) {
   const fetchDataById = async (id: string) => {
@@ -19,7 +19,7 @@ export default function useGetCartProducts(carts: string[]) {
       const promises = carts.map((id: string) => fetchDataById(id));
       return await Promise.all(promises);
     },
-    [carts]
+    []
   );
 
   const { data: products } = useQuery({
