@@ -1,1 +1,1 @@
-yarn vitest:run && yarn cy:run
+yarn prepush

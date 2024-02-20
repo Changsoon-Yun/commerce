@@ -14,7 +14,8 @@
     "lint": "eslint --cache .  --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --cache --write .",
     "sitemap": "babel-node sitemapGenerator.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepush": "git diff --staged --quiet || (git symbolic-ref --short HEAD | grep -q 'master' && yarn cypress:run || yarn vitest:run)"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
