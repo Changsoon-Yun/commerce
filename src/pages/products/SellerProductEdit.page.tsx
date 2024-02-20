@@ -14,6 +14,7 @@ import FormComboxInner from '@/components/products/form/FormComboxInner.tsx';
 import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 import PageTitle from '@/components/PageTitle.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
+import Container from '@/components/Container.tsx';
 
 export default function SellerProductEditPage() {
   const { id } = useParams();
@@ -59,7 +60,7 @@ export default function SellerProductEditPage() {
   return (
     <>
       <Metatags title={`Seconds: 중고거래 - 상품 수정`} desc={'상품 수정 페이지 입니다.'} />
-      <div className={'py-16'}>
+      <Container className={'pb-4'}>
         <PageTitle title={'상품 수정'} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(editHandler)}>
@@ -97,7 +98,7 @@ export default function SellerProductEditPage() {
             </Button>
           </form>
         </Form>
-      </div>
+      </Container>
     </>
   );
 }

@@ -17,35 +17,38 @@ export default function SideCart() {
     <>
       <aside
         data-cy={'side-cart'}
-        style={{ transition: '0.3s' }}
-        className={`${isOpen ? 'right-0' : 'right-[-600px]'} absolute top-[61px] h-screen  max-w-lg w-full transition p-4 border-l overflow-auto bg-white`}>
+        style={{ transition: '0.3s', height: 'calc(100vh - 61px)' }}
+        className={`${isOpen ? 'right-0' : 'right-[-600px]'} absolute top-[61px] max-w-lg w-full transition p-4 border-l overflow-auto bg-white`}>
         <div className={'relative'}>
-          <div className={'absolute top-3 right-0'}>
-            <IoMdClose
-              className={'cursor-pointer'}
-              size={24}
-              onClick={() => {
-                toggleHandler();
-              }}
-            />
+          <div className={'relative'}>
+            <div className={'absolute top-3 right-0'}>
+              <IoMdClose
+                className={'cursor-pointer'}
+                size={24}
+                onClick={() => {
+                  toggleHandler();
+                }}
+              />
+            </div>
+            <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">
+              장바구니
+            </h2>
+            <div className={'grid grid-cols-1 gap-4'} data-cy={'cart-item-list'}>
+              {products?.map((product) => <CartList key={product.id} product={product} />)}
+            </div>
           </div>
-          <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">
-            장바구니
-          </h2>
-          <div className={'flex gap-2 flex-wrap py-4'} data-cy={'cart-item-list'}>
-            {products?.map((product) => <CartList key={product.id} product={product} />)}
+          <div className={'text-right py-4 break-keep whitespace-nowrap'}>
+            주문 예상 금액 : {products?.reduce((acc, curr) => acc + curr.price, 0)} 원
           </div>
+          <Button
+            className={'w-full'}
+            asChild
+            onClick={() => {
+              toggleHandler();
+            }}>
+            <Link to={'/order/cart'}>구매하기</Link>
+          </Button>
         </div>
-        <div>총가격 : {products?.reduce((acc, curr) => acc + curr.price, 0)}</div>
-        <Button
-          variant={'outline'}
-          className={'w-full'}
-          asChild
-          onClick={() => {
-            toggleHandler();
-          }}>
-          <Link to={'/order/cart'}>구매하기</Link>
-        </Button>
       </aside>
     </>
   );

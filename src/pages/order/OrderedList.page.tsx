@@ -3,6 +3,7 @@ import OrderedListItem from '@/components/products/OrderedListItem.tsx';
 import useOrder from '@/hooks/useOrder.ts';
 import PageTitle from '@/components/PageTitle.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
+import Container from '@/components/Container.tsx';
 
 export default function OrderedListPage() {
   const { products } = useGetOrderedProducts();
@@ -11,14 +12,14 @@ export default function OrderedListPage() {
   return (
     <>
       <Metatags title={`Seconds: 중고거래 - 주문 목록`} desc={'주문 목록 페이지 입니다.'} />
-      <div className={'py-16'}>
+      <Container>
         <PageTitle title={'구매내역'} />
-        <div>
+        <div className={'grid grid-cols-1 gap-4'}>
           {products?.map((product) => (
             <OrderedListItem product={product} cancelOrderById={cancelOrderById} key={product.id} />
           ))}
         </div>
-      </div>
+      </Container>
     </>
   );
 }

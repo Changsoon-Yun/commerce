@@ -17,7 +17,7 @@ export default function CardRoot({ children, to }: CardRootProps) {
     <>
       <div
         className={
-          'relative flex flex-col gap-4 cursor-pointer rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200'
+          'relative flex flex-col gap-4 rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200'
         }
         onClick={goHandler}
         data-cy={'product-card'}>

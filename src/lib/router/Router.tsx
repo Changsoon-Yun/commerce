@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 const PrivateRouter = lazy(() => import('@/lib/router/PrivateRouter.tsx'));
 const LoginPage = lazy(() => import('@/pages/auth/Login.page.tsx'));
-const MobileLayout = lazy(() => import('@/components/ui/MobileLayout.tsx'));
+const MobileLayout = lazy(() => import('@/components/layout/MobileLayout.tsx'));
 const HomePage = lazy(() => import('@/pages/Home.page.tsx'));
 const RegisterSelectPage = lazy(() => import('@/pages/auth/RegisterSelect.page.tsx'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage.tsx'));
