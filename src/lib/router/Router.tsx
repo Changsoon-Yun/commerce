@@ -2,7 +2,6 @@ import NotFound from '@/components/optimize/NotFound';
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const CommonLayout = lazy(() => import('@/components/ui/CommonLayout.tsx'));
 const PrivateRouter = lazy(() => import('@/lib/router/PrivateRouter.tsx'));
 const LoginPage = lazy(() => import('@/pages/auth/Login.page.tsx'));
 const MobileLayout = lazy(() => import('@/components/ui/MobileLayout.tsx'));
@@ -24,13 +23,19 @@ export default function Router() {
   return (
     <>
       <Routes>
-        <Route element={<CommonLayout />}>
-          {/*일반 라우트*/}
+        {/*모바일 뷰 라우트*/}
+        <Route element={<MobileLayout />}>
+          <Route path={'/login'} element={<LoginPage />} />
+          <Route path={'/register/select'} element={<RegisterSelectPage />} />
+          <Route path={'/register/:params'} element={<RegisterPage />} />
           <Route path={'/'} element={<HomePage />} />
           <Route path={'/product/:id'} element={<DetailProductPage />} />
           <Route path={'/products/:category'} element={<CategoryProductsPage />} />
+
           {/*권한 필요 라우트*/}
           <Route element={<PrivateRouter />}>
+            <Route path={'/user/dashboard'} element={<UserDashBoardPage />} />
+            <Route path={'/user/dashboard/edit'} element={<UserDashBoardEditPage />} />
             <Route path={'/order/:id'} element={<OrderPage />} />
             <Route path={'/ordered-products'} element={<OrderedListPage />} />
             <Route element={<SellerRouter />}>
@@ -38,17 +43,6 @@ export default function Router() {
               <Route path={'/seller/product/add'} element={<SellerProductAddPage />} />
               <Route path={'/seller/product/edit/:id'} element={<SellerProductEditPage />} />
             </Route>
-          </Route>
-        </Route>
-
-        {/*모바일 뷰 라우트*/}
-        <Route element={<MobileLayout />}>
-          <Route path={'/login'} element={<LoginPage />} />
-          <Route path={'/register/select'} element={<RegisterSelectPage />} />
-          <Route path={'/register/:params'} element={<RegisterPage />} />
-          <Route element={<PrivateRouter />}>
-            <Route path={'/user/dashboard'} element={<UserDashBoardPage />} />
-            <Route path={'/user/dashboard/edit'} element={<UserDashBoardEditPage />} />
           </Route>
         </Route>
         <Route path="/*" element={<NotFound />} />
