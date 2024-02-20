@@ -15,13 +15,10 @@ export default function SideCart() {
   }, [carts]);
   return (
     <>
-      <div
-        onClick={toggleHandler}
-        className={`dim fixed top-0 left-0 w-screen h-screen ${isOpen ? 'bg-black opacity-25' : 'hidden'}`}></div>
       <aside
         data-cy={'side-cart'}
-        style={{ height: `calc(100vh - 80px)`, transition: '0.3s' }}
-        className={`fixed top-[80px]  w-[300px] transition p-4 border-l border-zinc-200  bg-zinc-100 overflow-auto ${isOpen ? 'right-[0px]' : 'right-[-300px]'}`}>
+        style={{ transition: '0.3s' }}
+        className={`${isOpen ? 'right-0' : 'right-[-600px]'} absolute top-[61px] h-screen  max-w-lg w-full transition p-4 border-l overflow-auto bg-white`}>
         <div className={'relative'}>
           <div className={'absolute top-3 right-0'}>
             <IoMdClose
