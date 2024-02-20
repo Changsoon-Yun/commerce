@@ -9,7 +9,7 @@ import { IProducts } from '@/types/product.ts';
 import { useAuth } from '@/apis/useAuth.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import imageCompression from 'browser-image-compression';
-import { queryClient } from '@/lib/react-query/queryClient';
+import { queryClient } from '@/lib/react-query/queryClient.ts';
 
 export default function useImage(product: IProducts) {
   const { userData } = useAuth();

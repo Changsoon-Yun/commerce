@@ -18,7 +18,7 @@ import { useToast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { UserData } from '../types/user.ts';
-import { queryClient } from '@/lib/router/Providers.tsx';
+import { queryClient } from '@/lib/react-query/queryClient.ts';
 
 interface authServerCallProps {
   type: 'register' | 'login';
