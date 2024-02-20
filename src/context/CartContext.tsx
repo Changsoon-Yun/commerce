@@ -3,7 +3,9 @@ import { createContext, ReactNode, useState } from 'react';
 const CartContext = createContext({
   carts: [] as string[],
   isOpen: false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addCart: (_id: string) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeCart: (_id: string) => {},
   toggleHandler: () => {},
 });

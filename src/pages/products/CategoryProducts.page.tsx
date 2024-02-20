@@ -13,8 +13,6 @@ import { Card } from '@/components/products/card';
 import PageTitle from '@/components/PageTitle.tsx';
 import Container from '@/components/Container.tsx';
 
-export const filterArr = ['최신순', '오래된순', '낮은 가격순', '높은 가격순'] as const;
-
 export default function CategoryProductsPage() {
   const { category } = useParams();
   const [selectedFilter, setSelectedFilter] = useState<string>('최신순');

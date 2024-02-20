@@ -37,7 +37,6 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_IMP_CODE: ${{ secrets.VITE_IMP_CODE }}
 
-
       - name: install yarn dependencies
         run: yarn install --frozen-lockfile
 
@@ -59,7 +58,7 @@ jobs:
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.AWS_CLOUDFRONT_ID }}
-          PATHS: "/index.html"
+          PATHS: '/index.html'
           AWS_REGION: ap-northeast-2
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY_ID }}

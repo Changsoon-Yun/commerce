@@ -1,7 +1,7 @@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.tsx';
 import { Label } from '@/components/ui/label.tsx';
-import { filterArr } from '@/pages/products/CategoryProducts.page.tsx';
 import Container from '@/components/Container.tsx';
+import { filterArr } from '@/constant/Filter';
 
 interface FilterListProps {
   onChangeFilterHandler: (item: string) => void;

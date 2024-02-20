@@ -38,12 +38,10 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_IMP_CODE: ${{ secrets.VITE_IMP_CODE }}
 
-
       - name: install yarn dependencies
         run: yarn install --frozen-lockfile
 
       - name: react build
         run: yarn build
-
 #      - name: react test
 #        run: yarn test

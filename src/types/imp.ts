@@ -193,7 +193,7 @@ export interface RequestPayParams extends RequestPayAdditionalParams {
    * - JSON notation(string)으로 저장됩니다.
    * - 주문 건에 대해 부가정보를 저장할 공간이 필요할 때 사용합니다
    */
-  custom_data?: Record<any, any>;
+  custom_data?: Record<never, never>;
   /**
    * ### 면세금액
    * - 결제 금액 중 면세금액에 해당하는 금액을 입력합니다.
