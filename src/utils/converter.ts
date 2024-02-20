@@ -16,7 +16,7 @@ export const formatNumberWithCommas = (number: number) => {
 
 export const getDateFromProduct = (time: TimeStamp) => {
   if (time) {
-    return (time.seconds + time.nanoseconds / 1000000000) * 1000;
+    return ((time.seconds + time.nanoseconds / 1000000000) * 1000).toString();
   } else {
     return '';
   }
