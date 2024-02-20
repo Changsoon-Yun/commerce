@@ -11,7 +11,7 @@ export default function FilterList({ onChangeFilterHandler, selectedFilter }: Fi
   return (
     <>
       <Container>
-        <div className={'flex justify-center items-center py-4 mb-2'}>
+        <div className={'flex justify-center items-center py-4'}>
           <RadioGroup
             defaultValue={filterArr[0]}
             className={'flex gap-4'}

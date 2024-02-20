@@ -12,7 +12,7 @@ export default function Header() {
       <div className={'flex justify-between px-5 min-h-[60px] bg-white items-center'}>
         <div onClick={closeMenuHandler}>
           <Link to={'/'}>
-            <img className={'w-10 h-10'} src="./img/logo-icon.png" alt="icon" />
+            <img className={'w-10 h-10'} src="/img/logo-icon.png" alt="icon" />
           </Link>
         </div>
         <Menu.Root>

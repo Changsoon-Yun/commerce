@@ -67,7 +67,7 @@ export default function CategoryProductsPage() {
       <Metatags title={`Seconds: 중고거래 - ${categoryLabel}`} desc={categoryLabel as string} />
       <PageTitle title={categoryLabel} />
       <FilterList selectedFilter={selectedFilter} onChangeFilterHandler={onChangeFilterHandler} />
-      <Container className={'py-10 mb-2 bg-white'}>
+      <Container className={'py-10 mb-2 bg-white flex-1'}>
         <div className={'grid grid-cols-2 gap-2'}>
           {products?.pages.map((items) =>
             items.products?.map((product) => (
