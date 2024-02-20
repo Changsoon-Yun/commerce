@@ -4,7 +4,7 @@ import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter.ts
 import useGetRelatedProducts from '@/apis/useGetRelatedProducts.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import { Card } from '@/components/products/card';
-import DetailProduct from '@/components/products/DetailProduct.tsx';
+import DetailProduct from '@/components/products/detail/DetailProduct.tsx';
 import Container from '@/components/Container.tsx';
 
 export default function DetailProductPage() {
