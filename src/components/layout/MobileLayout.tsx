@@ -1,9 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from '@/components/header/Header.tsx';
 import Footer from '../footer/Footer.tsx';
 import SideCart from '../cart/SideCart.tsx';
+import { useEffect } from 'react';
 
 export default function MobileLayout() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    document.getElementById('main')?.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
       <div className="bg-zinc-50 flex justify-center">
@@ -11,7 +18,7 @@ export default function MobileLayout() {
           <header className={'sticky top-0 z-10 border-b border-zinc-200'}>
             <Header />
           </header>
-          <main className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto'}>
+          <main id={'main'} className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto'}>
             <Outlet />
           </main>
           <footer className={'border-t border-zinc-200 bg-zinc-50'}>
