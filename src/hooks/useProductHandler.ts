@@ -5,7 +5,7 @@ import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from '
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/useAuth.ts';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
-import { queryClient } from '@/App.tsx';
+import { queryClient } from '@/lib/router/Providers.tsx';
 import { FirebaseError } from 'firebase/app';
 import { toast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';

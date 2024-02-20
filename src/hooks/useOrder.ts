@@ -11,7 +11,7 @@ import { IProducts, OrderStatus } from '@/types/product.ts';
 import { UserData } from '@/types/user.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
-import { queryClient } from '@/App.tsx';
+import { queryClient } from '@/lib/router/Providers.tsx';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 
 export default function useOrder() {

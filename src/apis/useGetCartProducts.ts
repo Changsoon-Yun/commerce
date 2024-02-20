@@ -3,7 +3,7 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { IProducts } from '@/types/product.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { queryClient } from '@/App.tsx';
+import { queryClient } from '@/lib/router/Providers.tsx';
 import { useMemo } from 'react';
 
 export default function useGetCartProducts(carts: string[]) {

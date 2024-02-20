@@ -7,9 +7,9 @@ import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
 import { IProducts } from '@/types/product.ts';
 import { useAuth } from '@/apis/useAuth.ts';
-import { queryClient } from '@/App.tsx';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import imageCompression from 'browser-image-compression';
+import { queryClient } from '@/lib/router/Providers.tsx';
 
 export default function useImage(product: IProducts) {
   const { userData } = useAuth();

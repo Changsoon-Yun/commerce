@@ -16,9 +16,9 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
-import { queryClient } from '@/App';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { UserData } from '../types/user.ts';
+import { queryClient } from '@/lib/router/Providers.tsx';
 
 interface authServerCallProps {
   type: 'register' | 'login';
