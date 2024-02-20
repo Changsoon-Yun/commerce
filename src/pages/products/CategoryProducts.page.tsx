@@ -1,13 +1,17 @@
-import { useParams } from 'react-router-dom';
-import { convertLabelByValue } from '@/utils/converter.ts';
+import { Link, useParams } from 'react-router-dom';
+import {
+  convertLabelByValue,
+  formatNumberWithCommas,
+  getDateFromProduct,
+} from '@/utils/converter.ts';
 import useGetCategoryProducts from '@/apis/useGetCategoryProducts.ts';
 import { categories } from '@/constant/categories.ts';
 import { useCallback, useMemo, useState } from 'react';
-import ProductCard from '@/components/products/ProductCard.tsx';
-import { IProducts } from '@/types/product.ts';
-import CategoryNav from '@/components/products/home/CategoryNav.tsx';
 import FilterList from '@/components/products/FilterList.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
+import { Card } from '@/components/products/card';
+import PageTitle from '@/components/PageTitle.tsx';
+import Container from '@/components/Container.tsx';
 
 export const filterArr = ['최신순', '오래된순', '낮은 가격순', '높은 가격순'] as const;
 
@@ -63,27 +67,37 @@ export default function CategoryProductsPage() {
   return (
     <>
       <Metatags title={`Seconds: 중고거래 - ${categoryLabel}`} desc={categoryLabel as string} />
-      <div className={'py-10 flex justify-between items-center'}>
-        <h2 className="scroll-m-20 tracking-tight first:mt-0 pb-10">
-          <span className={'text-3xl font-semibold '}>{categoryLabel}</span>
-        </h2>
-      </div>
-      <div className="flex">
-        <CategoryNav />
-        <div className={'flex-1'}>
-          <FilterList
-            selectedFilter={selectedFilter}
-            onChangeFilterHandler={onChangeFilterHandler}
-          />
-          <div className={'grid grid-cols-4  gap-2 '}>
-            {products?.pages.map((items, idx) => (
-              <ProductCard targetArr={items.products as IProducts[]} key={idx} />
-            ))}
-          </div>
-          <div ref={inViewRef} className="h-42 w-full">
-            {isFetchingNextPage && <p>loading...</p>}
-          </div>
+      <PageTitle title={categoryLabel} />
+      <FilterList selectedFilter={selectedFilter} onChangeFilterHandler={onChangeFilterHandler} />
+      <Container className={'py-10 mb-2 bg-white'}>
+        <div className={'grid grid-cols-2 gap-2'}>
+          {products?.pages.map((items) =>
+            items.products?.map((product) => (
+              <Card.Root key={product.id} to={`/product/${product.id}`}>
+                <Card.Img imageList={product.imageList} />
+                <Card.Title title={product.title} />
+                <Card.Description
+                  data-cy={'product-price'}
+                  text={formatNumberWithCommas(product.price) + '원'}
+                />
+                <Card.Description
+                  data-cy={'product-date'}
+                  text={getDateFromProduct(product.updatedAt)}
+                  className={'hidden'}
+                />
+                <Card.Buttons>
+                  <Card.Button data-cy={'product-detail-link'} variant={'outline'}>
+                    <Link to={`/product/${product.id}`}>상세보기</Link>
+                  </Card.Button>
+                </Card.Buttons>
+              </Card.Root>
+            ))
+          )}
         </div>
+      </Container>
+
+      <div ref={inViewRef} className="h-42 w-full">
+        {isFetchingNextPage && <p>loading...</p>}
       </div>
     </>
   );
