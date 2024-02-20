@@ -1,24 +1,23 @@
-import { MdChevronLeft } from 'react-icons/md';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Header from '@/components/header/Header.tsx';
+import Footer from '../footer/Footer';
+import SideCart from '../cart/SideCart';
 
 export default function MobileLayout() {
-  const navigate = useNavigate();
   return (
     <>
-      <div className="bg-zinc-50 flex justify-center min-h-screen">
-        <div className={'flex-1 flex justify-center'}>
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full h-full">
-            <header>
-              <div
-                className={'cursor-pointer'}
-                onClick={() => {
-                  navigate(-1);
-                }}>
-                <MdChevronLeft size={30} />
-              </div>
-            </header>
+      <div className="bg-zinc-50 flex justify-center">
+        <div className="flex flex-1 flex-col relative max-w-lg w-full min-h-screen h-full shadow-lg  bg-zinc-100 overflow-hidden">
+          <header className={'sticky top-0 z-10 border-b border-zinc-200'}>
+            <Header />
+          </header>
+          <main className={'flex-1 min-h-0 basis-0 overflow-auto pb-5'}>
             <Outlet />
-          </div>
+          </main>
+          <footer className={'border-t border-zinc-200 bg-zinc-50'}>
+            <Footer />
+          </footer>
+          <SideCart />
         </div>
       </div>
     </>
