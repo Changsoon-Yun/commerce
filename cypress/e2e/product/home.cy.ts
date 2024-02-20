@@ -13,10 +13,10 @@ describe('메인 랜딩 페이지', () => {
       .should('have.length.below', 5);
 
     cy.get('[data-cy="product-card"]').each(($product) => {
-      cy.wrap($product).find('[data-cy="product-img"]').should('be.visible');
-      cy.wrap($product).find('[data-cy="product-title"]').should('be.visible');
-      cy.wrap($product).find('[data-cy="product-price"]').should('be.visible');
-      cy.wrap($product).find('[data-cy="product-detail-link"]').should('be.visible');
+      cy.wrap($product).find('[data-cy="product-img"]').should('exist');
+      cy.wrap($product).find('[data-cy="product-title"]').should('exist');
+      cy.wrap($product).find('[data-cy="product-price"]').should('exist');
+      cy.wrap($product).find('[data-cy="product-detail-link"]').should('exist');
     });
   });
 

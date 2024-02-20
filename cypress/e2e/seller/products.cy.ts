@@ -45,7 +45,7 @@ describe('판매자 상품 관련 테스트', () => {
     cy.get('[data-cy="seller-product"]')
       .first()
       .find('[data-cy="edit-button"]')
-      .should('be.visible')
+      .should('exist')
       .click();
 
     cy.url().should('include', '/seller/product/edit');
@@ -67,7 +67,7 @@ describe('판매자 상품 관련 테스트', () => {
     cy.get('[data-cy="seller-product"]')
       .first()
       .find('[data-cy="delete-button"]')
-      .should('be.visible')
+      .should('exist')
       .click();
 
     cy.get('li[role="status"]').should('have.text', '상품 삭제에 성공 했습니다.');

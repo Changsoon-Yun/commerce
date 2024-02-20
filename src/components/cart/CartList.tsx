@@ -15,7 +15,7 @@ export default function CartList({ product }: { product: IProducts }) {
   const { id, imageList, title, price, updatedAt } = product;
   return (
     <>
-      <Card.Root key={id} to={`/product/${id}`}>
+      <Card.Root key={id} to={`/product/${id}`} data-cy={'cart-item'}>
         <Card.Img imageList={imageList} />
         <Card.Title title={title} />
         <Card.Description data-cy={'product-price'} text={formatNumberWithCommas(price) + '원'} />
@@ -38,6 +38,7 @@ export default function CartList({ product }: { product: IProducts }) {
             variant={'outline'}
             className={'w-full border-red-300'}
             asChild
+            data-cy={'delete-button'}
             onClick={() => {
               removeCart(id);
             }}>

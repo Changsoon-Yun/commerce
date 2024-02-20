@@ -21,6 +21,7 @@ Cypress.Commands.add('signOut', () => {
   cy.visit('/');
   cy.signInWithEmailAndPassword('seller');
   cy.get('[data-cy="header-dropdown-trigger"]').should('be.visible').click();
+  cy.get('[data-cy="menu-content"]').scrollTo('bottom', { duration: 1000 });
   cy.get('[data-cy="sign-out-button"]').should('be.visible').click();
 });
 
