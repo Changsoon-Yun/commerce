@@ -2,14 +2,20 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Header from '@/components/header/Header.tsx';
 import Footer from '../footer/Footer.tsx';
 import SideCart from '../cart/SideCart.tsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function MobileLayout() {
   const { pathname } = useLocation();
-
+  const [innerHeight, setInnerHeight] = useState<number>(0);
   useEffect(() => {
     document.getElementById('main')?.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setInnerHeight(window.innerHeight);
+    }
+  }, []);
 
   return (
     <>
@@ -20,7 +26,7 @@ export default function MobileLayout() {
           </header>
           <main
             id={'main'}
-            style={{ maxHeight: 'calc(100svh - 128px)' }}
+            style={{ maxHeight: innerHeight }}
             className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto'}>
             <Outlet />
           </main>
