@@ -21,7 +21,7 @@ export default function MobileLayout() {
           <main
             id={'main'}
             style={{ maxHeight: 'calc(100svh - 128px)' }}
-            className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto max-h-svh'}>
+            className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto'}>
             <Outlet />
           </main>
           <footer className={'border-t border-zinc-200 bg-zinc-50'}>
