@@ -18,7 +18,10 @@ export default function MobileLayout() {
           <header className={'sticky top-0 z-10 border-b border-zinc-200'}>
             <Header />
           </header>
-          <main id={'main'} className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto'}>
+          <main
+            id={'main'}
+            style={{ maxHeight: 'calc(100svh - 128px)' }}
+            className={'flex-1 flex flex-col min-h-0 basis-0 overflow-auto max-h-svh'}>
             <Outlet />
           </main>
           <footer className={'border-t border-zinc-200 bg-zinc-50'}>
