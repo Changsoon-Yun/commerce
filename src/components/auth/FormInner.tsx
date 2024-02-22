@@ -43,6 +43,7 @@ export default function FormInner<T extends FieldValues>({
                         {...field}
                         type={type}
                         placeholder={placeholder}
+                        data-testid={name}
                         className={
                           'pl-7 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                         }
