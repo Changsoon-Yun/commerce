@@ -20,7 +20,7 @@ export default function Footer() {
         <nav className={'flex justify-around'}>
           <FooterIconWithLabel to={'/'} icon={GoHome} exactIcon={GoHomeFill} text={'홈'} />
           <FooterIconWithLabel
-            to={'/order/list'}
+            to={'/ordered-products'}
             icon={FaList}
             exactIcon={FaList}
             text={'주문내역'}

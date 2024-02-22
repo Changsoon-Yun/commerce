@@ -7,7 +7,7 @@ interface MenuProps {
 export default function MenuRoot({ children }: MenuProps) {
   return (
     <>
-      <nav>{children}</nav>
+      <nav className={'z-[100]'}>{children}</nav>
     </>
   );
 }

@@ -6,8 +6,8 @@ export default function UserDashBoardPage() {
 
   return (
     <>
-      유저 프로필
       <Metatags title={`Seconds: 중고거래 - 유저 프로필`} desc={'유저 프로필 페이지 입니다.'} />
+      유저 프로필
       <div className={'bg-white flex-1'}>{storedUserData?.userName}</div>
     </>
   );
