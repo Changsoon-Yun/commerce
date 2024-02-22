@@ -5,11 +5,11 @@ describe('로그인 테스트', () => {
 
   beforeEach(() => {
     cy.visit('/login');
-    cy.get('[data-cy="heading-text"]').should('have.text', '로그인');
+    cy.get('[data-testid="heading-text"]').should('have.text', '로그인');
 
     cy.get('input[name="email"]').as('email-input').should('exist');
     cy.get('input[name="password"]').as('password-input').should('exist');
-    cy.get('[data-cy="login-button"]').as('login-button').should('exist');
+    cy.get('[data-testid="login-button"]').as('login-button').should('exist');
   });
   it('정상적인 로그인 시도', () => {
     cy.get('@email-input').type(seller.email);
@@ -26,16 +26,16 @@ describe('로그인 테스트', () => {
     it('이메일 에러 메세지 출력', () => {
       cy.get('@email-input').type('a');
       cy.get('@login-button').click();
-      cy.get('[data-cy="email-error-msg"]').should('have.text', '이메일 형식에 맞지 않습니다.');
+      cy.get('[data-testid="email-error-msg"]').should('have.text', '이메일 형식에 맞지 않습니다.');
     });
 
     it('비밀번호 에러 메세지 출력', () => {
       cy.get('@email-input').type(seller.email);
-      cy.get('[data-cy="email-error-msg"]').should('not.exist');
+      cy.get('[data-testid="email-error-msg"]').should('not.exist');
 
       cy.get('@password-input').type('1q');
       cy.get('@login-button').click();
-      cy.get('[data-cy="password-error-msg"]').should(
+      cy.get('[data-testid="password-error-msg"]').should(
         'have.text',
         '비밀번호 형식에 맞지 않습니다.'
       );

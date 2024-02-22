@@ -3,14 +3,14 @@ describe('장바구니', () => {
     it('비 로그인 찜하기', () => {
       cy.signOut();
       cy.visit('/');
-      cy.get('[data-cy="category-product-list"]')
+      cy.get('[data-testid="category-product-list"]')
         .first()
-        .find('[data-cy="product-card"]')
+        .find('[data-testid="product-card"]')
         .first()
         .click();
 
-      cy.get('[data-cy="buy-button"]').should('not.exist');
-      cy.get('[data-cy="cart-button"]').should('be.visible').click();
+      cy.get('[data-testid="buy-button"]').should('not.exist');
+      cy.get('[data-testid="cart-button"]').should('be.visible').click();
       cy.on('window:alert', (alertText) => {
         expect(alertText).to.eq('로그인한 유저만 가능합니다.');
       });
@@ -21,16 +21,16 @@ describe('장바구니', () => {
         cy.addCart();
       });
       it('페이지에서 삭제', () => {
-        cy.get('[data-cy="cart-button"]')
+        cy.get('[data-testid="cart-button"]')
           .should('be.visible')
           .should('have.text', '찜취소')
           .click();
       });
 
       it(' 카트에서 삭제', () => {
-        cy.get('[data-cy="cart-count"]').should('be.visible').click();
-        cy.get('[data-cy="side-cart"]').should('be.visible');
-        cy.get('[data-cy="cart-item"]').first().find('[data-cy="delete-button"]').click();
+        cy.get('[data-testid="cart-count"]').should('be.visible').click();
+        cy.get('[data-testid="side-cart"]').should('be.visible');
+        cy.get('[data-testid="cart-item"]').first().find('[data-testid="delete-button"]').click();
       });
 
       afterEach(() => {
@@ -55,25 +55,25 @@ describe('장바구니', () => {
     it('비 로그인 구매하기', () => {
       cy.signOut();
       cy.visit('/');
-      cy.get('[data-cy="category-product-list"]')
+      cy.get('[data-testid="category-product-list"]')
         .first()
-        .find('[data-cy="product-card"]')
+        .find('[data-testid="product-card"]')
         .first()
         .click();
 
-      cy.get('[data-cy="buy-button"]').should('not.exist');
+      cy.get('[data-testid="buy-button"]').should('not.exist');
     });
 
     it('로그인 구매하기', () => {
       cy.signInWithEmailAndPassword('seller');
       cy.visit('/');
-      cy.get('[data-cy="category-product-list"]')
+      cy.get('[data-testid="category-product-list"]')
         .first()
-        .find('[data-cy="product-card"]')
+        .find('[data-testid="product-card"]')
         .first()
         .click();
 
-      cy.get('[data-cy="buy-button"]').should('be.visible').click();
+      cy.get('[data-testid="buy-button"]').should('be.visible').click();
 
       cy.url().then((url) => {
         const urlParts = url.split('/');

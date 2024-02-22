@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs = require('dayjs');
 
 describe('판매자 상품 관련 테스트', () => {
   beforeEach(() => {
@@ -9,14 +9,14 @@ describe('판매자 상품 관련 테스트', () => {
   it('상품 등록', () => {
     const content = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss');
 
-    cy.get('[data-cy="add-button"]').should('be.visible').click();
+    cy.get('[data-testid="add-button"]').should('be.visible').click();
     cy.url().should('include', '/seller/product/add');
 
     cy.get('input[name="imgList"]')
       .siblings('label')
       .selectFile(['./cypress/fixtures/test-image.png', './cypress/fixtures/test-image-2.png']);
 
-    cy.get('[data-cy="image-list"]').children().should('have.length', 2);
+    cy.get('[data-testid="image-list"]').children().should('have.length', 2);
 
     cy.get('input[name="title"]').should('be.visible').type(content);
     cy.get('input[name="price"]')
@@ -25,10 +25,10 @@ describe('판매자 상품 관련 테스트', () => {
     cy.get('textarea[name="desc"]').should('be.visible').type(content);
 
     cy.get('button[role="combobox"]').as('select-trigger').should('be.visible').click();
-    cy.get('[data-cy="clothing_fashion"]').should('be.visible').click();
+    cy.get('[data-testid="clothing_fashion"]').should('be.visible').click();
     cy.get('@select-trigger').should('have.text', '의류 및 패션');
 
-    cy.get('[data-cy="unopened"]').should('be.visible').click();
+    cy.get('[data-testid="unopened"]').should('be.visible').click();
 
     cy.get('button[type="submit"]').should('be.visible').click();
 
@@ -42,9 +42,9 @@ describe('판매자 상품 관련 테스트', () => {
 
   it('상품 수정', () => {
     const content = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss');
-    cy.get('[data-cy="seller-product"]')
+    cy.get('[data-testid="seller-product"]')
       .first()
-      .find('[data-cy="edit-button"]')
+      .find('[data-testid="edit-button"]')
       .should('exist')
       .click();
 
@@ -63,10 +63,10 @@ describe('판매자 상품 관련 테스트', () => {
   });
 
   it('상품 삭제', () => {
-    cy.get('[data-cy="seller-product"]').should('have.length.at.least', 1);
-    cy.get('[data-cy="seller-product"]')
+    cy.get('[data-testid="seller-product"]').should('have.length.at.least', 1);
+    cy.get('[data-testid="seller-product"]')
       .first()
-      .find('[data-cy="delete-button"]')
+      .find('[data-testid="delete-button"]')
       .should('exist')
       .click();
 

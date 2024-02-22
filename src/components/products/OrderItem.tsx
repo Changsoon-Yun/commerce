@@ -43,7 +43,7 @@ export default function OrderItem({ item, handleSingleCheck, checkItems }: Order
               text={
                 <DetailDescription
                   title={'등록일'}
-                  data-cy={'product-date'}
+                  data-testid={'product-date'}
                   content={dayjs(getDateFromProduct(item.createdAt)).format('YYYY년 MM월 DD일')}
                 />
               }
@@ -51,7 +51,7 @@ export default function OrderItem({ item, handleSingleCheck, checkItems }: Order
             <Card.Description
               text={
                 <DetailDescription
-                  data-cy={'product-condition'}
+                  data-testid={'product-condition'}
                   title={'상품 상태'}
                   content={convertLabelByValue(item.condition, conditions) as string}
                 />
@@ -60,7 +60,7 @@ export default function OrderItem({ item, handleSingleCheck, checkItems }: Order
             <Card.Description
               text={
                 <DetailDescription
-                  data-cy={'product-desc'}
+                  data-testid={'product-desc'}
                   title={'상품 정보'}
                   content={item.desc}
                 />

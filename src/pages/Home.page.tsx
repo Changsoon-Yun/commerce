@@ -13,7 +13,7 @@ export default function HomePage() {
       <PageTitle
         title={
           <div>
-            <span className={'text-2xl pr-2'} data-cy={'home'}>
+            <span className={'text-2xl pr-2'} data-testid={'home'}>
               카테고리별
             </span>
             <span className={'text-3xl font-semibold '}>추천 상품</span>
@@ -21,7 +21,7 @@ export default function HomePage() {
         }
       />
       {categories.map((category) => (
-        <div key={category.value} data-cy={'category-product-list'}>
+        <div key={category.value} data-testid={'category-product-list'}>
           <CardWithCategory category={category} />
         </div>
       ))}

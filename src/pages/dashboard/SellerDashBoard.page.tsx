@@ -37,7 +37,7 @@ export default function SellerDashBoardPage() {
         <PageTitle
           title={`${storedUserData?.userName}님의 판매 상품 목록`}
           children={
-            <Button data-cy={'add-button'} asChild>
+            <Button data-testid={'add-button'} asChild>
               <Link to={'/seller/product/add'}>상품 등록</Link>
             </Button>
           }
@@ -47,14 +47,14 @@ export default function SellerDashBoardPage() {
         {products?.pages.map((items) =>
           items.products.map(
             ({ title, imageList, createdAt, orderedDate, id, price, condition, orderStatus }) => (
-              <Card.Root key={createdAt.seconds} data-cy={'seller-product'}>
+              <Card.Root key={createdAt.seconds} data-testid={'seller-product'}>
                 <Card.Img imageList={imageList} />
                 <Card.Title title={title} />
                 <Card.Description
                   text={
                     <DetailDescription
                       title={'등록일'}
-                      data-cy={'product-date'}
+                      data-testid={'product-date'}
                       content={dayjs(getDateFromProduct(createdAt)).format('YYYY년 MM월 DD일')}
                     />
                   }
@@ -62,7 +62,7 @@ export default function SellerDashBoardPage() {
                 <Card.Description
                   text={
                     <DetailDescription
-                      data-cy={'product-condition'}
+                      data-testid={'product-condition'}
                       title={'상품 상태'}
                       content={convertLabelByValue(condition, conditions) as string}
                     />
@@ -74,7 +74,7 @@ export default function SellerDashBoardPage() {
                     text={
                       <DetailDescription
                         title={'주문일'}
-                        data-cy={'product-ordered-date'}
+                        data-testid={'product-ordered-date'}
                         content={dayjs(getDateFromProduct(orderedDate)).format('YYYY년 MM월 DD일')}
                       />
                     }
@@ -106,11 +106,11 @@ export default function SellerDashBoardPage() {
                 />
                 <Card.Description text={formatNumberWithCommas(price) + '원'} />
                 <Card.Buttons>
-                  <Card.Button data-cy={'edit-button'} asChild>
+                  <Card.Button data-testid={'edit-button'} asChild>
                     <Link to={`/seller/product/edit/${id}`}>수정하기</Link>
                   </Card.Button>
                   <Card.Button
-                    data-cy={'delete-button'}
+                    data-testid={'delete-button'}
                     variant={'destructive'}
                     onClick={() => {
                       deleteHandler(id);

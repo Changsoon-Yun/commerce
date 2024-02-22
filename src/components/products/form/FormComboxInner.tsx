@@ -59,7 +59,7 @@ export default function FormComboxInner<T extends FieldValues>({
                     <CommandGroup>
                       {categories.map((category) => (
                         <CommandItem
-                          data-cy={category.value}
+                          data-testid={category.value}
                           value={category.label}
                           key={category.value}
                           onSelect={() => {

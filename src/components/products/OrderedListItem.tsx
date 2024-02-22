@@ -21,10 +21,10 @@ export default function OrderedListItem({ product, cancelOrderById }: OrderedLis
       <div className={'p-4 border rounded-lg'} key={product.id}>
         <DetailCarousel product={product} />
         <div className={'flex flex-col gap-4 pb-4'}>
-          <h3 data-cy={'product-title'} className={'text-2xl font-semibold tracking-tight'}>
+          <h3 data-testid={'product-title'} className={'text-2xl font-semibold tracking-tight'}>
             {product.title}
           </h3>
-          <p className="text-sm text-muted-foreground" data-cy={'product-desc'}>
+          <p className="text-sm text-muted-foreground" data-testid={'product-desc'}>
             {product.desc}
           </p>
           <p className={'text- font-semibold'}>
@@ -35,11 +35,11 @@ export default function OrderedListItem({ product, cancelOrderById }: OrderedLis
         <div className={'pb-4'}>
           <DetailDescription
             title={'등록일'}
-            data-cy={'product-date'}
+            data-testid={'product-date'}
             content={dayjs(getDateFromProduct(product.createdAt)).format('YYYY년 MM월 DD일')}
           />
           <DetailDescription
-            data-cy={'product-condition'}
+            data-testid={'product-condition'}
             title={'상품 상태'}
             content={convertLabelByValue(product.condition, conditions) as string}
           />

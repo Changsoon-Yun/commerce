@@ -24,7 +24,7 @@ export default function DetailCarousel({ product }: DetailCarouselProps) {
                   <Card className={'overflow-hidden'}>
                     <CardContent className="flex aspect-square items-center justify-center p-0">
                       <img
-                        data-cy={'product-img'}
+                        data-testid={'product-img'}
                         src={src}
                         alt="img"
                         className={'w-full h-full object-cover'}

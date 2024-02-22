@@ -16,7 +16,9 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
         <Container>
           <div className={'flex justify-between items-center pb-8 gap-4'}>
             <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-              <Link to={`products/${category.value}`} data-cy={`category-link-${category.value}`}>
+              <Link
+                to={`products/${category.value}`}
+                data-testid={`category-link-${category.value}`}>
                 <div className={'pb-2'}>{category.label}</div>
               </Link>
             </h3>
@@ -30,16 +32,16 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
                 <Card.Img imageList={product.imageList} />
                 <Card.Title title={product.title} />
                 <Card.Description
-                  data-cy={'product-price'}
+                  data-testid={'product-price'}
                   text={formatNumberWithCommas(product.price) + '원'}
                 />
                 <Card.Description
-                  data-cy={'product-date'}
+                  data-testid={'product-date'}
                   text={getDateFromProduct(product.updatedAt)}
                   className={'hidden'}
                 />
                 <Card.Buttons>
-                  <Card.Button data-cy={'product-detail-link'} variant={'outline'} asChild>
+                  <Card.Button data-testid={'product-detail-link'} variant={'outline'} asChild>
                     <Link to={`/product/${product.id}`}>상세보기</Link>
                   </Card.Button>
                 </Card.Buttons>

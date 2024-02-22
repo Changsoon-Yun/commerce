@@ -30,7 +30,7 @@ export default function FormRadioGroup<T extends FieldValues>({
                   className="flex flex-wrap gap-4">
                   {conditions.map((condition) => (
                     <FormItem
-                      data-cy={condition.value}
+                      data-testid={condition.value}
                       key={condition.value}
                       className="flex items-center space-x-1 space-y-0">
                       <FormControl>

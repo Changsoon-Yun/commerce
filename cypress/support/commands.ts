@@ -13,29 +13,31 @@ Cypress.Commands.add('signInWithEmailAndPassword', (type) => {
   cy.get('input[name="password"]').type(password);
   cy.get('input[name="password"]').invoke('val').should('eq', password);
 
-  cy.get('[data-cy="login-button"]').should('exist').click();
+  cy.get('[data-testid="login-button"]').should('exist').click();
   cy.url().should('eq', 'http://localhost:5173/');
 });
 
 Cypress.Commands.add('signOut', () => {
   cy.visit('/');
   cy.signInWithEmailAndPassword('seller');
-  cy.get('[data-cy="header-dropdown-trigger"]').should('be.visible').click();
-  cy.get('[data-cy="menu-content"]').scrollTo('bottom', { duration: 1000 });
-  cy.get('[data-cy="sign-out-button"]').should('be.visible').click();
+  cy.get('[data-testid="header-dropdown-trigger"]').should('be.visible').click();
+  cy.get('[data-testid="menu-content"]').scrollTo('bottom', { duration: 1000 });
+  cy.get('[data-testid="sign-out-button"]').should('be.visible').click();
 });
 
 Cypress.Commands.add('sortAndVerify', (sortOption, sortingCriteria, compareFunction) => {
-  cy.get(`[data-cy="filter-button-${sortOption}"]`).click();
-  cy.get('[data-cy="product-card"]').then(($products) => {
+  cy.get(`[data-testid="filter-button-${sortOption}"]`).click();
+  cy.get('[data-testid="product-card"]').then(($products) => {
     const initialSortingCriteria = $products
-      .map((_index, element) => Cypress.$(element).find(`[data-cy="${sortingCriteria}"]`).text())
+      .map((_index, element) =>
+        Cypress.$(element).find(`[data-testid="${sortingCriteria}"]`).text()
+      )
       .get();
     const sortedSortingCriteria = [...initialSortingCriteria].sort(compareFunction);
 
-    cy.get('[data-cy="product-card"]').each(($product, index) => {
+    cy.get('[data-testid="product-card"]').each(($product, index) => {
       cy.wrap($product)
-        .find(`[data-cy="${sortingCriteria}"]`)
+        .find(`[data-testid="${sortingCriteria}"]`)
         .should('contain', sortedSortingCriteria[index]);
     });
   });
@@ -44,13 +46,13 @@ Cypress.Commands.add('sortAndVerify', (sortOption, sortingCriteria, compareFunct
 Cypress.Commands.add('addCart', () => {
   cy.signInWithEmailAndPassword('seller');
   cy.visit('/');
-  cy.get('[data-cy="category-product-list"]')
+  cy.get('[data-testid="category-product-list"]')
     .first()
-    .find('[data-cy="product-card"]')
+    .find('[data-testid="product-card"]')
     .first()
     .click();
 
-  cy.get('[data-cy="cart-button"]').should('be.visible').should('have.text', '찜하기').click();
+  cy.get('[data-testid="cart-button"]').should('be.visible').should('have.text', '찜하기').click();
   cy.window().then((win) => {
     const localStorageValue = win.localStorage.getItem('cart');
     cy.url().then((url) => {

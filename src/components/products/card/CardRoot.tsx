@@ -20,7 +20,7 @@ export default function CardRoot({ children, to, ...rest }: CardRootProps) {
           'relative flex flex-col gap-4 rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200'
         }
         onClick={goHandler}
-        data-cy={'product-card'}
+        data-testid={'product-card'}
         {...rest}>
         {children}
       </div>

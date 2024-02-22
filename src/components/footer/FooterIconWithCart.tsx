@@ -33,7 +33,7 @@ export default function FooterIconWithCart({
           {isOpen ? <ExactIcon size={20} /> : <Icon size={20} />}
           {carts.length > 0 && storedUserData && (
             <small
-              data-cy={'cart-count'}
+              data-testid={'cart-count'}
               className={
                 'absolute top-[-4px] right-[-4px] rounded-full w-[16px] h-[16px] flex items-center justify-center bg-[#f6d0cb]'
               }>

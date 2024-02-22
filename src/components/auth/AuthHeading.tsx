@@ -11,7 +11,7 @@ export default function AuthHeading({ text }: AuthHeadingProps) {
           <img src="/img/logo.jpg" alt="logo" />
         </Link>
         <h2
-          data-cy={'heading-text'}
+          data-testid={'heading-text'}
           className="scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 text-center pb-10">
           {text}
         </h2>

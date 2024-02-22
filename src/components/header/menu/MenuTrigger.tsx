@@ -8,7 +8,7 @@ export default function MenuTrigger() {
   return (
     <>
       <div
-        data-cy={'header-dropdown-trigger'}
+        data-testid={'header-dropdown-trigger'}
         className={'focus-visible:outline-none cursor-pointer p-3'}
         onClick={toggleMenuHandler}>
         {isOpen ? <IoClose size={20} /> : <IoMenuOutline size={20} />}

@@ -10,7 +10,7 @@ export default function MenuAction() {
     <>
       {storedUserData ? (
         <div
-          data-cy={'sign-out-button'}
+          data-testid={'sign-out-button'}
           className={'px-5 my-1 hover:bg-zinc-100 cursor-pointer'}
           onClick={() => {
             closeMenuHandler();

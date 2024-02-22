@@ -37,16 +37,16 @@ export default function DetailProductPage() {
                 <Card.Img imageList={product.imageList} />
                 <Card.Title title={product.title} />
                 <Card.Description
-                  data-cy={'product-price'}
+                  data-testid={'product-price'}
                   text={formatNumberWithCommas(product.price) + '원'}
                 />
                 <Card.Description
-                  data-cy={'product-date'}
+                  data-testid={'product-date'}
                   text={getDateFromProduct(product.updatedAt)}
                   className={'hidden'}
                 />
                 <Card.Buttons>
-                  <Card.Button data-cy={'product-detail-link'} variant={'outline'}>
+                  <Card.Button data-testid={'product-detail-link'} variant={'outline'}>
                     <Link to={`/product/${product.id}`}>상세보기</Link>
                   </Card.Button>
                 </Card.Buttons>

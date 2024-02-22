@@ -16,7 +16,7 @@ export default function SideCart() {
   return (
     <>
       <aside
-        data-cy={'side-cart'}
+        data-testid={'side-cart'}
         style={{ transition: '0.3s', height: 'calc(100vh - 61px)' }}
         className={`${isOpen ? 'right-0' : 'right-[-600px]'} absolute top-[61px] max-w-lg w-full transition p-4 border-l overflow-auto bg-white`}>
         <div className={'relative'}>
@@ -33,7 +33,7 @@ export default function SideCart() {
             <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">
               장바구니
             </h2>
-            <div className={'grid grid-cols-1 gap-2'} data-cy={'cart-item-list'}>
+            <div className={'grid grid-cols-1 gap-2'} data-testid={'cart-item-list'}>
               {products?.map((product) => <CartList key={product.id} product={product} />)}
             </div>
           </div>

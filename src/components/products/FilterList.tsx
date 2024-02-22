@@ -20,7 +20,7 @@ export default function FilterList({ onChangeFilterHandler, selectedFilter }: Fi
               <div className="flex items-center space-x-2" key={item}>
                 <RadioGroupItem value={item} id={item} className={'hidden'} />
                 <Label
-                  data-cy={`filter-button-${item}`}
+                  data-testid={`filter-button-${item}`}
                   htmlFor={item}
                   className={`cursor-pointer pb-1 ${selectedFilter === item ? 'font-bold border-b border-gray-600' : 'font-medium'}`}>
                   {item}

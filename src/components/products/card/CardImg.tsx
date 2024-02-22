@@ -9,7 +9,7 @@ export default function CardImg({ imageList }: CardImgProps) {
     <>
       <div className={'relative w-full h-0 pb-[100%]'}>
         <img
-          data-cy={'product-img'}
+          data-testid={'product-img'}
           src={imageList[0]}
           alt="img"
           className={'absolute top-0 left-0 w-full h-full rounded-lg'}

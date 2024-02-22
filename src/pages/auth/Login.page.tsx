@@ -46,7 +46,7 @@ export default function LoginPage() {
                 label={'비밀번호'}
                 placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
               />
-              <Button data-cy={'login-button'} className={'w-full mt-10 py-6'} type={'submit'}>
+              <Button data-testid={'login-button'} className={'w-full mt-10 py-6'} type={'submit'}>
                 로그인 하기
               </Button>
             </form>
