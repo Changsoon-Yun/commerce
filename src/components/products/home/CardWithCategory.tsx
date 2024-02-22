@@ -21,7 +21,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
               </Link>
             </h3>
             <Button variant={'outline'} asChild>
-              <Link to={`products/${category.value}`}>모두보기</Link>
+              <Link to={`products/${category.value}`}>더보기</Link>
             </Button>
           </div>
           <div className={'grid grid-cols-2 gap-2'}>
