@@ -33,7 +33,7 @@ export default function SideCart() {
             <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">
               장바구니
             </h2>
-            <div className={'grid grid-cols-1 gap-4'} data-cy={'cart-item-list'}>
+            <div className={'grid grid-cols-1 gap-2'} data-cy={'cart-item-list'}>
               {products?.map((product) => <CartList key={product.id} product={product} />)}
             </div>
           </div>

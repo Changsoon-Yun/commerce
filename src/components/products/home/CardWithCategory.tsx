@@ -24,7 +24,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
               <Link to={`products/${category.value}`}>모두보기</Link>
             </Button>
           </div>
-          <div className={'grid grid-cols-2 gap-4'}>
+          <div className={'grid grid-cols-2 gap-2'}>
             {products?.map((product) => (
               <Card.Root key={product.id} to={`/product/${product.id}`}>
                 <Card.Img imageList={product.imageList} />

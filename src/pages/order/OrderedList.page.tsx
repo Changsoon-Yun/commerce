@@ -14,7 +14,7 @@ export default function OrderedListPage() {
       <Metatags title={`Seconds: 중고거래 - 주문 목록`} desc={'주문 목록 페이지 입니다.'} />
       <Container>
         <PageTitle title={'구매내역'} />
-        <div className={'grid grid-cols-1 gap-4'}>
+        <div className={'grid grid-cols-1 gap-2'}>
           {products?.map((product) => (
             <OrderedListItem product={product} cancelOrderById={cancelOrderById} key={product.id} />
           ))}
