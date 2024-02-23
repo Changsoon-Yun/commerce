@@ -7,7 +7,7 @@ interface CardImgProps {
 export default function CardImg({ imageList }: CardImgProps) {
   return (
     <>
-      <div className={'relative w-full h-0 pb-[120%] rounded-lg overflow-hidden'}>
+      <div className={'relative w-full h-0 pb-[100%] rounded-lg overflow-hidden'}>
         <img
           data-testid={'product-img'}
           src={imageList[0]}
