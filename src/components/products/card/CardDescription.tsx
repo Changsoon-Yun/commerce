@@ -9,7 +9,7 @@ interface CardDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {
 export default function CardDescription({ text, className, ...rest }: CardDescriptionProps) {
   return (
     <>
-      <div {...rest} className={cn('text-sm font-semibold line-clamp-2', className)}>
+      <div className={cn('text-sm line-clamp-2', className)} {...rest}>
         {text}
       </div>
     </>

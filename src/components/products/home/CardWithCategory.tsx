@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import useGetHomeProducts from '@/apis/useGetHomeProducts.ts';
 import { Card } from '../card';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter.ts';
-import { Button } from '@/components/ui/button.tsx';
 import Container from '@/components/Container.tsx';
+import { MdArrowRightAlt } from 'react-icons/md';
 
 interface CardWithCategoryProps {
   category: { label: string; value: string };
@@ -22,9 +22,10 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
                 <div className={'pb-2'}>{category.label}</div>
               </Link>
             </h3>
-            <Button variant={'outline'} asChild>
-              <Link to={`products/${category.value}`}>더보기</Link>
-            </Button>
+            <Link to={`products/${category.value}`} className={'flex items-center gap-1'}>
+              <span className={'text-foreground text-sm'}>더보기</span>
+              <MdArrowRightAlt />
+            </Link>
           </div>
           <div className={'grid grid-cols-2 gap-2'}>
             {products?.map((product) => (
