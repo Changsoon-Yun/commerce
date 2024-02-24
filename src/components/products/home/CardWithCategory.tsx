@@ -31,7 +31,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
           <div className={'grid grid-cols-2 gap-2'}>
             {isLoading &&
               Array.from({ length: 4 }, () => (
-                <div className={'flex flex-col gap-4 p-2'}>
+                <div className={'flex flex-col gap-4 p-2'} key={Math.random()}>
                   <Skeleton className="w-full h-0 pb-[100%] rounded-lg" />
                   <Skeleton className="w-full h-[28px]" />
                   <Skeleton className="w-full h-[20px]" />
