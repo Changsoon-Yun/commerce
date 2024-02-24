@@ -2,9 +2,10 @@ import { useAuth } from '@/apis/useAuth.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 import useInputChange from '@/hooks/useInputChange.ts';
+import { Button } from '@/components/ui/button.tsx';
 
 export default function UserDashBoardPage() {
-  const { storedUserData } = useAuth();
+  const { storedUserData, updateProfileHandler } = useAuth();
   const { isEditing, handleEditClick, handleSaveClick, handleNicknameChange, nickname } =
     useInputChange();
 
@@ -20,15 +21,30 @@ export default function UserDashBoardPage() {
           <div className="">
             <div className="flex flex-col">
               {/* 프로필 사진 */}
-              <div className={'relative w-full h-0 pb-[100%] rounded-full overflow-hidden'}>
-                <img
-                  src="/img/defaultProfileImage.png"
-                  alt="Profile"
-                  className="absolute top-0 left-0 w-full h-full"
-                />
+              <div className={'flex justify-center pt-10'}>
+                <div className={'relative w-32 h-32 rounded-full'}>
+                  <img
+                    src={storedUserData.profileImg || '/img/defaultProfileImage.png'}
+                    alt="Profile"
+                    className="object-cover rounded-full"
+                  />
+                  <div className={''}>
+                    <label
+                      htmlFor="profileInput"
+                      className={'absolute top-0 right-0 w-4 h-4 bg-black '}></label>
+                    <input
+                      id={'profileInput'}
+                      type={'file'}
+                      className={'hidden'}
+                      onChange={(e) => {
+                        updateProfileHandler(e);
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
               <div>
-                <div className={''}>
+                <div>
                   <p className={'py-10'}>닉네임</p>
                   <div className={'flex gap-1'}>
                     {/* 닉네임 */}
@@ -47,19 +63,19 @@ export default function UserDashBoardPage() {
                     <div className="">
                       {/* 수정 버튼 */}
                       {!isEditing && (
-                        <button
+                        <Button
                           onClick={handleEditClick}
                           className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-blue-600">
                           수정
-                        </button>
+                        </Button>
                       )}
                       {/* 저장 버튼 */}
                       {isEditing && (
-                        <button
+                        <Button
                           onClick={handleSaveClick}
                           className="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-green-600">
                           저장
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </div>
