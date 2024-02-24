@@ -65,6 +65,7 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteQuery({
     queryKey,
     initialPageParam: undefined,
@@ -88,5 +89,5 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
     }
   }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
-  return { products, fetchNextPage, isFetchingNextPage, hasNextPage, inViewRef };
+  return { products, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage, inViewRef };
 }
