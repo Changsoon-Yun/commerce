@@ -72,7 +72,9 @@ export function useAuth() {
           maxWidthOrHeight: 310,
           useWebWorker: true,
         });
-        console.log(compressedImage);
+
+        const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
+        console.log(blobImage);
         await updateProfile(auth.currentUser, {
           photoURL: '',
         });
