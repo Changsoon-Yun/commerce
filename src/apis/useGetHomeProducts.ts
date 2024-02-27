@@ -20,11 +20,11 @@ export default function useGetHomeProducts(category: string) {
     return products;
   }, [category]);
 
-  const { data: products } = useQuery({
+  const { data: products, isLoading } = useQuery({
     queryKey: useMemo(() => QUERY_KEYS.PRODUCTS.HOME(category), [category]),
     queryFn: fetchData,
     enabled: !!category,
   });
 
-  return { products };
+  return { products, isLoading };
 }

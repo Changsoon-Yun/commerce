@@ -12,13 +12,14 @@ import { Metatags } from '@/metadatas/metadatas.tsx';
 import { Card } from '@/components/products/card';
 import PageTitle from '@/components/PageTitle.tsx';
 import Container from '@/components/Container.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
 
 export default function CategoryProductsPage() {
   const { category } = useParams();
   const [selectedFilter, setSelectedFilter] = useState<string>('최신순');
   const [option, setOption] = useState<'updatedAt' | 'price'>('updatedAt');
   const [direction, setDirection] = useState<'desc' | 'asc'>('desc');
-  const { products, inViewRef, isFetchingNextPage } = useGetCategoryProducts({
+  const { products, isLoading, inViewRef, isFetchingNextPage } = useGetCategoryProducts({
     category: category ?? '',
     filter: {
       option,
@@ -69,6 +70,17 @@ export default function CategoryProductsPage() {
       <FilterList selectedFilter={selectedFilter} onChangeFilterHandler={onChangeFilterHandler} />
       <Container className={'py-10 mb-2 bg-white flex-1'}>
         <div className={'grid grid-cols-2 gap-2'}>
+          {isLoading &&
+            Array.from({ length: 8 }, () => (
+              <div className={'flex flex-col gap-4 p-2'} key={Math.random()}>
+                <Skeleton className="w-full h-0 pb-[100%] rounded-lg" />
+                <Skeleton className="w-full h-[28px]" />
+                <Skeleton className="w-full h-[20px]" />
+                <div className={'flex justify-between gap-4'}>
+                  <Skeleton className="flex-1 h-[18px]" />
+                </div>
+              </div>
+            ))}
           {products?.pages.map((items) =>
             items.products?.map((product) => (
               <Card.Root key={product.id} to={`/product/${product.id}`}>

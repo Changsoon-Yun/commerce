@@ -9,8 +9,6 @@
     "preview": "vite preview",
     "cypress:test": "cypress open",
     "cypress:run": "cypress run",
-    "vitest:test": "vitest --coverage",
-    "vitest:run": "vitest run",
     "lint": "eslint --cache .  --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --cache --write .",
     "sitemap": "babel-node sitemapGenerator.js",

@@ -7,18 +7,20 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { FirebaseError } from 'firebase/app';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { UserData } from '../types/user.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
+import imageCompression from 'browser-image-compression';
 
 interface authServerCallProps {
   type: 'register' | 'login';
@@ -60,6 +62,33 @@ export function useAuth() {
       }
     });
   }, [fetchUserInfo]);
+
+  const updateProfileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (auth.currentUser && e.target.files) {
+        const file = e.target.files;
+        const compressedImage = await imageCompression(file[0], {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 310,
+          useWebWorker: true,
+        });
+
+        const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
+        console.log(blobImage);
+        await updateProfile(auth.currentUser, {
+          photoURL: '',
+        });
+      }
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        toast({
+          title: '에러!',
+          description: e.code,
+          variant: 'destructive',
+        });
+      }
+    }
+  };
 
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
     try {
@@ -122,7 +151,7 @@ export function useAuth() {
           uid: userCredential.user.uid,
           isSeller: false,
           userName: userCredential.user.email,
-          profileImg: '',
+          profileImg: userCredential.user.photoURL,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
@@ -158,6 +187,7 @@ export function useAuth() {
     const provider = new GithubAuthProvider(); // provider 구글 설정
     await handleLogin(provider);
   };
+
   //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
   const { data: userData } = useQuery({
     queryKey: QUERY_KEYS.AUTH.USER(),
@@ -174,5 +204,13 @@ export function useAuth() {
       navigate('/');
     },
   });
-  return { storedUserData, authServerCall, logout, userData, handleGoogleLogin, handleGithubLogin };
+  return {
+    storedUserData,
+    authServerCall,
+    logout,
+    userData,
+    handleGoogleLogin,
+    handleGithubLogin,
+    updateProfileHandler,
+  };
 }
