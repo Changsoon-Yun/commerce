@@ -10,10 +10,6 @@ yarn dev
 
 yarn build
 
-### lint 수행
-
-yarn lint
-
 ### 미리보기
 
 yarn preview
