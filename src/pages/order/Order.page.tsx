@@ -19,7 +19,7 @@ import FormInner from '@/components/auth/FormInner.tsx';
 import { Form } from '@/components/ui/form.tsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
 import { z } from 'zod';
 import PageTitle from '@/components/PageTitle.tsx';

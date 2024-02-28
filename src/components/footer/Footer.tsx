@@ -1,4 +1,4 @@
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { GoHome, GoHomeFill } from 'react-icons/go';
 import { IoHeart, IoHeartOutline, IoLogInOutline } from 'react-icons/io5';
 import { FaList } from 'react-icons/fa';

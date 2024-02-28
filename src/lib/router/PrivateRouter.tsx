@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 
 export default function PrivateRouter() {
   const { storedUserData } = useAuth();

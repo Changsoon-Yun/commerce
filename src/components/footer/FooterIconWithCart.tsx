@@ -1,6 +1,6 @@
 import { ElementType, useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 
 interface FooterIconWithCart {
   icon: ElementType;

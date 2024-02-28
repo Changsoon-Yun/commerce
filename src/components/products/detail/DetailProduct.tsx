@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { IProducts } from '@/types/product.ts';
 import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import dayjs from 'dayjs';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
 import DetailCarousel from '@/components/products/detail/DetailCarousel.tsx';

@@ -1,4 +1,4 @@
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { MenuContext } from '@/context/MenuContext.tsx';

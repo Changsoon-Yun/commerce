@@ -1,4 +1,4 @@
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';

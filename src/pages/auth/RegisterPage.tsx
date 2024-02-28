@@ -7,7 +7,7 @@ import { Form } from '@/components/ui/form.tsx';
 import FormInner from '@/components/auth/FormInner.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { registerFormSchema } from '@/lib/zod/schemas.ts';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 

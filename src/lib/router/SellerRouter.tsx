@@ -1,4 +1,4 @@
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Navigate, Outlet } from 'react-router-dom';
 
 export default function SellerRouter() {

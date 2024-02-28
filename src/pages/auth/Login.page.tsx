@@ -8,12 +8,14 @@ import SocialLogins from '@/components/auth/SocialLogins.tsx';
 import { Link } from 'react-router-dom';
 import AuthHeading from '@/components/auth/AuthHeading.tsx';
 import { loginFormSchema } from '@/lib/zod/schemas.ts';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
+import useSocialLogin from '@/apis/auth/useSocialLogin.ts';
 
 export default function LoginPage() {
-  const { authServerCall, handleGoogleLogin, handleGithubLogin } = useAuth();
+  const { authServerCall } = useAuth();
+  const { handleGoogleLogin, handleGithubLogin } = useSocialLogin();
   const form = useForm({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {

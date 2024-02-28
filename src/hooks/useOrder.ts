@@ -6,13 +6,13 @@ import { z } from 'zod';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
 import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { IProducts, OrderStatus } from '@/types/product.ts';
 import { UserData } from '@/types/user.ts';
 import { toast } from '@/components/ui/use-toast.ts';
-import { FirebaseError } from 'firebase/app';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
+import { handleFirebaseError } from '@/utils/handleFirebaseError';
 
 export default function useOrder() {
   const { carts } = useContext(CartContext);
@@ -139,13 +139,7 @@ export default function useOrder() {
         description: '주문 취소를 성공 했습니다.',
       });
     } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
+      handleFirebaseError({ e, toast });
     }
   };
 

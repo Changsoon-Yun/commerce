@@ -6,7 +6,7 @@ import { db, storage } from '@/lib/firebase/firebase.ts';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
 import { IProducts } from '@/types/product.ts';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import imageCompression from 'browser-image-compression';
 import { queryClient } from '@/lib/react-query/queryClient.ts';

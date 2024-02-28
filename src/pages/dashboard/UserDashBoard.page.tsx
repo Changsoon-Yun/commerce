@@ -1,4 +1,4 @@
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 import useInputChange from '@/hooks/useInputChange.ts';
@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button.tsx';
 import { MdEdit } from 'react-icons/md';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useProfile from '@/apis/auth/useProfile.ts';
 
 export default function UserDashBoardPage() {
-  const { storedUserData, updateProfileHandler } = useAuth();
+  const { storedUserData } = useAuth();
+  const { updateProfileHandler } = useProfile();
   const {
     isEditing,
     handleEditClick,

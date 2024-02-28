@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
 import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/apis/useAuth.ts';
+import { useAuth } from '@/apis/auth/useAuth.ts';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
 import { FirebaseError } from 'firebase/app';
 import { toast } from '@/components/ui/use-toast.ts';
@@ -12,6 +12,7 @@ import useImage from '@/hooks/useImage.ts';
 import { IProducts } from '@/types/product.ts';
 import { useState } from 'react';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
+import { handleFirebaseError } from '@/utils/handleFirebaseError';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
@@ -57,13 +58,7 @@ export default function useProductHandler(id?: string) {
       });
       navigate('/seller/dashboard');
     } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
+      handleFirebaseError({ e, toast });
     } finally {
       setIsLoading(false);
     }
@@ -93,13 +88,7 @@ export default function useProductHandler(id?: string) {
       });
       navigate('/seller/dashboard');
     } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
+      handleFirebaseError({ e, toast });
     } finally {
       setIsLoading(false);
     }
@@ -140,13 +129,7 @@ export default function useProductHandler(id?: string) {
         description: '주문 상태 수정을 성공 했습니다.',
       });
     } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
+      handleFirebaseError({ e, toast });
     }
   };
 
