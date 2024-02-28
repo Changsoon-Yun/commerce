@@ -1,11 +1,11 @@
 import NotFound from '@/components/optimize/NotFound';
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import MobileLayout from '@/components/layout/MobileLayout.tsx';
+import HomePage from '@/pages/Home.page';
 
 const PrivateRouter = lazy(() => import('@/lib/router/PrivateRouter.tsx'));
 const LoginPage = lazy(() => import('@/pages/auth/Login.page.tsx'));
-const MobileLayout = lazy(() => import('@/components/layout/MobileLayout.tsx'));
-const HomePage = lazy(() => import('@/pages/Home.page.tsx'));
 const RegisterSelectPage = lazy(() => import('@/pages/auth/RegisterSelect.page.tsx'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage.tsx'));
 const SellerRouter = lazy(() => import('@/lib/router/SellerRouter.tsx'));
