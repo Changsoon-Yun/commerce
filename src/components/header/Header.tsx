@@ -3,14 +3,19 @@ import { MenuContext } from '@/context/MenuContext.tsx';
 import { useContext } from 'react';
 import { Menu } from './menu';
 import CategoryNav from '@/components/products/home/CategoryNav.tsx';
+import { CartContext } from '@/context/CartContext.tsx';
 
 export default function Header() {
   const { closeMenuHandler } = useContext(MenuContext);
-
+  const { closeHandler: closeCartHandler } = useContext(CartContext);
   return (
     <>
       <div className={'flex justify-between px-5 min-h-[60px] bg-white items-center'}>
-        <div onClick={closeMenuHandler}>
+        <div
+          onClick={() => {
+            closeMenuHandler();
+            closeCartHandler();
+          }}>
           <Link to={'/'}>
             <img className={'w-10 h-10'} src="/img/logo-icon.png" alt="icon" />
           </Link>
