@@ -1,26 +1,21 @@
-import { auth, db } from '@/lib/firebase/firebase';
+import { auth, db } from '@/lib/firebase/firebase.ts';
 import {
   createUserWithEmailAndPassword,
-  GithubAuthProvider,
-  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
-  updateProfile,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
-import { FirebaseError } from 'firebase/app';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { UserData } from '../types/user.ts';
+import { UserData } from '@/types/user.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
-import imageCompression from 'browser-image-compression';
+import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
 
 interface authServerCallProps {
   type: 'register' | 'login';
@@ -63,32 +58,6 @@ export function useAuth() {
     });
   }, [fetchUserInfo]);
 
-  const updateProfileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    try {
-      if (auth.currentUser && e.target.files) {
-        const file = e.target.files;
-        const compressedImage = await imageCompression(file[0], {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 310,
-          useWebWorker: true,
-        });
-
-        const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
-        await updateProfile(auth.currentUser, {
-          photoURL: blobImage,
-        });
-      }
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
-    }
-  };
-
   const authServerCall = async ({ type, data, isSeller }: authServerCallProps) => {
     try {
       //회원가입
@@ -127,64 +96,8 @@ export function useAuth() {
         navigate('/');
       }
     } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
+      handleFirebaseError({ e, toast });
     }
-  };
-
-  const handleLogin = async (provider: GoogleAuthProvider | GithubAuthProvider) => {
-    try {
-      const userCredential = await signInWithPopup(auth, provider); // 팝업창 띄워서 로그인
-
-      const uid = userCredential.user.uid;
-      const q = doc(db, 'users', uid);
-      const querySnapshot = await getDoc(q);
-      if (!querySnapshot.data()) {
-        await setDoc(doc(db, 'users', uid), {
-          email: userCredential.user.email,
-          uid: userCredential.user.uid,
-          isSeller: false,
-          userName: userCredential.user.email,
-          profileImg: userCredential.user.photoURL,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        });
-      }
-
-      const q2 = doc(db, 'users', uid);
-      const querySnapshot2 = await getDoc(q2);
-      localStorage.setItem('user', JSON.stringify(querySnapshot2.data()));
-      setStoredUserData(querySnapshot2.data() as UserData);
-
-      toast({
-        title: '로그인 성공!',
-        description: '메인 페이지로 이동합니다!',
-      });
-      navigate('/');
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        toast({
-          title: '에러!',
-          description: e.code,
-          variant: 'destructive',
-        });
-      }
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider(); // provider 구글 설정
-    await handleLogin(provider);
-  };
-
-  const handleGithubLogin = async () => {
-    const provider = new GithubAuthProvider(); // provider 구글 설정
-    await handleLogin(provider);
   };
 
   //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
@@ -203,13 +116,12 @@ export function useAuth() {
       navigate('/');
     },
   });
+
   return {
     storedUserData,
+    setStoredUserData,
     authServerCall,
     logout,
     userData,
-    handleGoogleLogin,
-    handleGithubLogin,
-    updateProfileHandler,
   };
 }
