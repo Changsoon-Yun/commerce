@@ -8,6 +8,7 @@ const CartContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeCart: (_id: string) => {},
   toggleHandler: () => {},
+  closeHandler: () => {},
 });
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [carts, setCarts] = useState<string[]>(JSON.parse(localStorage.getItem('cart') ?? '[]'));
@@ -36,7 +37,10 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   const toggleHandler = () => {
     setIsOpen(!isOpen);
   };
-  const value = { carts, isOpen, addCart, toggleHandler, removeCart };
+  const closeHandler = () => {
+    setIsOpen(false);
+  };
+  const value = { carts, isOpen, addCart, toggleHandler, removeCart, closeHandler };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
