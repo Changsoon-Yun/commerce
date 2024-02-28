@@ -3,16 +3,22 @@ import { CartContext } from '@/context/CartContext.tsx';
 import CartList from './CartList';
 import { IoMdClose } from 'react-icons/io';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CardButton from '@/components/products/card/CardButton.tsx';
 
 export default function SideCart() {
-  const { isOpen, carts, toggleHandler } = useContext(CartContext);
+  const { isOpen, carts, toggleHandler, closeHandler } = useContext(CartContext);
+  const { pathname } = useLocation();
   const { products, mutate } = useGetCartProducts(carts);
 
   useEffect(() => {
     mutate();
   }, [carts, mutate]);
+
+  useEffect(() => {
+    closeHandler();
+  }, [pathname, closeHandler]);
+
   return (
     <>
       <aside
