@@ -43,86 +43,90 @@ export default function SellerDashBoardPage() {
           }
         />
       </Container>
-      <div className={'grid grid-cols-1 gap-4'}>
-        {products?.pages.map((items) =>
-          items.products.map(
-            ({ title, imageList, createdAt, orderedDate, id, price, condition, orderStatus }) => (
-              <Card.Root key={createdAt.seconds} data-testid={'seller-product'}>
-                <Card.Img imageList={imageList} />
-                <Card.Title title={title} />
-                <Card.Description
-                  text={
-                    <DetailDescription
-                      title={'등록일'}
-                      data-testid={'product-date'}
-                      content={dayjs(getDateFromProduct(createdAt)).format('YYYY년 MM월 DD일')}
-                    />
-                  }
-                />
-                <Card.Description
-                  text={
-                    <DetailDescription
-                      data-testid={'product-condition'}
-                      title={'상품 상태'}
-                      content={convertLabelByValue(condition, conditions) as string}
-                    />
-                  }
-                />
-                {dayjs(getDateFromProduct(orderedDate)).format('YYYY년 MM월 DD일') ===
-                'Invalid Date' ? null : (
+      <Container className={'py-10'}>
+        <div className={'grid grid-cols-2 gap-2'}>
+          {products?.pages.map((items) =>
+            items.products.map(
+              ({ title, imageList, createdAt, orderedDate, id, price, condition, orderStatus }) => (
+                <Card.Root key={createdAt.seconds} data-testid={'seller-product'}>
+                  <Card.Img imageList={imageList} />
+                  <Card.Title title={title} />
                   <Card.Description
                     text={
                       <DetailDescription
-                        title={'주문일'}
-                        data-testid={'product-ordered-date'}
-                        content={dayjs(getDateFromProduct(orderedDate)).format('YYYY년 MM월 DD일')}
+                        title={'등록일'}
+                        data-testid={'product-date'}
+                        content={dayjs(getDateFromProduct(createdAt)).format('YYYY년 MM월 DD일')}
                       />
                     }
                   />
-                )}
-                <Card.Description
-                  text={
-                    orderStatus && (
-                      <Select
-                        onValueChange={(value) => {
-                          updateOrderStatusHandler(value, id);
-                        }}>
-                        <SelectTrigger className="w-[130px]">
-                          <SelectValue placeholder={orderStatus} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>주문 상태</SelectLabel>
-                            {Object.values(OrderStatus).map((status) => (
-                              <SelectItem key={status} value={status}>
-                                {status}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )
-                  }
-                />
-                <Card.Description text={formatNumberWithCommas(price) + '원'} />
-                <Card.Buttons>
-                  <Card.Button data-testid={'edit-button'} asChild>
-                    <Link to={`/seller/product/edit/${id}`}>수정하기</Link>
-                  </Card.Button>
-                  <Card.Button
-                    data-testid={'delete-button'}
-                    variant={'destructive'}
-                    onClick={() => {
-                      deleteHandler(id);
-                    }}>
-                    삭제하기
-                  </Card.Button>
-                </Card.Buttons>
-              </Card.Root>
+                  <Card.Description
+                    text={
+                      <DetailDescription
+                        data-testid={'product-condition'}
+                        title={'상품 상태'}
+                        content={convertLabelByValue(condition, conditions) as string}
+                      />
+                    }
+                  />
+                  {dayjs(getDateFromProduct(orderedDate)).format('YYYY년 MM월 DD일') ===
+                  'Invalid Date' ? null : (
+                    <Card.Description
+                      text={
+                        <DetailDescription
+                          title={'주문일'}
+                          data-testid={'product-ordered-date'}
+                          content={dayjs(getDateFromProduct(orderedDate)).format(
+                            'YYYY년 MM월 DD일'
+                          )}
+                        />
+                      }
+                    />
+                  )}
+                  <Card.Description
+                    text={
+                      orderStatus && (
+                        <Select
+                          onValueChange={(value) => {
+                            updateOrderStatusHandler(value, id);
+                          }}>
+                          <SelectTrigger className="w-[130px]">
+                            <SelectValue placeholder={orderStatus} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>주문 상태</SelectLabel>
+                              {Object.values(OrderStatus).map((status) => (
+                                <SelectItem key={status} value={status}>
+                                  {status}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      )
+                    }
+                  />
+                  <Card.Description text={formatNumberWithCommas(price) + '원'} />
+                  <Card.Buttons>
+                    <Card.Button data-testid={'edit-button'} asChild>
+                      <Link to={`/seller/product/edit/${id}`}>수정하기</Link>
+                    </Card.Button>
+                    <Card.Button
+                      data-testid={'delete-button'}
+                      variant={'destructive'}
+                      onClick={() => {
+                        deleteHandler(id);
+                      }}>
+                      삭제하기
+                    </Card.Button>
+                  </Card.Buttons>
+                </Card.Root>
+              )
             )
-          )
-        )}
-      </div>
+          )}
+        </div>
+      </Container>
       <div ref={inViewRef} className="">
         {isFetchingNextPage && <p>loading...</p>}
       </div>
