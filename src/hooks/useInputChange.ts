@@ -17,5 +17,12 @@ export default function useInputChange() {
     // 변경된 닉네임을 저장하거나 서버에 전송하는 등의 작업 수행
   }, []);
 
-  return { isEditing, handleEditClick, handleSaveClick, handleNicknameChange, nickname };
+  return {
+    isEditing,
+    handleEditClick,
+    handleSaveClick,
+    handleNicknameChange,
+    nickname,
+    setNickname,
+  };
 }

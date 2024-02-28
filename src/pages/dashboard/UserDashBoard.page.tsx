@@ -3,11 +3,25 @@ import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 import useInputChange from '@/hooks/useInputChange.ts';
 import { Button } from '@/components/ui/button.tsx';
+import { MdEdit } from 'react-icons/md';
+import { useEffect } from 'react';
 
 export default function UserDashBoardPage() {
   const { storedUserData, updateProfileHandler } = useAuth();
-  const { isEditing, handleEditClick, handleSaveClick, handleNicknameChange, nickname } =
-    useInputChange();
+  const {
+    isEditing,
+    handleEditClick,
+    handleSaveClick,
+    handleNicknameChange,
+    nickname,
+    setNickname,
+  } = useInputChange();
+
+  useEffect(() => {
+    if (storedUserData?.userName) {
+      setNickname(storedUserData.userName);
+    }
+  }, [setNickname, storedUserData]);
 
   if (!storedUserData) {
     return;
@@ -31,7 +45,11 @@ export default function UserDashBoardPage() {
                   <div className={''}>
                     <label
                       htmlFor="profileInput"
-                      className={'absolute top-0 right-0 w-4 h-4 bg-black '}></label>
+                      className={
+                        'absolute bottom-1 right-1 rounded-full overflow-hidden border border-zinc-500 p-0.5 flex justify-center items-center bg-white cursor-pointer'
+                      }>
+                      <MdEdit />
+                    </label>
                     <input
                       id={'profileInput'}
                       type={'file'}
@@ -45,7 +63,7 @@ export default function UserDashBoardPage() {
               </div>
               <div>
                 <div>
-                  <p className={'py-10'}>닉네임</p>
+                  <p className={'pt-10 pb-2'}>닉네임</p>
                   <div className={'flex gap-1'}>
                     {/* 닉네임 */}
                     {isEditing ? (
