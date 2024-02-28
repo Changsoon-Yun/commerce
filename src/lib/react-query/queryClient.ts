@@ -1,6 +1,6 @@
 import { toast, Toast, ToasterToast } from '@/components/ui/use-toast.ts';
-import { FirebaseError } from 'firebase/app';
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
 
 const queryErrorHandler = (
   toast: ({ ...props }: Toast) => {
@@ -10,13 +10,7 @@ const queryErrorHandler = (
   },
   e: unknown
 ) => {
-  if (e instanceof FirebaseError) {
-    return toast({
-      title: '에러!',
-      description: e.code,
-      variant: 'destructive',
-    });
-  }
+  handleFirebaseError({ e, toast });
 };
 
 export const queryClient = new QueryClient({
