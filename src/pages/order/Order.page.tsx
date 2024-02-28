@@ -73,7 +73,6 @@ export default function OrderPage() {
   });
 
   useEffect(() => {
-    console.log(checkItems);
     form.setValue('amount', checkItems.reduce((prev, curr) => prev + curr.price, 0) as number);
     form.setValue(
       'name',

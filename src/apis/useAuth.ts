@@ -74,9 +74,8 @@ export function useAuth() {
         });
 
         const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
-        console.log(blobImage);
         await updateProfile(auth.currentUser, {
-          photoURL: '',
+          photoURL: blobImage,
         });
       }
     } catch (e) {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-console.log(React);
-
 export default (
   <Routes>
     <Route path={'/'} />
