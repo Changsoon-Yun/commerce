@@ -5,6 +5,7 @@ import useInputChange from '@/hooks/useInputChange.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { MdEdit } from 'react-icons/md';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserDashBoardPage() {
   const { storedUserData, updateProfileHandler } = useAuth();
@@ -16,12 +17,18 @@ export default function UserDashBoardPage() {
     nickname,
     setNickname,
   } = useInputChange();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (storedUserData?.userName) {
       setNickname(storedUserData.userName);
     }
   }, [setNickname, storedUserData]);
+
+  useEffect(() => {
+    alert('현재 준비중인 페이지 입니다.');
+    navigate('/');
+  }, [navigate]);
 
   if (!storedUserData) {
     return;
