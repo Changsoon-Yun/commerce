@@ -4,7 +4,7 @@ import { Card } from '../card';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter.ts';
 import Container from '@/components/Container.tsx';
 import { MdArrowRightAlt } from 'react-icons/md';
-import { Skeleton } from '@/components/ui/skeleton.tsx';
+import CardSkeleton from '@/components/products/card/CardSkeleton.tsx';
 
 interface CardWithCategoryProps {
   category: { label: string; value: string };
@@ -29,17 +29,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
             </Link>
           </div>
           <div className={'grid grid-cols-2 gap-2'}>
-            {isLoading &&
-              Array.from({ length: 4 }, () => (
-                <div className={'flex flex-col gap-4 p-2'} key={Math.random()}>
-                  <Skeleton className="w-full h-0 pb-[100%] rounded-lg" />
-                  <Skeleton className="w-full h-[28px]" />
-                  <Skeleton className="w-full h-[20px]" />
-                  <div className={'flex justify-between gap-4'}>
-                    <Skeleton className="flex-1 h-[18px]" />
-                  </div>
-                </div>
-              ))}
+            {isLoading && Array.from({ length: 8 }, () => <CardSkeleton />)}
             {products?.map((product) => (
               <Card.Root key={product.id} to={`/product/${product.id}`}>
                 <Card.Img imageList={product.imageList} />
