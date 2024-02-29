@@ -17,7 +17,7 @@ export default function SideCart() {
 
   useEffect(() => {
     closeHandler();
-  }, [pathname, closeHandler]);
+  }, [closeHandler, pathname]);
 
   return (
     <>

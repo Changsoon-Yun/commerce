@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useCallback, useState } from 'react';
 
 const CartContext = createContext({
   carts: [] as string[],
@@ -37,9 +37,9 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   const toggleHandler = () => {
     setIsOpen(!isOpen);
   };
-  const closeHandler = () => {
+  const closeHandler = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
   const value = { carts, isOpen, addCart, toggleHandler, removeCart, closeHandler };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
