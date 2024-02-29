@@ -15,6 +15,7 @@ import { useInView } from 'react-intersection-observer';
 import { useCallback, useEffect, useMemo } from 'react';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
+import { PAGE_LIMIT } from '@/constant/pageLimit.ts';
 
 export interface FilterOptions {
   option: 'updatedAt' | 'price';
@@ -33,14 +34,14 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
             collection(db, `products`),
             where('category', '==', category),
             orderBy(filter.option, filter.direction),
-            limit(8)
+            limit(PAGE_LIMIT)
           )
         : query(
             collection(db, `products`),
             where('category', '==', category),
             orderBy(filter.option, filter.direction),
             startAfter(lastVisible),
-            limit(8)
+            limit(PAGE_LIMIT)
           );
       const querySnapshot = await getDocs(q);
 
@@ -77,7 +78,7 @@ export default function useGetCategoryProducts({ category, filter }: Options) {
     enabled: !!category,
     getNextPageParam: (lastPage) => {
       const lastVisible = lastPage.querySnapshot.docs[lastPage.querySnapshot.docs.length - 1];
-      return lastPage.querySnapshot.size >= 8 ? lastVisible : undefined;
+      return lastPage.querySnapshot.size >= PAGE_LIMIT ? lastVisible : undefined;
     },
   });
 

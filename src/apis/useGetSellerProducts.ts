@@ -16,8 +16,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
-
-const PAGE_LIMIT = 4;
+import { PAGE_LIMIT } from '@/constant/pageLimit';
 
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();
