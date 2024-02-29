@@ -36,8 +36,6 @@
 </div>
 
 ## 📚 Library
-***
-
 | Name | Appliance | Version |
 | --- | --- | --- |
 | react-query     | 서버 상태 관리  | 5.17.19  |
