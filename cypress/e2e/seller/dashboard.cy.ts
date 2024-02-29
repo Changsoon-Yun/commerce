@@ -1,3 +1,5 @@
+import { PAGE_LIMIT } from '../../../src/constant/pageLimit.ts';
+
 describe('판매자 상품 확인', () => {
   beforeEach(() => {
     cy.signInWithEmailAndPassword('seller');
@@ -12,6 +14,6 @@ describe('판매자 상품 확인', () => {
       offset: { top: 100000, left: 0 },
     });
 
-    cy.get('[data-testid="seller-product"]').should('have.length.greaterThan', 4);
+    cy.get('[data-testid="seller-product"]').should('have.length.greaterThan', PAGE_LIMIT);
   });
 });
