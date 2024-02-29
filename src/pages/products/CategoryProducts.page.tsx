@@ -12,7 +12,7 @@ import { Metatags } from '@/metadatas/metadatas.tsx';
 import { Card } from '@/components/products/card';
 import PageTitle from '@/components/PageTitle.tsx';
 import Container from '@/components/Container.tsx';
-import { Skeleton } from '@/components/ui/skeleton.tsx';
+import CardSkeleton from '@/components/products/card/CardSkeleton.tsx';
 
 export default function CategoryProductsPage() {
   const { category } = useParams();
@@ -69,18 +69,8 @@ export default function CategoryProductsPage() {
       <PageTitle title={categoryLabel} />
       <FilterList selectedFilter={selectedFilter} onChangeFilterHandler={onChangeFilterHandler} />
       <Container className={'py-10 mb-2 bg-white flex-1'}>
-        <div className={'grid grid-cols-2 gap-2'}>
-          {isLoading &&
-            Array.from({ length: 8 }, () => (
-              <div className={'flex flex-col gap-4 p-2'} key={Math.random()}>
-                <Skeleton className="w-full h-0 pb-[100%] rounded-lg" />
-                <Skeleton className="w-full h-[28px]" />
-                <Skeleton className="w-full h-[20px]" />
-                <div className={'flex justify-between gap-4'}>
-                  <Skeleton className="flex-1 h-[18px]" />
-                </div>
-              </div>
-            ))}
+        <div className={'grid grid-cols-2 gap-2'} data-testid={'products-wrapper'}>
+          {isLoading && Array.from({ length: 8 }, () => <CardSkeleton />)}
           {products?.pages.map((items) =>
             items.products?.map((product) => (
               <Card.Root key={product.id} to={`/product/${product.id}`}>
@@ -106,7 +96,7 @@ export default function CategoryProductsPage() {
         </div>
       </Container>
 
-      <div ref={inViewRef} className="h-42 w-full">
+      <div ref={inViewRef} className="min-h-1">
         {isFetchingNextPage && <p>loading...</p>}
       </div>
     </>

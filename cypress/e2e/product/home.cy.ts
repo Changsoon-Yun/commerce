@@ -20,6 +20,10 @@ describe('메인 랜딩 페이지', () => {
     });
   });
 
+  it('스켈레톤 UI가 보이는지', () => {
+    cy.get('[data-testid="skeleton-card"]').should('be.visible');
+  });
+
   it('카테고리 페이지 이동 되는지', () => {
     categories.forEach(({ value }) => {
       cy.get(`[data-testid="category-link-${value}"]`).click();

@@ -26,7 +26,6 @@ export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
   const { storedUserData } = useAuth();
   const { deleteHandler, updateOrderStatusHandler } = useProductHandler();
-
   return (
     <>
       <Metatags
@@ -44,7 +43,7 @@ export default function SellerDashBoardPage() {
         />
       </Container>
       <Container className={'py-10'}>
-        <div className={'grid grid-cols-2 gap-2'}>
+        <div className={'grid grid-cols-2 gap-2'} data-testid={'seller-products-wrapper'}>
           {products?.pages.map((items) =>
             items.products.map(
               ({ title, imageList, createdAt, orderedDate, id, price, condition, orderStatus }) => (
@@ -127,7 +126,7 @@ export default function SellerDashBoardPage() {
           )}
         </div>
       </Container>
-      <div ref={inViewRef} className="">
+      <div ref={inViewRef} className="min-h-1">
         {isFetchingNextPage && <p>loading...</p>}
       </div>
     </>
