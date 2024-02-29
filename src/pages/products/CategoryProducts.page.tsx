@@ -106,7 +106,7 @@ export default function CategoryProductsPage() {
         </div>
       </Container>
 
-      <div ref={inViewRef} className="h-42 w-full">
+      <div ref={inViewRef} className="min-h-1">
         {isFetchingNextPage && <p>loading...</p>}
       </div>
     </>

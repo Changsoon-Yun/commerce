@@ -17,7 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 4;
 
 export default function useGetSellerProducts() {
   const { storedUserData } = useAuth();

@@ -1,6 +1,6 @@
 import dayjs = require('dayjs');
 
-describe('판매자 상품 관련 테스트', () => {
+describe('판매자 상품 CRUD 관련 테스트', () => {
   beforeEach(() => {
     cy.signInWithEmailAndPassword('seller');
     cy.visit('/seller/dashboard');
