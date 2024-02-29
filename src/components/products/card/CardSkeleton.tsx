@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton.tsx';
 export default function CardSkeleton() {
   return (
     <>
-      <div className={'flex flex-col gap-4 p-2'} key={Math.random()} data-testid={'skeleton-card'}>
+      <div className={'flex flex-col gap-4 p-2'}>
         <Skeleton className="w-full h-0 pb-[100%] rounded-lg" />
         <Skeleton className="w-full h-[28px]" />
         <Skeleton className="w-full h-[20px]" />

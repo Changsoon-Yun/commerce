@@ -70,7 +70,8 @@ export default function CategoryProductsPage() {
       <FilterList selectedFilter={selectedFilter} onChangeFilterHandler={onChangeFilterHandler} />
       <Container className={'py-10 mb-2 bg-white flex-1'}>
         <div className={'grid grid-cols-2 gap-2'} data-testid={'products-wrapper'}>
-          {isLoading && Array.from({ length: 8 }, () => <CardSkeleton />)}
+          {isLoading &&
+            Array.from({ length: 8 }, () => <CardSkeleton data-testid={'skeleton-card'} />)}
           {products?.pages.map((items) =>
             items.products?.map((product) => (
               <Card.Root key={product.id} to={`/product/${product.id}`}>
