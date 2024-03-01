@@ -29,10 +29,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
             </Link>
           </div>
           <div className={'grid grid-cols-2 gap-2'}>
-            {isLoading &&
-              Array.from({ length: 8 }, () => (
-                <CardSkeleton key={Math.random()} data-testid={'skeleton-card'} />
-              ))}
+            {isLoading && Array.from({ length: 8 }, () => <CardSkeleton key={Math.random()} />)}
             {products?.map((product) => (
               <Card.Root key={product.id} to={`/product/${product.id}`}>
                 <Card.Img imageList={product.imageList} />
