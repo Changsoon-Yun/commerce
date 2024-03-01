@@ -34,7 +34,7 @@ export default function RegisterPage() {
     <>
       <Metatags title={`Seconds: 중고거래 - 회원가입`} desc={'회원가입 페이지 입니다.'} />
       <Container className={'flex-1'}>
-        <AuthHeading text={`${isSeller ? '판매자' : '소비자'} 회원가입`} />
+        <AuthHeading text={`회원가입`} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submitHandler)}>
             <FormInner

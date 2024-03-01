@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import '../app/globals.css';
+import './styles/globals.css';
 import '../src/styles/fonts/font.css';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
