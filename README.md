@@ -23,5 +23,5 @@
 
 <br />
 
-##  **📚 [기술적 의사결정 및 트러블슈팅 자세히 보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
+##  **📚 [Link 기술적 의사결정 및 트러블슈팅 자세히 보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
 ![image](https://github.com/Changsoon-Yun/second-market/assets/92949174/d22c2834-2c5f-42dd-b73d-5ce5a43661d0)
