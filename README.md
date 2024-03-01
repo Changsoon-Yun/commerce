@@ -6,9 +6,6 @@
   <img src="https://github.com/Changsoon-Yun/second-market/assets/92949174/299b79bd-41f1-42d5-97ba-50ea1f19f92e" alt="Image 4" width="20%" style="display:inline-block;">
 </div>
 
-<br />
-
-##  **📚 [아키텍처 및 트러블슈팅 바로보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
 
 <br />
 
@@ -44,3 +41,4 @@
 
 <br />
 
+##  **📚 [아키텍처 및 트러블슈팅 자세히 보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
