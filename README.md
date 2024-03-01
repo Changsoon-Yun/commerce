@@ -6,24 +6,6 @@
   <img src="https://github.com/Changsoon-Yun/second-market/assets/92949174/299b79bd-41f1-42d5-97ba-50ea1f19f92e" alt="Image 4" width="20%" style="display:inline-block;">
 </div>
 
-
-<br />
-
-## ⚙ 주요 기능
-* **소비자, 판매자 상품 관련 Firebase SDK를 활용한 CRUD 구현**
-* **유저 플로우 및 서비스 로직 테스트를 위한 Cypress E2E 테스트 기능**
-* **합성 컴포넌트와 커스텀 훅을 통해 컴포넌트 관심사 분리**
-* **React Suspense, Error boundary를 활용한 예외처리**
-* **Https 서비스 배포를 위한 AWS S3, Cloudfront, Route 53 활용**
-* **Github Actions, husky를 활용한 자동화된 CI/CD 구현**
-
-
-<br />
-
-### 📆 Project Timeline
-* 총 기간: 2024/02/01 ~ 2024/02/29
-
-
 <br />
 
 ## 🛠 Tech Stack
@@ -41,4 +23,5 @@
 
 <br />
 
-##  **📚 [아키텍처 및 트러블슈팅 자세히 보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
+##  **📚 [기술적 의사결정 및 트러블슈팅 자세히 보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
+![image](https://github.com/Changsoon-Yun/second-market/assets/92949174/d22c2834-2c5f-42dd-b73d-5ce5a43661d0)
