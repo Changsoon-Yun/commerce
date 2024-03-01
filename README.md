@@ -40,4 +40,4 @@
 
 <br />
 
-## 📚 [트러블 슈팅 및 의사결정 바로보](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)
+## 📚 [트러블 슈팅 및 의사결정 바로보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)
