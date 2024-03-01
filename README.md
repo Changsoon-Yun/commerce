@@ -40,13 +40,4 @@
 
 <br />
 
-## 📚 Library
-| Name | Appliance | Version |
-| --- | --- | --- |
-| react-query     | 서버 상태 관리  | 5.17.19  |
-| cypress         | E2E 테스트       | 13.6.4   |
-| react-hook-form | 폼상태관리       | 7.49.3   |
-| zod             | 유효성 검사      | 3.22.4   |
-| firebase        | baas            | 10.7.2   |
-| tailwindcss     | 유틸리티 CSS     | 3.4.1    |
-| vite            | 빌드            | 5.0.8    |
+## 📚 [트러블 슈팅 및 의사결정 바로보](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)
