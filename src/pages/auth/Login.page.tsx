@@ -55,7 +55,7 @@ export default function LoginPage() {
             <p className={'text-center mt-8 text-sm text-zinc-600'}>
               계정이 없으신가요?
               <span className={'text-blue-500'}>
-                <Link to={'/register/select'}> 회원가입 하기</Link>
+                <Link to={'/register/seller'}> 회원가입 하기</Link>
               </span>
             </p>
             <SocialLogins
