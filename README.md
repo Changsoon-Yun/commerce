@@ -8,6 +8,10 @@
 
 <br />
 
+##  **📚 [아키텍처 및 트러블슈팅 바로보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)**
+
+<br />
+
 ## ⚙ 주요 기능
 * **소비자, 판매자 상품 관련 Firebase SDK를 활용한 CRUD 구현**
 * **유저 플로우 및 서비스 로직 테스트를 위한 Cypress E2E 테스트 기능**
@@ -40,4 +44,3 @@
 
 <br />
 
-## 📚 [트러블 슈팅 및 의사결정 바로보기](https://changsoonyun.notion.site/518829e937a0479fbc9ae56571e26658?pvs=4)
