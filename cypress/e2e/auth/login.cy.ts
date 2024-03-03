@@ -22,6 +22,12 @@ describe('로그인 테스트', () => {
     cy.url().should('eq', 'http://localhost:5173/');
   });
 
+  it('회원가입 페이지로 이동 되는지', () => {
+    cy.get('[data-testid="link-to-register"]').should('be.visible').click();
+
+    cy.url().should('eq', 'http://localhost:5173/register/seller');
+  });
+
   context('잘못된 인풋 입력', () => {
     it('이메일 에러 메세지 출력', () => {
       cy.get('@email-input').type('a');
