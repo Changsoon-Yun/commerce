@@ -11,7 +11,7 @@ export const registerFormSchema = loginFormSchema.extend({
   userName: z
     .string()
     .min(1, { message: '이름을 입력해 주세요.' })
-    .max(20, { message: '이름은 최대 20자 입니다.' }),
+    .max(50, { message: '이름은 최대 50자 입니다.' }),
 });
 
 export const productFormSchema = z.object({
