@@ -79,9 +79,9 @@ export function useAuth() {
         });
         toast({
           title: '회원 가입 성공!',
-          description: '로그인 페이지로 이동합니다!',
+          description: '로그인까지 했어요! 메인 페이지로 이동합니다!',
         });
-        navigate('/login');
+        navigate('/');
       }
 
       // 로그인
