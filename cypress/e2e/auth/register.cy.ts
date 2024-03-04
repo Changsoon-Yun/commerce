@@ -28,8 +28,11 @@ describe('회원가입 테스트', () => {
     cy.get('@password-input').invoke('val').should('eq', '1q2w3e4r!A');
     cy.get('@register-button').click();
 
-    cy.get('li[role="status"]').should('have.text', '회원 가입 성공!로그인 페이지로 이동합니다!');
-    cy.url().should('eq', 'http://localhost:5173/login');
+    cy.get('li[role="status"]').should(
+      'have.text',
+      '회원 가입 성공!로그인까지 했어요! 메인 페이지로 이동합니다!'
+    );
+    cy.url().should('eq', 'http://localhost:5173/');
   });
 
   context('잘못된 인풋 입력', () => {
