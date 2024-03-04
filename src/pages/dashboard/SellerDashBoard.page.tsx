@@ -21,6 +21,7 @@ import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 import { Card } from '@/components/products/card';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
+import NoProduct from '@/components/optimize/NoProduct.tsx';
 
 export default function SellerDashBoardPage() {
   const { products, inViewRef, isFetchingNextPage } = useGetSellerProducts();
@@ -42,7 +43,12 @@ export default function SellerDashBoardPage() {
           }
         />
       </Container>
-      <Container className={'py-10'}>
+      <Container className={'py-10 flex-1'}>
+        <NoProduct
+          products={products?.pages[0].products}
+          title={'판매 상품이 없어요'}
+          desc={'상품 등록은 어떠신가요?'}
+        />
         <div className={'grid grid-cols-2 gap-2'} data-testid={'seller-products-wrapper'}>
           {products?.pages.map((items) =>
             items.products.map(

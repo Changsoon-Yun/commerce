@@ -5,6 +5,8 @@ import { IoMdClose } from 'react-icons/io';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
 import { Link, useLocation } from 'react-router-dom';
 import CardButton from '@/components/products/card/CardButton.tsx';
+import NoProduct from '@/components/optimize/NoProduct.tsx';
+import { Button } from '@/components/ui/button.tsx';
 
 export default function SideCart() {
   const { isOpen, carts, toggleHandler, closeHandler } = useContext(CartContext);
@@ -39,21 +41,34 @@ export default function SideCart() {
                 }}
               />
             </div>
-            <div className={'grid grid-cols-2 gap-2'} data-testid={'cart-item-list'}>
-              {products?.map((product) => <CartList key={product.id} product={product} />)}
+          </div>
+          {products?.length === 0 ? (
+            <NoProduct
+              products={products}
+              title={'장바구니에 상품이 없어요!'}
+              desc={'찜해보는건 어떠신가요?'}>
+              <Button>
+                <Link to={'/'}>홈으로 가기</Link>
+              </Button>
+            </NoProduct>
+          ) : (
+            <div>
+              <div className={'grid grid-cols-2 gap-2'} data-testid={'cart-item-list'}>
+                {products?.map((product) => <CartList key={product.id} product={product} />)}
+              </div>
+              <div className={'text-right py-4 break-keep whitespace-nowrap'}>
+                주문 예상 금액 : {products?.reduce((acc, curr) => acc + curr.price, 0)} 원
+              </div>
+              <CardButton
+                className={'w-full'}
+                asChild
+                onClick={() => {
+                  toggleHandler();
+                }}>
+                <Link to={'/order/cart'}>구매하기</Link>
+              </CardButton>
             </div>
-          </div>
-          <div className={'text-right py-4 break-keep whitespace-nowrap'}>
-            주문 예상 금액 : {products?.reduce((acc, curr) => acc + curr.price, 0)} 원
-          </div>
-          <CardButton
-            className={'w-full'}
-            asChild
-            onClick={() => {
-              toggleHandler();
-            }}>
-            <Link to={'/order/cart'}>구매하기</Link>
-          </CardButton>
+          )}
         </div>
       </aside>
     </>
