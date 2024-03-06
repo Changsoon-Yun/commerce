@@ -4,7 +4,6 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { useCallback, useMemo } from 'react';
-import { IProducts } from '@/types/product.ts';
 
 export default function useGetSellerProduct({ id }: { id: string }) {
   const { storedUserData } = useAuth();
@@ -15,7 +14,7 @@ export default function useGetSellerProduct({ id }: { id: string }) {
     const q = doc(db, `products/${id}`);
     const querySnapshot = await getDoc(q);
 
-    return querySnapshot.data() as IProducts;
+    return querySnapshot.data();
   }, [id, storedUserData]);
 
   const { data: product } = useQuery({
