@@ -18,6 +18,13 @@ export default function ErrorFallbackPage({ error }: FallbackProps) {
               className="rounded-md cursor-pointer bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Reload Page
             </button>
+            <button
+              onClick={() => {
+                location.href = '/';
+              }}
+              className="rounded-md cursor-pointer bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Go Home!
+            </button>
             <a href="#" className="text-sm font-semibold text-gray-900">
               Contact support <span aria-hidden="true">&rarr;</span>
             </a>
