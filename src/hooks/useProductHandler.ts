@@ -35,6 +35,9 @@ export default function useProductHandler(id?: string) {
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
+    if (previewImages.length === 0) {
+      return alert('이미지는 최소 한장이 필요합니다!');
+    }
     try {
       setIsLoading(true);
       await uploadHandler(values.title);
@@ -53,8 +56,7 @@ export default function useProductHandler(id?: string) {
 
   const editHandler = async (values: z.infer<typeof productFormSchema>) => {
     if (previewImages.length < 1) {
-      alert('이미지는 최소 한장이 필요합니다.');
-      return;
+      return alert('이미지는 최소 한장이 필요합니다.');
     }
     try {
       setIsLoading(true);
