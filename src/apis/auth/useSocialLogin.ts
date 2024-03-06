@@ -15,8 +15,8 @@ export default function useSocialLogin() {
       const userCredential = await signInWithPopup(auth, provider); // 팝업창 띄워서 로그인
 
       const uid = userCredential.user.uid;
-      const q = doc(db, 'users', uid);
-      const querySnapshot = await getDoc(q);
+      const userRef = doc(db, 'users', uid);
+      const querySnapshot = await getDoc(userRef);
       if (!querySnapshot.data()) {
         await setDoc(doc(db, 'users', uid), {
           email: userCredential.user.email,
@@ -29,10 +29,10 @@ export default function useSocialLogin() {
         });
       }
 
-      const q2 = doc(db, 'users', uid);
-      const querySnapshot2 = await getDoc(q2);
-      localStorage.setItem('user', JSON.stringify(querySnapshot2.data()));
-      setStoredUserData(querySnapshot2.data() as UserData);
+      const updatedUserRef = doc(db, 'users', uid);
+      const updatedSnapShot = await getDoc(updatedUserRef);
+      localStorage.setItem('user', JSON.stringify(updatedSnapShot.data()));
+      setStoredUserData(updatedSnapShot.data() as UserData);
 
       toast({
         title: '로그인 성공!',
