@@ -1,11 +1,8 @@
-import { db } from '@/lib/firebase/firebase.ts';
 import { z } from 'zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
-import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/auth/useAuth.ts';
 import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
-import { FirebaseError } from 'firebase/app';
 import { toast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import useImage from '@/hooks/useImage.ts';
@@ -13,6 +10,13 @@ import { IProducts } from '@/types/product.ts';
 import { useState } from 'react';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError';
+import {
+  deleteAction,
+  editAction,
+  submitAction,
+  updateOrderStatusAction,
+} from '@/lib/firebase/productActions.ts';
+import { UserData } from '@/types/user.ts';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
@@ -35,24 +39,7 @@ export default function useProductHandler(id?: string) {
       setIsLoading(true);
       await uploadHandler(values.title);
       const imageUrlList = await getImageURL(values.title);
-      const collectionRef = collection(db, `products`);
-      const docRef = await addDoc(collectionRef, {
-        uid: userData?.uid,
-        sellerEmail: userData?.email,
-        title: values.title,
-        desc: values.desc,
-        price: +values.price,
-        category: values.category,
-        condition: values.condition,
-        imageList: imageUrlList,
-        isSold: false,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-      const productRef = doc(db, `products/${docRef.id}`);
-      await updateDoc(productRef, {
-        id: docRef.id,
-      });
+      await submitAction({ userData: userData as UserData, values, imageUrlList });
       toast({
         description: '상품 등록을 성공 했습니다. 이전 페이지로 이동합니다.',
       });
@@ -65,24 +52,15 @@ export default function useProductHandler(id?: string) {
   };
 
   const editHandler = async (values: z.infer<typeof productFormSchema>) => {
+    if (previewImages.length < 1) {
+      alert('이미지는 최소 한장이 필요합니다.');
+      return;
+    }
     try {
       setIsLoading(true);
       await uploadHandler(values.title);
       const imageUrlList = await getImageURL(values.title);
-
-      const productRef = doc(db, `products/${id}`);
-      if (product) {
-        await updateDoc(productRef, {
-          ...product,
-          title: values.title,
-          desc: values.desc,
-          price: +values.price,
-          category: values.category,
-          condition: values.condition,
-          imageList: [...product.imageList, ...imageUrlList],
-          updatedAt: serverTimestamp(),
-        });
-      }
+      await editAction({ values, imageUrlList, id: id as string, product: product as IProducts });
       toast({
         description: '상품 수정을 성공 했습니다. 이전 페이지로 이동합니다.',
       });
@@ -95,10 +73,9 @@ export default function useProductHandler(id?: string) {
   };
 
   const deleteHandler = async (id: string) => {
-    const productRef = doc(db, `products/${id}`);
     if (confirm('삭제 하시겠습니까?')) {
       try {
-        await deleteDoc(productRef);
+        await deleteAction({ id });
         await queryClient.invalidateQueries({
           queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
         });
@@ -106,25 +83,14 @@ export default function useProductHandler(id?: string) {
           description: '상품 삭제에 성공 했습니다.',
         });
       } catch (e) {
-        if (e instanceof FirebaseError) {
-          toast({
-            title: '에러!',
-            description: e.code,
-            variant: 'destructive',
-          });
-        }
+        handleFirebaseError({ e, toast });
       }
     }
   };
 
   const updateOrderStatusHandler = async (value: string, id: string) => {
-    const productRef = doc(db, `products/${id}`);
     try {
-      await updateDoc(productRef, {
-        ...product,
-        updatedAt: serverTimestamp(),
-        orderStatus: value,
-      });
+      await updateOrderStatusAction({ value, id, product: product as IProducts });
       toast({
         description: '주문 상태 수정을 성공 했습니다.',
       });
