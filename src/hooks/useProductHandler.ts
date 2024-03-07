@@ -31,6 +31,7 @@ export default function useProductHandler(id?: string) {
     previewImages,
     setPreviewImages,
     deleteImageHandler,
+    deleteAddedImageHandler,
   } = useImage(product as IProducts);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,13 +62,18 @@ export default function useProductHandler(id?: string) {
     try {
       setIsLoading(true);
       await uploadHandler(values.title);
+      await deleteAddedImageHandler(id as string);
       const imageUrlList = await getImageURL(values.title);
-      await editAction({ values, imageUrlList, id: id as string, product: product as IProducts });
+      await editAction({ values, imageUrlList, id: id as string });
       toast({
         description: '상품 수정을 성공 했습니다. 이전 페이지로 이동합니다.',
       });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.PRODUCT.SELLER(userData?.uid as string, id as string),
+      });
       navigate('/seller/dashboard');
     } catch (e) {
+      console.log(e);
       handleFirebaseError({ e, toast });
     } finally {
       setIsLoading(false);

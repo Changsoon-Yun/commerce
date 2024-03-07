@@ -26,9 +26,7 @@ interface SubmitActionProps extends UploadData {
   userData: UserData;
 }
 
-interface EditActionProps extends UploadData, IdProps {
-  product: IProducts;
-}
+interface EditActionProps extends UploadData, IdProps {}
 
 interface DeleteActionProps extends IdProps {}
 
@@ -67,8 +65,10 @@ const submitAction = async ({ userData, values, imageUrlList }: SubmitActionProp
   });
 };
 
-const editAction = async ({ values, imageUrlList, id, product }: EditActionProps) => {
+const editAction = async ({ values, imageUrlList, id }: EditActionProps) => {
   const productRef = doc(db, `products/${id}`);
+  const productSnapshot = await getDoc(productRef);
+  const product = productSnapshot.data();
   if (product) {
     await updateDoc(productRef, {
       ...product,

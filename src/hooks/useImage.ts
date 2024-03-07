@@ -1,21 +1,17 @@
 import { ChangeEvent, useState } from 'react';
 import { UploadImgListType } from '@/hooks/useProductHandler.ts';
-import { toast } from '@/components/ui/use-toast.ts';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase/firebase.ts';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
-import { FirebaseError } from 'firebase/app';
 import { IProducts } from '@/types/product.ts';
 import { useAuth } from '@/apis/auth/useAuth.ts';
-import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import imageCompression from 'browser-image-compression';
-import { queryClient } from '@/lib/react-query/queryClient.ts';
 
 export default function useImage(product: IProducts) {
   const { userData } = useAuth();
   const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-
+  const [deleteImages, setDeleteImages] = useState<string[]>([]);
   const addImgHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const temp: UploadImgListType = [];
     const temp2 = [];
@@ -44,62 +40,38 @@ export default function useImage(product: IProducts) {
     setPreviewImages([...previewImages, ...temp2]);
   };
 
-  const deleteImageHandler = async (targetSrc: string, id?: string) => {
+  const deleteAddedImageHandler = async (id: string) => {
+    const promises = deleteImages.map(async (targetSrc) => {
+      const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
+      const fileRef = ref(storage, decodedFilePath);
+      const productRef = doc(db, `products/${id}`);
+      const updatedImageList = product?.imageList.filter((src: string) => {
+        return src !== targetSrc;
+      });
+
+      await deleteObject(fileRef);
+      await updateDoc(productRef, {
+        ...product,
+        imageList: updatedImageList,
+        updatedAt: serverTimestamp(),
+      });
+    });
+    await Promise.all(promises);
+  };
+
+  const deleteImageHandler = async (targetSrc: string) => {
+    setUploadImages(
+      uploadImages.filter(({ src }) => {
+        return targetSrc != src;
+      })
+    );
+    setPreviewImages(
+      previewImages.filter((src) => {
+        return targetSrc != src;
+      })
+    );
     if (targetSrc.startsWith('https://firebasestorage')) {
-      if (confirm('이미 등록된 사진입니다. \n삭제 하시겠습니까?')) {
-        try {
-          const decodedFilePath = decodeURIComponent(targetSrc.split('/o/')[1].split('?')[0]);
-          const fileRef = ref(storage, decodedFilePath);
-          const productRef = doc(db, `products/${id}`);
-
-          const updatedImageList = product?.imageList.filter((src: string) => {
-            return src !== targetSrc;
-          });
-
-          await deleteObject(fileRef);
-          await updateDoc(productRef, {
-            ...product,
-            imageList: updatedImageList,
-            updatedAt: serverTimestamp(),
-          });
-          await queryClient.invalidateQueries({
-            queryKey: QUERY_KEYS.PRODUCT.SELLER(userData?.uid as string, id as string),
-          });
-          toast({
-            description: '이미지 삭제를 성공 했습니다.',
-          });
-
-          setUploadImages(
-            uploadImages.filter(({ src }) => {
-              return targetSrc != src;
-            })
-          );
-          setPreviewImages(
-            previewImages.filter((src) => {
-              return targetSrc != src;
-            })
-          );
-        } catch (e) {
-          if (e instanceof FirebaseError) {
-            toast({
-              title: '에러!',
-              description: e.code,
-              variant: 'destructive',
-            });
-          }
-        }
-      }
-    } else {
-      setUploadImages(
-        uploadImages.filter(({ src }) => {
-          return targetSrc != src;
-        })
-      );
-      setPreviewImages(
-        previewImages.filter((src) => {
-          return targetSrc != src;
-        })
-      );
+      setDeleteImages((prev) => [...prev, targetSrc]);
     }
   };
 
@@ -128,5 +100,6 @@ export default function useImage(product: IProducts) {
     setPreviewImages,
     previewImages,
     getImageURL,
+    deleteAddedImageHandler,
   };
 }
