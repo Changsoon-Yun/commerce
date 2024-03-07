@@ -3,8 +3,8 @@ import useGetHomeProducts from '@/apis/useGetHomeProducts.ts';
 import { Card } from '../card';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter.ts';
 import Container from '@/components/Container.tsx';
-import { MdArrowRightAlt } from 'react-icons/md';
 import CardSkeleton from '@/components/products/card/CardSkeleton.tsx';
+import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight';
 
 interface CardWithCategoryProps {
   category: { label: string; value: string };
@@ -25,7 +25,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
             </h3>
             <Link to={`products/${category.value}`} className={'flex items-center gap-1'}>
               <span className={'text-foreground text-sm'}>더보기</span>
-              <MdArrowRightAlt />
+              <FaArrowRight />
             </Link>
           </div>
           <div className={'grid grid-cols-2 gap-2'}>

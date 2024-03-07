@@ -2,7 +2,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input.tsx';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { ChangeEvent } from 'react';
-import { MdOutlinePhotoCamera } from 'react-icons/md';
+import { MdPhotoCamera } from '@react-icons/all-files/md/MdPhotoCamera';
 
 interface FormInnerProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -29,7 +29,7 @@ export default function FormFileInner<T extends FieldValues>({
                 className={
                   'border-zinc-500 border-2 rounded mt-3 p-3 flex justify-center items-center cursor-pointer'
                 }>
-                <MdOutlinePhotoCamera size={50} />
+                <MdPhotoCamera size={50} />
                 <p className={'hidden'}>{label}</p>
               </div>
             </FormLabel>

@@ -1,6 +1,7 @@
-import { IoClose, IoMenuOutline } from 'react-icons/io5';
 import { useContext } from 'react';
 import { MenuContext } from '@/context/MenuContext.tsx';
+import { IoClose } from '@react-icons/all-files/io5/IoClose';
+import { IoMenuOutline } from '@react-icons/all-files/io5/IoMenuOutline';
 
 export default function MenuTrigger() {
   const { isOpen, toggleMenuHandler } = useContext(MenuContext);

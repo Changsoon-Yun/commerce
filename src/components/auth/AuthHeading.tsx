@@ -8,7 +8,10 @@ export default function AuthHeading({ text }: AuthHeadingProps) {
     <>
       <div className={'flex flex-col items-center justify-center'}>
         <Link to={'/'}>
-          <img src="/img/logo.jpg" alt="logo" />
+          <picture>
+            <source srcSet="/img/logo.webp" type="image/webp" />
+            <img src="/img/logo.jpg" alt="logo" />
+          </picture>
         </Link>
         <h2
           data-testid={'heading-text'}

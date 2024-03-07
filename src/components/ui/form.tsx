@@ -12,7 +12,7 @@ import {
 
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { IoCheckmarkSharp } from 'react-icons/io5';
+import { IoCheckmarkSharp } from '@react-icons/all-files/io5/IoCheckmarkSharp';
 
 const Form = FormProvider;
 

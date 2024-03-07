@@ -1,5 +1,5 @@
-import { TiDelete } from 'react-icons/ti';
 import { useParams } from 'react-router-dom';
+import { TiDelete } from '@react-icons/all-files/ti/TiDelete';
 
 interface ProductImgListProps {
   previewImages: string[];

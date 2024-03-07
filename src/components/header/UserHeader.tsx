@@ -1,6 +1,6 @@
-import { FaRegHeart } from 'react-icons/fa';
 import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
+import { FaRegHeart } from '@react-icons/all-files/fa/FaRegHeart';
 
 export default function UserHeader() {
   const { carts, toggleHandler } = useContext(CartContext);
