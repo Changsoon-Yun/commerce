@@ -73,7 +73,6 @@ export default function useProductHandler(id?: string) {
       });
       navigate('/seller/dashboard');
     } catch (e) {
-      console.log(e);
       handleFirebaseError({ e, toast });
     } finally {
       setIsLoading(false);
