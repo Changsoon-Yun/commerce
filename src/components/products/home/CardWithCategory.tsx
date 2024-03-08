@@ -3,8 +3,8 @@ import useGetHomeProducts from '@/apis/useGetHomeProducts.ts';
 import { Card } from '../card';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter.ts';
 import Container from '@/components/Container.tsx';
-import CardSkeleton from '@/components/products/card/CardSkeleton.tsx';
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight';
+import CardSkeleton from '@/components/products/card/CardSkeleton.tsx';
 
 interface CardWithCategoryProps {
   category: { label: string; value: string };

@@ -11,6 +11,7 @@ import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError';
 import { cancelOrderByIdAction, updateFetchAction } from '@/lib/firebase/productActions.ts';
+import { toastMessage } from '@/constant/toastMessage.ts';
 
 export default function useOrder() {
   const { carts } = useContext(CartContext);
@@ -94,7 +95,7 @@ export default function useOrder() {
       await cancelOrderByIdAction({ id });
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS.ORDERED() });
       toast({
-        description: '주문 취소를 성공 했습니다.',
+        description: toastMessage.cancelOrder.description,
       });
     } catch (e) {
       handleFirebaseError({ e, toast });

@@ -16,6 +16,7 @@ import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { UserData } from '@/types/user.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
+import { toastMessage } from '@/constant/toastMessage.ts';
 
 interface authServerCallProps {
   type: 'register' | 'login';
@@ -27,14 +28,12 @@ export function useAuth() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  //storedUserData의 초기값은 로컬스토리지에 있는 데이터를 사용한다.
   const [storedUserData, setStoredUserData] = useState<UserData | undefined | null>(
     localStorage.getItem('user') === 'undefined'
       ? null
       : JSON.parse(localStorage.getItem('user') as string)
   );
 
-  //유저정보를 페칭한다면 로컬스토리지, storedUserData 및 쿼리데이터 변경
   const fetchUserInfo = useCallback(async () => {
     const uid = auth.currentUser?.uid || '';
     const q = doc(db, 'users', uid);
@@ -44,7 +43,6 @@ export function useAuth() {
     return querySnapshot.data() as UserData;
   }, []);
 
-  //유저 상태가 변경 될때마다 실행되는 Effect
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -78,8 +76,8 @@ export function useAuth() {
           updatedAt: serverTimestamp(),
         });
         toast({
-          title: '회원 가입 성공!',
-          description: '로그인까지 했어요! 메인 페이지로 이동합니다!',
+          title: toastMessage.register.title,
+          description: toastMessage.register.description,
         });
         navigate('/');
       }
@@ -87,11 +85,10 @@ export function useAuth() {
       // 로그인
       if (type === 'login' && data) {
         await signInWithEmailAndPassword(auth, data.email, data.password);
-        // 로그인시 로컬스토리지에 저장할 유저정보를 페칭한다
         localStorage.setItem('user', JSON.stringify(await fetchUserInfo()));
         toast({
-          title: '로그인 성공!',
-          description: '메인 페이지로 이동합니다!',
+          title: toastMessage.login.title,
+          description: toastMessage.login.description,
         });
         navigate('/');
       }
@@ -100,14 +97,12 @@ export function useAuth() {
     }
   };
 
-  //실제 데이터 통신에 사용할 유저 정보 데이터 캐싱
   const { data: userData } = useQuery({
     queryKey: QUERY_KEYS.AUTH.USER(),
     queryFn: fetchUserInfo,
     enabled: !!auth.currentUser,
   });
 
-  //로그아웃
   const { mutate: logout } = useMutation({
     mutationFn: () => signOut(auth),
     onSuccess() {

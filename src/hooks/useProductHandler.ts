@@ -17,6 +17,7 @@ import {
   updateOrderStatusAction,
 } from '@/lib/firebase/productActions.ts';
 import { UserData } from '@/types/user.ts';
+import { toastMessage } from '@/constant/toastMessage.ts';
 
 export type UploadImgListType = { src: string; blob: File }[];
 
@@ -45,7 +46,7 @@ export default function useProductHandler(id?: string) {
       const imageUrlList = await getImageURL(values.title);
       await submitAction({ userData: userData as UserData, values, imageUrlList });
       toast({
-        description: '상품 등록을 성공 했습니다. 이전 페이지로 이동합니다.',
+        description: toastMessage.productAdd.description,
       });
       navigate('/seller/dashboard');
     } catch (e) {
@@ -66,7 +67,7 @@ export default function useProductHandler(id?: string) {
       const imageUrlList = await getImageURL(values.title);
       await editAction({ values, imageUrlList, id: id as string });
       toast({
-        description: '상품 수정을 성공 했습니다. 이전 페이지로 이동합니다.',
+        description: toastMessage.productEdit.description,
       });
       await queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.PRODUCT.SELLER(userData?.uid as string, id as string),
@@ -87,7 +88,7 @@ export default function useProductHandler(id?: string) {
           queryKey: QUERY_KEYS.PRODUCTS.SELLER(storedUserData?.uid as string),
         });
         toast({
-          description: '상품 삭제에 성공 했습니다.',
+          description: toastMessage.productDelete.description,
         });
       } catch (e) {
         handleFirebaseError({ e, toast });
@@ -99,7 +100,7 @@ export default function useProductHandler(id?: string) {
     try {
       await updateOrderStatusAction({ value, id, product: product as IProducts });
       toast({
-        description: '주문 상태 수정을 성공 했습니다.',
+        description: toastMessage.updateOrderState.description,
       });
     } catch (e) {
       handleFirebaseError({ e, toast });

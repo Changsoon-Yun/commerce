@@ -6,6 +6,7 @@ import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/apis/auth/useAuth.ts';
+import { toastMessage } from '@/constant/toastMessage.ts';
 
 export default function useSocialLogin() {
   const navigate = useNavigate();
@@ -35,8 +36,8 @@ export default function useSocialLogin() {
       setStoredUserData(updatedSnapShot.data() as UserData);
 
       toast({
-        title: '로그인 성공!',
-        description: '메인 페이지로 이동합니다!',
+        title: toastMessage.login.title,
+        description: toastMessage.login.description,
       });
       navigate('/');
     } catch (e) {
