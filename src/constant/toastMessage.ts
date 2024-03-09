@@ -21,6 +21,7 @@ const toastMessage = {
     '회원 가입 성공!',
     '로그인까지 했어요! 메인 페이지로 이동합니다!'
   ),
+  profile: new ToastMessage('프로필 정보를 수정 했습니다.'),
   productAdd: new ToastMessage('상품 등록을 성공 했습니다. 이전 페이지로 이동합니다.'),
   productEdit: new ToastMessage('상품 수정을 성공 했습니다. 이전 페이지로 이동합니다.'),
   productDelete: new ToastMessage('상품 삭제에 성공 했습니다.'),
