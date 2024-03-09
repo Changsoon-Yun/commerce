@@ -11,7 +11,7 @@ import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 import PageTitle from '@/components/PageTitle.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
-import FormTextInput from '@/components/compound/submission/FormTextInput.tsx';
+import { Submission } from '@/components/compound/submission';
 
 export default function SellerProductAddPage() {
   const { submitHandler, addImgHandler, previewImages, deleteImageHandler, isLoading } =
@@ -50,28 +50,60 @@ export default function SellerProductAddPage() {
             <FormField
               name={'title'}
               render={({ field }) => (
-                <FormTextInput label={'제목'} placeholder={'제목을 입력해 주세요.'} field={field} />
+                <Submission.Root>
+                  <Submission.Label label={'제목'} />
+                  <Submission.Content>
+                    <Submission.Input placeholder={'제목을 입력해 주세요.'} field={field} />
+                  </Submission.Content>
+                </Submission.Root>
               )}
             />
             <FormField
               name={'price'}
               render={({ field }) => (
-                <FormTextInput
-                  label={'가격'}
-                  placeholder={'가격을 입력해 주세요.'}
-                  type={'number'}
-                  field={field}
-                />
+                <Submission.Root>
+                  <Submission.Label label={'가격'} />
+                  <Submission.Content>
+                    <Submission.InputIcon />
+                    <Submission.Input
+                      placeholder={'가격을 입력해 주세요.'}
+                      type={'number'}
+                      hasPadding={true}
+                      field={field}
+                    />
+                  </Submission.Content>
+                </Submission.Root>
               )}
             />
             <FormField
               name={'desc'}
               render={({ field }) => (
-                <FormTextInput
-                  label={'상세 내용'}
-                  placeholder={'게시글 내용을 작성해 주세요.'}
-                  field={field}
-                />
+                <Submission.Root>
+                  <Submission.Label label={'상세 내용'} />
+                  <Submission.Content>
+                    <Submission.InputIcon />
+                    <Submission.Input
+                      placeholder={'게시글 내용을 작성해 주세요.'}
+                      type={'number'}
+                      hasPadding={true}
+                      field={field}
+                    />
+                  </Submission.Content>
+                </Submission.Root>
+              )}
+            />
+            <FormField
+              name={'desc'}
+              render={({ field }) => (
+                <Submission.Root>
+                  <Submission.Label label={'상세 내용'} />
+                  <Submission.Content>
+                    <Submission.Textarea
+                      placeholder={'게시글 내용을 작성해 주세요.'}
+                      field={field}
+                    />
+                  </Submission.Content>
+                </Submission.Root>
               )}
             />
             <FormComboxInner form={form} name={'category'} label={'카테고리'} />
