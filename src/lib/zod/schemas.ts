@@ -39,3 +39,11 @@ export const orderDataFormSchema = z.object({
   buyer_addr: z.string().min(1, zodMessage.order.buyer_addr),
   buyer_postcode: z.string().min(1, zodMessage.order.buyer_postcode),
 });
+
+export const profileSchema = z.object({
+  profileImg: z.any(),
+  userName: z
+    .string()
+    .min(1, zodMessage.register.userName.min)
+    .max(50, zodMessage.register.userName.max),
+});
