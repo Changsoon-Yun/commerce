@@ -1,11 +1,10 @@
 import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { MenuContext } from '@/context/MenuContext.tsx';
+import useMenuContext from '@/context/useMenuContext.tsx';
 
 export default function MenuAction() {
   const { storedUserData, logout } = useAuth();
-  const { closeMenuHandler } = useContext(MenuContext);
+  const { closeMenuHandler } = useMenuContext();
   return (
     <>
       {storedUserData ? (

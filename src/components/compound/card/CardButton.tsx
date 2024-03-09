@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@/components/ui/button.tsx';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils.ts';
-import { useCardContext } from '@/hooks/useCardContext';
+import { useCardContext } from '@/context/useCardContext.ts';
 
 interface CardButtonProps extends ButtonProps {
   children: ReactNode;

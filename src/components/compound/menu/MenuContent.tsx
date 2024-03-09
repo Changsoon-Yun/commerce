@@ -1,12 +1,12 @@
-import { ReactNode, useContext } from 'react';
-import { MenuContext } from '@/context/MenuContext.tsx';
+import { ReactNode } from 'react';
+import useMenuContext from '@/context/useMenuContext.tsx';
 
 interface MenuContentProps {
   children: ReactNode;
 }
 
 export default function MenuContent({ children }: MenuContentProps) {
-  const { isOpen } = useContext(MenuContext);
+  const { isOpen } = useMenuContext();
   return (
     <>
       <div

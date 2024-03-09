@@ -1,12 +1,11 @@
 import { categories } from '@/constant/categories.ts';
 import { Link, useParams } from 'react-router-dom';
 import Container from '@/components/Container.tsx';
-import { useContext } from 'react';
-import { MenuContext } from '@/context/MenuContext.tsx';
+import useMenuContext from '@/context/useMenuContext.tsx';
 
 export default function CategoryNav() {
   const { category: currentLocation } = useParams();
-  const { closeMenuHandler } = useContext(MenuContext);
+  const { closeMenuHandler } = useMenuContext();
   return (
     <>
       <div className={'flex gap-2 py-2 max-w-lg items-center bg-white'}>

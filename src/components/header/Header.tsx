@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { MenuContext } from '@/context/MenuContext.tsx';
+import useMenuContext from '@/context/useMenuContext.tsx';
 import { useContext } from 'react';
 import { Menu } from '../compound/menu';
 import CategoryNav from '@/components/products/home/CategoryNav.tsx';
 import { CartContext } from '@/context/CartContext.tsx';
 
 export default function Header() {
-  const { closeMenuHandler } = useContext(MenuContext);
+  const { closeMenuHandler } = useMenuContext();
   const { closeHandler: closeCartHandler } = useContext(CartContext);
   return (
     <>

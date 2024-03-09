@@ -1,4 +1,4 @@
-import { CardContext } from '@/hooks/useCardContext';
+import { CardContext } from '@/context/CardContext';
 import { HTMLAttributes, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 

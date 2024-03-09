@@ -6,11 +6,7 @@ interface MenuContextProps {
   closeMenuHandler: () => void;
 }
 
-const MenuContext = createContext<MenuContextProps>({
-  isOpen: false,
-  toggleMenuHandler: () => {},
-  closeMenuHandler: () => {},
-});
+const MenuContext = createContext<MenuContextProps | undefined>(undefined);
 const MenuProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 

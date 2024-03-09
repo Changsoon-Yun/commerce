@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { MenuContext } from '@/context/MenuContext.tsx';
+import useMenuContext from '@/context/useMenuContext.tsx';
 
 interface MenuLinkProps {
   text: string;
@@ -8,7 +7,7 @@ interface MenuLinkProps {
 }
 
 export default function MenuLink({ text, to }: MenuLinkProps) {
-  const { closeMenuHandler } = useContext(MenuContext);
+  const { closeMenuHandler } = useMenuContext();
   return (
     <>
       <div className={'px-5 my-1 hover:bg-zinc-100'} onClick={closeMenuHandler}>
