@@ -3,7 +3,7 @@ import useGetProduct from '@/apis/useGetProduct.ts';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter.ts';
 import useGetRelatedProducts from '@/apis/useGetRelatedProducts.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
-import { Card } from 'src/components/compound/card';
+import { Card } from '@/components/compound/card';
 import DetailProduct from '@/components/products/detail/DetailProduct.tsx';
 import Container from '@/components/Container.tsx';
 

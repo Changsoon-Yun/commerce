@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { conditions } from '@/constant/conditions.ts';
 import { IProducts } from '@/types/product.ts';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
-import { Card } from 'src/components/compound/card';
+import { Card } from '@/components/compound/card';
 
 interface OrderItemProps {
   item: IProducts;

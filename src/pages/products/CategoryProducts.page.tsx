@@ -9,10 +9,10 @@ import { categories } from '@/constant/categories.ts';
 import { useCallback, useMemo, useState } from 'react';
 import FilterList from '@/components/products/FilterList.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
-import { Card } from 'src/components/compound/card';
 import PageTitle from '@/components/PageTitle.tsx';
 import Container from '@/components/Container.tsx';
 import CardSkeleton from '@/components/compound/card/CardSkeleton.tsx';
+import { Card } from '@/components/compound/card';
 
 export default function CategoryProductsPage() {
   const { category } = useParams();

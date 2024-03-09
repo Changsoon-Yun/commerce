@@ -19,7 +19,7 @@ import { useAuth } from '@/apis/auth/useAuth.ts';
 import PageTitle from '@/components/PageTitle.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
-import { Card } from 'src/components/compound/card';
+import { Card } from '@/components/compound/card';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
 import NoProduct from '@/components/optimize/NoProduct.tsx';
 
