@@ -1,6 +1,7 @@
 import { Button, ButtonProps } from '@/components/ui/button.tsx';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils.ts';
+import { useCardContext } from './useCardContext';
 
 interface CardButtonProps extends ButtonProps {
   children: ReactNode;
@@ -8,14 +9,10 @@ interface CardButtonProps extends ButtonProps {
 }
 
 export default function CardButton({ children, className, ...rest }: CardButtonProps) {
+  const { variant } = useCardContext();
   return (
     <>
-      <Button
-        className={cn(
-          'flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2',
-          className
-        )}
-        {...rest}>
+      <Button className={cn('flex-1 h-9 px-4 py-2', className)} variant={variant} {...rest}>
         {children}
       </Button>
     </>

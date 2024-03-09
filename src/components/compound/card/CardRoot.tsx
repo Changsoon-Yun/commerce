@@ -1,5 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CardContext } from './useCardContext';
 
 interface CardRootProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -16,15 +17,17 @@ export default function CardRoot({ children, to, ...rest }: CardRootProps) {
 
   return (
     <>
-      <div
-        className={
-          'relative flex flex-col gap-3 rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200 cursor-pointer'
-        }
-        onClick={goHandler}
-        data-testid={'product-card'}
-        {...rest}>
-        {children}
-      </div>
+      <CardContext.Provider value={{ variant: 'default' }}>
+        <div
+          className={
+            'relative flex flex-col gap-3 rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200 cursor-pointer'
+          }
+          onClick={goHandler}
+          data-testid={'product-card'}
+          {...rest}>
+          {children}
+        </div>
+      </CardContext.Provider>
     </>
   );
 }

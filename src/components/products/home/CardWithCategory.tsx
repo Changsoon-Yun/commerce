@@ -44,7 +44,7 @@ export default function CardWithCategory({ category }: CardWithCategoryProps) {
                   className={'hidden'}
                 />
                 <Card.Buttons>
-                  <Card.Button data-testid={'product-detail-link'} variant={'outline'} asChild>
+                  <Card.Button data-testid={'product-detail-link'} asChild>
                     <Link to={`/product/${product.id}`}>상세보기</Link>
                   </Card.Button>
                 </Card.Buttons>

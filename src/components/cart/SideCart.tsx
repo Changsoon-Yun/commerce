@@ -3,7 +3,6 @@ import { CartContext } from '@/context/CartContext.tsx';
 import CartList from './CartList';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
 import { Link, useLocation } from 'react-router-dom';
-import CardButton from '@/components/compound/card/CardButton.tsx';
 import NoProduct from '@/components/optimize/NoProduct.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose';
@@ -59,14 +58,14 @@ export default function SideCart() {
               <div className={'text-right py-4 break-keep whitespace-nowrap'}>
                 주문 예상 금액 : {products?.reduce((acc, curr) => acc + curr.price, 0)} 원
               </div>
-              <CardButton
+              <Button
                 className={'w-full'}
                 asChild
                 onClick={() => {
                   toggleHandler();
                 }}>
                 <Link to={'/order/cart'}>구매하기</Link>
-              </CardButton>
+              </Button>
             </div>
           )}
         </div>

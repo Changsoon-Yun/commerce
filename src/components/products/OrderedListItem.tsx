@@ -8,7 +8,7 @@ import { conditions } from '@/constant/conditions.ts';
 import { IProducts, OrderStatus } from '@/types/product.ts';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
 import DetailCarousel from '@/components/products/detail/DetailCarousel.tsx';
-import CardButton from '@/components/compound/card/CardButton.tsx';
+import { Button } from '@/components/ui/button.tsx';
 
 interface OrderedListItemProps {
   product: IProducts;
@@ -53,18 +53,18 @@ export default function OrderedListItem({ product, cancelOrderById }: OrderedLis
         </div>
         <div className={'flex flex-col'}>
           <div className="flex-1 flex flex-col justify-center items-center gap-2 mb-4 text-sm">
-            <CardButton variant={'outline'} className={'w-full'}>
+            <Button variant={'outline'} className={'w-full'}>
               배송 조회
-            </CardButton>
+            </Button>
             {product.orderStatus !== OrderStatus.SALE_COMPLETED && (
-              <CardButton
+              <Button
                 variant={'outline'}
                 className={'w-full'}
                 onClick={() => {
                   cancelOrderById(product.id);
                 }}>
                 주문 취소
-              </CardButton>
+              </Button>
             )}
           </div>
         </div>
