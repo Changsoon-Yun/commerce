@@ -6,6 +6,7 @@ import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { IProducts } from '@/types/product.ts';
 import { useAuth } from '@/apis/auth/useAuth.ts';
 import imageCompression from 'browser-image-compression';
+import { compressValues } from '@/constant/compressValues.ts';
 
 export default function useImage(product: IProducts) {
   const { userData } = useAuth();
@@ -13,8 +14,8 @@ export default function useImage(product: IProducts) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [deleteImages, setDeleteImages] = useState<string[]>([]);
   const addImgHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const temp: UploadImgListType = [];
-    const temp2 = [];
+    const uploadImagesTemp: UploadImgListType = [];
+    const previewImagesTemp = [];
     if (e.target.files) {
       // 파일 배열 생성
       const files = Array.from(e.target.files);
@@ -22,8 +23,8 @@ export default function useImage(product: IProducts) {
       // 파일 압축 및 데이터 URL 생성을 위한 Promise 배열 생성
       const compressPromises = files.map(async (file) => {
         const compressedImage = await imageCompression(file, {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 310,
+          maxSizeMB: compressValues.maxSizeMB,
+          maxWidthOrHeight: compressValues.maxWidthOrHeight,
           useWebWorker: true,
         });
         const blobImage = await imageCompression.getDataUrlFromFile(compressedImage);
@@ -32,12 +33,12 @@ export default function useImage(product: IProducts) {
       const compressedImages = await Promise.all(compressPromises);
       const blobImages = compressedImages.map((image) => image.src);
 
-      temp.push(...compressedImages);
-      temp2.push(...blobImages);
+      uploadImagesTemp.push(...compressedImages);
+      previewImagesTemp.push(...blobImages);
     }
 
-    setUploadImages([...uploadImages, ...temp]);
-    setPreviewImages([...previewImages, ...temp2]);
+    setUploadImages([...uploadImages, ...uploadImagesTemp]);
+    setPreviewImages([...previewImages, ...previewImagesTemp]);
   };
 
   const deleteAddedImageHandler = async (id: string) => {
