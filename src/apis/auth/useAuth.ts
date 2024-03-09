@@ -118,5 +118,6 @@ export function useAuth() {
     authServerCall,
     logout,
     userData,
+    fetchUserInfo,
   };
 }
