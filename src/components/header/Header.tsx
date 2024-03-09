@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MenuContext } from '@/context/MenuContext.tsx';
 import { useContext } from 'react';
-import { Menu } from './menu';
+import { Menu } from '../compound/menu';
 import CategoryNav from '@/components/products/home/CategoryNav.tsx';
 import { CartContext } from '@/context/CartContext.tsx';
 

@@ -3,7 +3,7 @@ import { CartContext } from '@/context/CartContext.tsx';
 import { Link } from 'react-router-dom';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter';
 import { IProducts } from '@/types/product.ts';
-import { Card } from '../products/card';
+import { Card } from '../compound/card';
 import { Button } from '@/components/ui/button.tsx';
 
 export default function CartList({ product }: { product: IProducts }) {

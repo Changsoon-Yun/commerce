@@ -8,7 +8,7 @@ import { conditions } from '@/constant/conditions.ts';
 import { IProducts, OrderStatus } from '@/types/product.ts';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
 import DetailCarousel from '@/components/products/detail/DetailCarousel.tsx';
-import CardButton from '@/components/products/card/CardButton.tsx';
+import CardButton from '@/components/compound/card/CardButton.tsx';
 
 interface OrderedListItemProps {
   product: IProducts;

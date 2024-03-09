@@ -3,7 +3,7 @@ import { CartContext } from '@/context/CartContext.tsx';
 import CartList from './CartList';
 import useGetCartProducts from '@/apis/useGetCartProducts.ts';
 import { Link, useLocation } from 'react-router-dom';
-import CardButton from '@/components/products/card/CardButton.tsx';
+import CardButton from '@/components/compound/card/CardButton.tsx';
 import NoProduct from '@/components/optimize/NoProduct.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose';

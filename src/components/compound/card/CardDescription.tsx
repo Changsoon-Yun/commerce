@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils.ts';
 import { HTMLAttributes, ReactNode } from 'react';
 
 interface CardDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {
