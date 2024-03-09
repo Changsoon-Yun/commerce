@@ -13,6 +13,7 @@ export default function CardRoot({ children, to, ...rest }: CardRootProps) {
     if (!to) return;
     navigate(to);
   };
+
   return (
     <>
       <div
