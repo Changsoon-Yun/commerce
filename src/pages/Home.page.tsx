@@ -21,9 +21,9 @@ export default function HomePage() {
         }
       />
       {categories.map((category) => (
-        <div key={category.value} data-testid={'category-product-list'}>
+        <section key={category.value} data-testid={'category-product-list'}>
           <CardWithCategory category={category} />
-        </div>
+        </section>
       ))}
     </>
   );

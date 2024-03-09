@@ -13,7 +13,7 @@ export default function CardImg({ imageList }: CardImgProps) {
           src={imageList[0]}
           alt="img"
           className={
-            'absolute top-0 left-0 w-full h-full  rounded-lg hover:scale-105 transition object-cover'
+            'absolute top-0 left-0 w-full h-full object-cover rounded-lg hover:scale-105 transition'
           }
         />
         {imageList.length > 1 && (

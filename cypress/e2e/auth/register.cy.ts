@@ -1,3 +1,6 @@
+import { toastMessage } from '../../../src/constant/toastMessage.ts';
+import { zodMessage } from '../../../src/constant/zodMessage.ts';
+
 function generateRandomEmail() {
   const emailPrefix = 'testuser';
   const domain = 'example.com';
@@ -28,10 +31,7 @@ describe('회원가입 테스트', () => {
     cy.get('@password-input').invoke('val').should('eq', '1q2w3e4r!A');
     cy.get('@register-button').click();
 
-    cy.get('li[role="status"]').should(
-      'have.text',
-      '회원 가입 성공!로그인까지 했어요! 메인 페이지로 이동합니다!'
-    );
+    cy.get('li[role="status"]').should('include.text', toastMessage.register.title);
     cy.url().should('eq', 'http://localhost:5173/');
   });
 
@@ -39,7 +39,10 @@ describe('회원가입 테스트', () => {
     it('이메일 에러 메세지 출력', () => {
       cy.get('@email-input').type('a');
       cy.get('@register-button').click();
-      cy.get('[data-testid="email-error-msg"]').should('have.text', '이메일 형식에 맞지 않습니다.');
+      cy.get('[data-testid="email-error-msg"]').should(
+        'include.text',
+        zodMessage.login.email.message
+      );
     });
 
     it('이름 에러 메세지 출력', () => {
@@ -49,7 +52,10 @@ describe('회원가입 테스트', () => {
 
       cy.get('@password-input').type('1q2w3e4r!A');
       cy.get('@register-button').click();
-      cy.get('[data-testid="userName-error-msg"]').should('have.text', '이름을 입력해 주세요.');
+      cy.get('[data-testid="userName-error-msg"]').should(
+        'have.text',
+        zodMessage.register.userName.min.message
+      );
     });
 
     it('비밀번호 에러 메세지 출력', () => {
@@ -64,7 +70,7 @@ describe('회원가입 테스트', () => {
       cy.get('@register-button').click();
       cy.get('[data-testid="password-error-msg"]').should(
         'have.text',
-        '비밀번호 형식에 맞지 않습니다.'
+        zodMessage.login.password.message
       );
     });
   });

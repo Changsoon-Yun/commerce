@@ -1,4 +1,3 @@
-import NotFound from '@/components/optimize/NotFound';
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ const CategoryProductsPage = lazy(() => import('@/pages/products/CategoryProduct
 const DetailProductPage = lazy(() => import('@/pages/products/DetailProduct.page.tsx'));
 const OrderPage = lazy(() => import('@/pages/order/Order.page.tsx'));
 const OrderedListPage = lazy(() => import('@/pages/order/OrderedList.page.tsx'));
+const NotFound = lazy(() => import('@/components/optimize/NotFound'));
 
 export default function Router() {
   return (

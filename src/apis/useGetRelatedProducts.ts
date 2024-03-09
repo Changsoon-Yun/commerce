@@ -1,9 +1,10 @@
 import { db } from '@/lib/firebase/firebase';
-import { collection, getDocs, limit, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { IProducts } from '@/types/product.ts';
 import { useCallback, useMemo } from 'react';
+import _ from 'lodash';
 
 export default function useGetRelatedProducts(category: string, id: string) {
   const fetchData = useCallback(async () => {
@@ -13,8 +14,7 @@ export default function useGetRelatedProducts(category: string, id: string) {
     const q = query(
       collection(db, 'products'),
       where('category', '==', category),
-      where('id', '!=', id),
-      limit(4)
+      where('id', '!=', id)
     );
 
     const querySnapshot = await getDocs(q);
@@ -25,7 +25,7 @@ export default function useGetRelatedProducts(category: string, id: string) {
       products.push({ id: doc.id, ...doc.data() } as IProducts);
     });
 
-    return products;
+    return _.shuffle(products).slice(0, 4);
   }, [category, id]);
 
   const { data: products } = useQuery({

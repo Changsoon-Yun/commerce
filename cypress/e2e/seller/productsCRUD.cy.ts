@@ -1,4 +1,5 @@
 import dayjs = require('dayjs');
+import { toastMessage } from '../../../src/constant/toastMessage.ts';
 
 describe('판매자 상품 CRUD 관련 테스트', () => {
   beforeEach(() => {
@@ -34,10 +35,7 @@ describe('판매자 상품 CRUD 관련 테스트', () => {
 
     cy.url().should('include', '/seller/dashboard');
 
-    cy.get('li[role="status"]').should(
-      'have.text',
-      '상품 등록을 성공 했습니다. 이전 페이지로 이동합니다.'
-    );
+    cy.get('li[role="status"]').should('have.text', toastMessage.productAdd.description);
   });
 
   it('상품 수정', () => {
@@ -56,10 +54,7 @@ describe('판매자 상품 CRUD 관련 테스트', () => {
 
     cy.url().should('include', '/seller/dashboard');
 
-    cy.get('li[role="status"]').should(
-      'have.text',
-      '상품 수정을 성공 했습니다. 이전 페이지로 이동합니다.'
-    );
+    cy.get('li[role="status"]').should('have.text', toastMessage.productEdit.description);
   });
 
   it('상품 삭제', () => {
@@ -70,6 +65,6 @@ describe('판매자 상품 CRUD 관련 테스트', () => {
       .should('exist')
       .click();
 
-    cy.get('li[role="status"]').should('have.text', '상품 삭제에 성공 했습니다.');
+    cy.get('li[role="status"]').should('have.text', toastMessage.productDelete.description);
   });
 });
