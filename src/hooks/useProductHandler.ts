@@ -48,7 +48,7 @@ export default function useProductHandler(id?: string) {
       toast({
         description: toastMessage.productAdd.description,
       });
-      navigate('/seller/dashboard');
+      navigate('/seller/dashboard', { replace: true });
     } catch (e) {
       handleFirebaseError({ e, toast });
     } finally {
