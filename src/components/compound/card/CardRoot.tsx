@@ -20,7 +20,7 @@ export default function CardRoot({ children, to, ...rest }: CardRootProps) {
       <CardContext.Provider value={{ variant: 'default' }}>
         <div
           className={
-            'relative flex flex-col gap-3 rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200 cursor-pointer'
+            'relative flex flex-col gap-3 rounded-lg p-2 bg-white transition border border-transparent hover:border-zinc-200'
           }
           onClick={goHandler}
           data-testid={'product-card'}
