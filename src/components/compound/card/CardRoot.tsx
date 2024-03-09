@@ -1,6 +1,6 @@
+import { CardContext } from '@/hooks/useCardContext';
 import { HTMLAttributes, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CardContext } from './useCardContext';
 
 interface CardRootProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
