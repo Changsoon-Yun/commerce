@@ -16,7 +16,7 @@ export default function FormRadioGroup<T extends FieldValues>({
 }: FormInnerProps<T>) {
   return (
     <>
-      <div className="pb-4">
+      <div className="py-2">
         <FormField
           control={form.control}
           name={name}

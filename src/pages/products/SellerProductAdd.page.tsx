@@ -1,6 +1,5 @@
-import FormInner from '@/components/auth/FormInner.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Form } from '@/components/ui/form.tsx';
+import { Form, FormField } from '@/components/ui/form.tsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
@@ -12,6 +11,7 @@ import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 import PageTitle from '@/components/PageTitle.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
+import FormTextInput from '@/components/compound/submission/FormTextInput.tsx';
 
 export default function SellerProductAddPage() {
   const { submitHandler, addImgHandler, previewImages, deleteImageHandler, isLoading } =
@@ -47,20 +47,32 @@ export default function SellerProductAddPage() {
                 deleteImageHandler={deleteImageHandler}
               />
             </div>
-            <FormInner form={form} name={'title'} label={'제목'} placeholder={'제목'} />
-            <FormInner
-              form={form}
-              name={'price'}
-              label={'가격'}
-              type={'number'}
-              placeholder={'가격을 입력해 주세요.'}
+            <FormField
+              name={'title'}
+              render={({ field }) => (
+                <FormTextInput label={'제목'} placeholder={'제목을 입력해 주세요.'} field={field} />
+              )}
             />
-            <FormInner
-              form={form}
+            <FormField
+              name={'price'}
+              render={({ field }) => (
+                <FormTextInput
+                  label={'가격'}
+                  placeholder={'가격을 입력해 주세요.'}
+                  type={'number'}
+                  field={field}
+                />
+              )}
+            />
+            <FormField
               name={'desc'}
-              label={'상세 내용'}
-              isTextArea={true}
-              placeholder={'게시글 내용을 작성해 주세요.'}
+              render={({ field }) => (
+                <FormTextInput
+                  label={'상세 내용'}
+                  placeholder={'게시글 내용을 작성해 주세요.'}
+                  field={field}
+                />
+              )}
             />
             <FormComboxInner form={form} name={'category'} label={'카테고리'} />
             <FormRadioGroup form={form} name={'condition'} label={'상태'} />

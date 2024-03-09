@@ -53,7 +53,7 @@ export default function SellerDashBoardPage() {
           {products?.pages.map((items) =>
             items.products.map(
               ({ title, imageList, createdAt, orderedDate, id, price, condition, orderStatus }) => (
-                <Card.Root key={createdAt.seconds} data-testid={'seller-product'}>
+                <Card.Root key={id} data-testid={'seller-product'}>
                   <Card.Img imageList={imageList} />
                   <Card.Title title={title} />
                   <Card.Description

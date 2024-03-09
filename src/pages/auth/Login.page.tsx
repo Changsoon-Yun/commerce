@@ -1,8 +1,7 @@
-import { Form } from '@/components/ui/form';
+import { Form, FormField } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInner from '@/components/auth/FormInner.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import SocialLogins from '@/components/auth/SocialLogins.tsx';
 import { Link } from 'react-router-dom';
@@ -12,6 +11,7 @@ import { useAuth } from '@/apis/auth/useAuth.ts';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 import useSocialLogin from '@/apis/auth/useSocialLogin.ts';
+import FormTextInput from '@/components/compound/submission/FormTextInput.tsx';
 
 export default function LoginPage() {
   const { authServerCall } = useAuth();
@@ -35,18 +35,27 @@ export default function LoginPage() {
           <AuthHeading text={'로그인'} />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(submitHandler)}>
-              <FormInner
-                form={form}
+              <FormField
                 name={'email'}
-                label={'이메일'}
-                placeholder={'example@email.com'}
+                render={({ field }) => (
+                  <FormTextInput
+                    label={'이메일'}
+                    type={'text'}
+                    placeholder={'example@email.com'}
+                    field={field}
+                  />
+                )}
               />
-              <FormInner
-                form={form}
+              <FormField
                 name={'password'}
-                type={'password'}
-                label={'비밀번호'}
-                placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
+                render={({ field }) => (
+                  <FormTextInput
+                    type={'password'}
+                    label={'비밀번호'}
+                    placeholder={'최소 8글자 이상 대문자, 소문자, 특수문자 1개 포함 입니다.'}
+                    field={field}
+                  />
+                )}
               />
               <Button data-testid={'login-button'} className={'w-full mt-10 py-6'} type={'submit'}>
                 로그인 하기

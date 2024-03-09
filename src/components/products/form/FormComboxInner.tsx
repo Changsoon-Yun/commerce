@@ -28,7 +28,7 @@ export default function FormComboxInner<T extends FieldValues>({
   const [open, setOpen] = useState(false);
   return (
     <>
-      <div className={'pb-4'}>
+      <div className={'py-2'}>
         <FormField
           control={form.control}
           name={name}
