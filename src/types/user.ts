@@ -1,6 +1,4 @@
-import { DocumentData } from 'firebase/firestore';
-
-export interface UserData extends DocumentData {
+export interface User {
   createdAt: {
     seconds: number;
     nanoseconds: number;

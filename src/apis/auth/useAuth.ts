@@ -13,7 +13,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { UserData } from '@/types/user.ts';
+import { User } from '@/types/user.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
 import { toastMessage } from '@/constant/toastMessage.ts';
@@ -28,7 +28,7 @@ export function useAuth() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const [storedUserData, setStoredUserData] = useState<UserData | undefined | null>(
+  const [storedUserData, setStoredUserData] = useState<User | undefined | null>(
     localStorage.getItem('user') === 'undefined'
       ? null
       : JSON.parse(localStorage.getItem('user') as string)
@@ -39,8 +39,8 @@ export function useAuth() {
     const q = doc(db, 'users', uid);
     const querySnapshot = await getDoc(q);
     localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
-    setStoredUserData(querySnapshot.data() as UserData);
-    return querySnapshot.data() as UserData;
+    setStoredUserData(querySnapshot.data() as User);
+    return querySnapshot.data() as User;
   }, []);
 
   useEffect(() => {

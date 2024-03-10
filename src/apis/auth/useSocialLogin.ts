@@ -1,7 +1,7 @@
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, db } from '@/lib/firebase/firebase.ts';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { UserData } from '@/types/user.ts';
+import { User } from '@/types/user.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +33,7 @@ export default function useSocialLogin() {
       const updatedUserRef = doc(db, 'users', uid);
       const updatedSnapShot = await getDoc(updatedUserRef);
       localStorage.setItem('user', JSON.stringify(updatedSnapShot.data()));
-      setStoredUserData(updatedSnapShot.data() as UserData);
+      setStoredUserData(updatedSnapShot.data() as User);
 
       toast({
         title: toastMessage.login.title,

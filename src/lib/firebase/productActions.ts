@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
-import { UserData } from '@/types/user.ts';
+import { User } from '@/types/user.ts';
 import { z } from 'zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
 import { OrderStatus, Product } from '@/types/product.ts';
@@ -23,7 +23,7 @@ interface IdProps {
 }
 
 interface SubmitActionProps extends UploadData {
-  userData: UserData;
+  userData: User;
 }
 
 interface EditActionProps extends UploadData, IdProps {}
@@ -41,7 +41,7 @@ interface UpdateFetchActionProps extends IdProps {
   idx: number;
   isSold: boolean;
   checkItems: Product[];
-  storedUserData: UserData;
+  storedUserData: User;
 }
 
 const submitAction = async ({ userData, values, imageUrlList }: SubmitActionProps) => {
@@ -124,7 +124,7 @@ const updateFetchAction = async ({
 
   const sellerRef = doc(db, `users/${productData.uid}`);
   const sellerSnapshot = await getDoc(sellerRef);
-  const sellerData = sellerSnapshot.data() as UserData;
+  const sellerData = sellerSnapshot.data() as User;
 
   const itemToUpdate = checkItems[idx];
   const newData = {

@@ -16,7 +16,7 @@ import {
   submitAction,
   updateOrderStatusAction,
 } from '@/lib/firebase/productActions.ts';
-import { UserData } from '@/types/user.ts';
+import { User } from '@/types/user.ts';
 import { toastMessage } from '@/constant/toastMessage.ts';
 
 export type UploadImgListType = { src: string; blob: File }[];
@@ -44,7 +44,7 @@ export default function useProductHandler(id?: string) {
       setIsLoading(true);
       await uploadHandler(values.title);
       const imageUrlList = await getImageURL(values.title);
-      await submitAction({ userData: userData as UserData, values, imageUrlList });
+      await submitAction({ userData: userData as User, values, imageUrlList });
       toast({
         description: toastMessage.productAdd.description,
       });

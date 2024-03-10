@@ -1,4 +1,4 @@
-import { UserData } from './user.ts';
+import { User } from './user.ts';
 
 export interface TimeStamp {
   nanoseconds: number;
@@ -25,7 +25,7 @@ export interface Product {
   condition: string;
   uid: string;
   sellerEmail: string;
-  customerData: UserData;
+  customerData: User;
   orderStatus: OrderStatus;
   orderedDate: TimeStamp;
 }
