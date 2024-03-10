@@ -5,8 +5,6 @@ interface FormRootProps {
   children: ReactNode;
 }
 
-// TODO: Submission컴포넌트 완성해야함
-
 function SubmissionRoot({ children }: FormRootProps) {
   return (
     <>
