@@ -5,7 +5,7 @@ import { CartContext } from '@/context/CartContext.tsx';
 import { z } from 'zod';
 import { orderDataFormSchema } from '@/lib/zod/schemas.ts';
 import { useAuth } from '@/apis/auth/useAuth.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
@@ -57,9 +57,9 @@ export default function useOrder() {
     }
   }
 
-  const [checkItems, setCheckItems] = useState<IProducts[]>([]);
+  const [checkItems, setCheckItems] = useState<Product[]>([]);
 
-  const handleSingleCheck = (checked: boolean, item: IProducts) => {
+  const handleSingleCheck = (checked: boolean, item: Product) => {
     if (checked) {
       setCheckItems((prev) => [...prev, item]);
     } else {
@@ -70,7 +70,7 @@ export default function useOrder() {
   const handleAllCheck = (checked: boolean) => {
     if (products) {
       if (checked) {
-        const idArray: IProducts[] = [];
+        const idArray: Product[] = [];
         products.forEach((el) => idArray.push(el));
         setCheckItems(idArray);
       } else {

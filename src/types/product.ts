@@ -1,4 +1,3 @@
-import { DocumentData } from 'firebase/firestore';
 import { UserData } from './user.ts';
 
 export interface TimeStamp {
@@ -14,7 +13,7 @@ export enum OrderStatus {
   SALE_COMPLETED = '판매 완료',
 }
 
-export interface IProducts extends DocumentData {
+export interface Product {
   title: string;
   id: string;
   desc: string;

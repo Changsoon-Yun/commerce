@@ -2,7 +2,7 @@ import { db } from '@/lib/firebase/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useCallback, useMemo } from 'react';
 import _ from 'lodash';
 
@@ -19,10 +19,10 @@ export default function useGetRelatedProducts(category: string, id: string) {
 
     const querySnapshot = await getDocs(q);
 
-    const products: IProducts[] = [];
+    const products: Product[] = [];
 
     querySnapshot.forEach((doc) => {
-      products.push({ id: doc.id, ...doc.data() } as IProducts);
+      products.push({ id: doc.id, ...doc.data() } as Product);
     });
 
     return _.shuffle(products).slice(0, 4);

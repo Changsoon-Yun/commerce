@@ -11,7 +11,7 @@ import { db } from '@/lib/firebase/firebase.ts';
 import { UserData } from '@/types/user.ts';
 import { z } from 'zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
-import { IProducts, OrderStatus } from '@/types/product.ts';
+import { OrderStatus, Product } from '@/types/product.ts';
 
 interface UploadData {
   values: z.infer<typeof productFormSchema>;
@@ -32,7 +32,7 @@ interface DeleteActionProps extends IdProps {}
 
 interface UpdateOrderStatusActionProps extends IdProps {
   value: string;
-  product: IProducts;
+  product: Product;
 }
 
 interface CancelOrderByIdActionProps extends IdProps {}
@@ -40,7 +40,7 @@ interface CancelOrderByIdActionProps extends IdProps {}
 interface UpdateFetchActionProps extends IdProps {
   idx: number;
   isSold: boolean;
-  checkItems: IProducts[];
+  checkItems: Product[];
   storedUserData: UserData;
 }
 
@@ -100,7 +100,7 @@ const updateOrderStatusAction = async ({ value, id, product }: UpdateOrderStatus
 const cancelOrderByIdAction = async ({ id }: CancelOrderByIdActionProps) => {
   const productRef = doc(db, `products/${id}`);
   const productSnapshot = await getDoc(productRef);
-  const productData = productSnapshot.data() as IProducts;
+  const productData = productSnapshot.data() as Product;
   await updateDoc(productRef, {
     ...productData,
     orderStatus: OrderStatus.ORDER_CANCELLED,
@@ -120,7 +120,7 @@ const updateFetchAction = async ({
 }: UpdateFetchActionProps) => {
   const productRef = doc(db, `products/${id}`);
   const productSnapshot = await getDoc(productRef);
-  const productData = productSnapshot.data() as IProducts;
+  const productData = productSnapshot.data() as Product;
 
   const sellerRef = doc(db, `users/${productData.uid}`);
   const sellerSnapshot = await getDoc(sellerRef);

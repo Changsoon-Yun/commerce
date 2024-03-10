@@ -3,7 +3,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useCallback } from 'react';
 
 export default function useGetOrderedProducts() {
@@ -13,9 +13,9 @@ export default function useGetOrderedProducts() {
     const q = query(collection(db, 'products'), where('isSold', '==', true));
     const querySnapshot = await getDocs(q);
 
-    const products: IProducts[] = [];
+    const products: Product[] = [];
     querySnapshot.forEach((doc) => {
-      products.push({ id: doc.id, ...doc.data() } as IProducts);
+      products.push({ id: doc.id, ...doc.data() } as Product);
     });
 
     return products.filter((product) => {

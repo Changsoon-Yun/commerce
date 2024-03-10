@@ -15,7 +15,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { PAGE_LIMIT } from '@/constant/pageLimit';
 
 export default function useGetSellerProducts() {
@@ -38,9 +38,9 @@ export default function useGetSellerProducts() {
             limit(PAGE_LIMIT)
           );
       const querySnapshot = await getDocs(q);
-      const products: IProducts[] = [];
+      const products: Product[] = [];
       querySnapshot.forEach((doc) => {
-        products.push({ id: doc.id, ...doc.data() } as IProducts);
+        products.push({ id: doc.id, ...doc.data() } as Product);
       });
 
       return { products, querySnapshot };

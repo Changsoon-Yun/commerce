@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import { Link } from 'react-router-dom';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { Card } from '../compound/card';
 import { Button } from '@/components/ui/button.tsx';
 
-export default function CartList({ product }: { product: IProducts }) {
+export default function CartList({ product }: { product: Product }) {
   const { removeCart, toggleHandler } = useContext(CartContext);
 
   if (!product) {

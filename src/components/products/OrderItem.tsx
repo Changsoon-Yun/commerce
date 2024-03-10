@@ -6,14 +6,14 @@ import {
 import { Separator } from '@/components/ui/separator.tsx';
 import dayjs from 'dayjs';
 import { conditions } from '@/constant/conditions.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
 import { Card } from '@/components/compound/card';
 
 interface OrderItemProps {
-  item: IProducts;
-  handleSingleCheck: (checked: boolean, item: IProducts) => void;
-  checkItems: IProducts[];
+  item: Product;
+  handleSingleCheck: (checked: boolean, item: Product) => void;
+  checkItems: Product[];
 }
 
 export default function OrderItem({ item, handleSingleCheck, checkItems }: OrderItemProps) {

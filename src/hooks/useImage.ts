@@ -3,12 +3,12 @@ import { UploadImgListType } from '@/hooks/useProductHandler.ts';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase/firebase.ts';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useAuth } from '@/apis/auth/useAuth.ts';
 import imageCompression from 'browser-image-compression';
 import { compressValues } from '@/constant/compressValues.ts';
 
-export default function useImage(product: IProducts) {
+export default function useImage(product: Product) {
   const { userData } = useAuth();
   const [uploadImages, setUploadImages] = useState<UploadImgListType>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);

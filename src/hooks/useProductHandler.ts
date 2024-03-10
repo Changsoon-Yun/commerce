@@ -6,7 +6,7 @@ import useGetSellerProduct from '@/apis/useGetSellerProduct.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import useImage from '@/hooks/useImage.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useState } from 'react';
 import { queryClient } from '@/lib/react-query/queryClient.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError';
@@ -33,7 +33,7 @@ export default function useProductHandler(id?: string) {
     setPreviewImages,
     deleteImageHandler,
     deleteAddedImageHandler,
-  } = useImage(product as IProducts);
+  } = useImage(product as Product);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (values: z.infer<typeof productFormSchema>) => {
@@ -98,7 +98,7 @@ export default function useProductHandler(id?: string) {
 
   const updateOrderStatusHandler = async (value: string, id: string) => {
     try {
-      await updateOrderStatusAction({ value, id, product: product as IProducts });
+      await updateOrderStatusAction({ value, id, product: product as Product });
       toast({
         description: toastMessage.updateOrderState.description,
       });

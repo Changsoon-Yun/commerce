@@ -5,13 +5,13 @@ import {
 } from '@/utils/converter.ts';
 import dayjs from 'dayjs';
 import { conditions } from '@/constant/conditions.ts';
-import { IProducts, OrderStatus } from '@/types/product.ts';
+import { OrderStatus, Product } from '@/types/product.ts';
 import DetailDescription from '@/components/products/detail/DetailDescription.tsx';
 import DetailCarousel from '@/components/products/detail/DetailCarousel.tsx';
 import { Button } from '@/components/ui/button.tsx';
 
 interface OrderedListItemProps {
-  product: IProducts;
+  product: Product;
   cancelOrderById: (id: string) => Promise<void>;
 }
 

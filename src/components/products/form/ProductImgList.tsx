@@ -6,7 +6,7 @@ interface ProductImgListProps {
   deleteImageHandler: (targetSrc: string, id?: string) => void;
 }
 export default function ProductImgList({ previewImages, deleteImageHandler }: ProductImgListProps) {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   return (
     <>
       <div className={'flex flex-1 overflow-auto'} data-testid={'image-list'}>

@@ -4,7 +4,7 @@ import { formatNumberWithCommas } from '@/utils/converter.ts';
 import { useParams } from 'react-router-dom';
 import OrderItem from '@/components/products/OrderItem';
 import useGetProduct from '@/apis/useGetProduct.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useEffect, useState } from 'react';
 import {
   AlertDialog,
@@ -119,7 +119,7 @@ export default function OrderPage() {
                   방금 보신 상품
                 </h4>
                 <OrderItem
-                  item={product as IProducts}
+                  item={product as Product}
                   handleSingleCheck={handleSingleCheck}
                   checkItems={checkItems}
                 />

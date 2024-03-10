@@ -2,7 +2,7 @@ import { db } from '@/lib/firebase/firebase';
 import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useCallback, useMemo } from 'react';
 
 export default function useGetHomeProducts(category: string) {
@@ -11,10 +11,10 @@ export default function useGetHomeProducts(category: string) {
     const q = query(collection(db, 'products'), where('category', '==', category), limit(4));
     const querySnapshot = await getDocs(q);
 
-    const products: IProducts[] = [];
+    const products: Product[] = [];
 
     querySnapshot.forEach((doc) => {
-      products.push({ id: doc.id, ...doc.data() } as IProducts);
+      products.push({ id: doc.id, ...doc.data() } as Product);
     });
 
     return products;

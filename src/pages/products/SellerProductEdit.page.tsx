@@ -17,7 +17,7 @@ import Container from '@/components/Container.tsx';
 import { Submission } from '@/components/compound/submission';
 
 export default function SellerProductEditPage() {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
 
   const {
     editHandler,

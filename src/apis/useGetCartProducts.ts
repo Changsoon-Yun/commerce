@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase.ts';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { useMemo } from 'react';
@@ -10,7 +10,7 @@ export default function useGetCartProducts(carts: string[]) {
   const fetchDataById = async (id: string) => {
     const q = doc(db, `products/${id}`);
     const querySnapshot = await getDoc(q);
-    return querySnapshot.data() as IProducts;
+    return querySnapshot.data() as Product;
   };
 
   const fetchProductsByIds = useMemo(

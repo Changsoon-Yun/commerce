@@ -1,8 +1,8 @@
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { ReactNode } from 'react';
 
 interface NoProductProps {
-  products: IProducts[] | undefined;
+  products: Product[] | undefined;
   title: string;
   desc: string;
   children?: ReactNode;

@@ -6,7 +6,7 @@ import {
 import { conditions } from '@/constant/conditions.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { Link } from 'react-router-dom';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext.tsx';
 import { useAuth } from '@/apis/auth/useAuth.ts';
@@ -15,7 +15,7 @@ import DetailDescription from '@/components/products/detail/DetailDescription.ts
 import DetailCarousel from '@/components/products/detail/DetailCarousel.tsx';
 
 interface DetailProductProps {
-  product: IProducts;
+  product: Product;
 }
 
 export default function DetailProduct({ product }: DetailProductProps) {

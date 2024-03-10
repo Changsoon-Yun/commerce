@@ -6,10 +6,10 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel.tsx';
 import { Card, CardContent } from '@/components/ui/card.tsx';
-import { IProducts } from '@/types/product.ts';
+import { Product } from '@/types/product.ts';
 
 interface DetailCarouselProps {
-  product: IProducts;
+  product: Product;
 }
 
 export default function DetailCarousel({ product }: DetailCarouselProps) {
