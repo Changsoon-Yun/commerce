@@ -1,9 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { collection, CollectionReference, DocumentData, getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { Product } from '@/types/product.ts';
+import {
+  collection,
+  CollectionReference,
+  doc,
+  DocumentData,
+  Firestore,
+  FirestoreDataConverter,
+  getFirestore,
+  QueryDocumentSnapshot,
+} from 'firebase/firestore';
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,8 +31,33 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-const createCollection = <T = DocumentData>(collectionName: string) => {
-  return collection(db, collectionName) as CollectionReference<T>;
+export const createFirestoreDataConverter = <
+  T extends DocumentData,
+>(): FirestoreDataConverter<T> => {
+  return {
+    toFirestore(data: T): DocumentData {
+      return data;
+    },
+    fromFirestore(snapshot: QueryDocumentSnapshot<T>): T {
+      return snapshot.data();
+    },
+  };
 };
 
-export const productCol = createCollection<Product>('product');
+export const createDocRef = <T extends DocumentData>(
+  db: Firestore,
+  collectionPath: string,
+  docPath?: string
+) => {
+  if (!docPath) {
+    return doc(db, collectionPath).withConverter(createFirestoreDataConverter<T>());
+  }
+  return doc(db, collectionPath, docPath).withConverter(createFirestoreDataConverter<T>());
+};
+
+export const createCollectionRef = <T extends DocumentData>(
+  db: Firestore,
+  collectionPath: string
+): CollectionReference<T> => {
+  return collection(db, collectionPath).withConverter(createFirestoreDataConverter<T>());
+};

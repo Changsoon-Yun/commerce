@@ -9,13 +9,13 @@ import Container from '@/components/Container.tsx';
 
 export default function DetailProductPage() {
   const { id } = useParams() as { id: string };
-  const { product } = useGetProduct({ id });
+  const { product } = useGetProduct(id);
   const { products: recommendedProducts } = useGetRelatedProducts(
     product?.category as string,
     id as string
   );
 
-  if (!product || !id) {
+  if (!product) {
     return;
   }
 
