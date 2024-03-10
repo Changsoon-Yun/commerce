@@ -81,23 +81,6 @@ export default function SellerProductAddPage() {
                 <Submission.Root>
                   <Submission.Label label={'상세 내용'} />
                   <Submission.Content>
-                    <Submission.InputIcon />
-                    <Submission.Input
-                      placeholder={'게시글 내용을 작성해 주세요.'}
-                      type={'number'}
-                      hasPadding={true}
-                      field={field}
-                    />
-                  </Submission.Content>
-                </Submission.Root>
-              )}
-            />
-            <FormField
-              name={'desc'}
-              render={({ field }) => (
-                <Submission.Root>
-                  <Submission.Label label={'상세 내용'} />
-                  <Submission.Content>
                     <Submission.Textarea
                       placeholder={'게시글 내용을 작성해 주세요.'}
                       field={field}

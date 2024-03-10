@@ -2,8 +2,7 @@ import useProductHandler from '@/hooks/useProductHandler.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productFormSchema } from '@/lib/zod/schemas.ts';
-import { Form } from '@/components/ui/form.tsx';
-import FormInner from '@/components/auth/FormInner.tsx';
+import { Form, FormField } from '@/components/ui/form.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import ProductImgList from '@/components/products/form/ProductImgList.tsx';
 import { useParams } from 'react-router-dom';
@@ -15,6 +14,7 @@ import FormRadioGroup from '@/components/products/form/FormRadioGroup.tsx';
 import PageTitle from '@/components/PageTitle.tsx';
 import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
+import { Submission } from '@/components/compound/submission';
 
 export default function SellerProductEditPage() {
   const { id } = useParams();
@@ -76,20 +76,47 @@ export default function SellerProductEditPage() {
                 deleteImageHandler={deleteImageHandler}
               />
             </div>
-            <FormInner form={form} name={'title'} label={'제목'} placeholder={'제목'} />
-            <FormInner
-              form={form}
-              name={'price'}
-              label={'가격'}
-              type={'number'}
-              placeholder={'가격을 입력해 주세요.'}
+            <FormField
+              name={'title'}
+              render={({ field }) => (
+                <Submission.Root>
+                  <Submission.Label label={'제목'} />
+                  <Submission.Content>
+                    <Submission.Input placeholder={'제목을 입력해 주세요.'} field={field} />
+                  </Submission.Content>
+                </Submission.Root>
+              )}
             />
-            <FormInner
-              form={form}
+            <FormField
+              name={'price'}
+              render={({ field }) => (
+                <Submission.Root>
+                  <Submission.Label label={'가격'} />
+                  <Submission.Content>
+                    <Submission.InputIcon />
+                    <Submission.Input
+                      placeholder={'가격을 입력해 주세요.'}
+                      type={'number'}
+                      hasPadding={true}
+                      field={field}
+                    />
+                  </Submission.Content>
+                </Submission.Root>
+              )}
+            />
+            <FormField
               name={'desc'}
-              label={'상세 내용'}
-              isTextArea={true}
-              placeholder={'최소 1글자 이상입니다.'}
+              render={({ field }) => (
+                <Submission.Root>
+                  <Submission.Label label={'상세 내용'} />
+                  <Submission.Content>
+                    <Submission.Textarea
+                      placeholder={'게시글 내용을 작성해 주세요.'}
+                      field={field}
+                    />
+                  </Submission.Content>
+                </Submission.Root>
+              )}
             />
             <FormComboxInner form={form} name={'category'} label={'카테고리'} />
             <FormRadioGroup form={form} name={'condition'} label={'상태'} />
