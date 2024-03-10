@@ -18,11 +18,15 @@ Cypress.Commands.add('signInWithEmailAndPassword', (type) => {
 });
 
 Cypress.Commands.add('signOut', () => {
-  cy.visit('/');
-  cy.signInWithEmailAndPassword('seller');
   cy.get('[data-testid="header-dropdown-trigger"]').should('be.visible').click();
   cy.get('[data-testid="menu-content"]').scrollTo('bottom', { duration: 1000 });
-  cy.get('[data-testid="sign-out-button"]').should('be.visible').click();
+  cy.get('[data-testid="sign-button"]').then(($signBtn) => {
+    if ($signBtn.text() === '로그아웃') {
+      cy.wrap($signBtn).click();
+    } else {
+      cy.get('[data-testid="sign-button"]').should('have.text', '로그인');
+    }
+  });
 });
 
 Cypress.Commands.add('sortAndVerify', (sortOption, sortingCriteria, compareFunction) => {

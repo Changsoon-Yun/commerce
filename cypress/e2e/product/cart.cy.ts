@@ -1,7 +1,6 @@
 describe('장바구니', () => {
   context('로그인 상황에 따른 버튼 동작', () => {
     it('비 로그인 찜하기', () => {
-      cy.signOut();
       cy.visit('/');
       cy.get('[data-testid="category-product-list"]')
         .first()
@@ -53,7 +52,6 @@ describe('장바구니', () => {
     });
 
     it('비 로그인 구매하기', () => {
-      cy.signOut();
       cy.visit('/');
       cy.get('[data-testid="category-product-list"]')
         .first()

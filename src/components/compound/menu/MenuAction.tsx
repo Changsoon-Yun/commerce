@@ -9,7 +9,7 @@ export default function MenuAction() {
     <>
       {storedUserData ? (
         <div
-          data-testid={'sign-out-button'}
+          data-testid={'sign-button'}
           className={'px-5 my-1 hover:bg-zinc-100 cursor-pointer'}
           onClick={() => {
             closeMenuHandler();
@@ -18,7 +18,10 @@ export default function MenuAction() {
           <p className="scroll-m-20 py-3 text-xl tracking-tight hover:font-semibold">로그아웃</p>
         </div>
       ) : (
-        <div className={'px-5 my-1 hover:bg-zinc-100'} onClick={closeMenuHandler}>
+        <div
+          data-testid={'sign-button'}
+          className={'px-5 my-1 hover:bg-zinc-100'}
+          onClick={closeMenuHandler}>
           <Link to={'/login'}>
             <p className="scroll-m-20 py-3 text-xl tracking-tight hover:font-semibold">로그인</p>
           </Link>
