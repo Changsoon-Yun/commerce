@@ -13,7 +13,7 @@ export default function MobileLayout() {
   return (
     <>
       <div className="bg-zinc-50 flex justify-center">
-        <div className="flex flex-1 flex-col relative max-w-lg w-full min-h-screen h-full shadow-lg bg-zinc-100 overflow-hidden">
+        <div className="flex flex-1 flex-col relative max-w-[600px] w-full min-h-screen h-full shadow-lg bg-zinc-100 overflow-hidden">
           <header className={'sticky top-0 z-10 border-b border-zinc-200'}>
             <Header />
           </header>

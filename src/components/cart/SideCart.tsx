@@ -25,7 +25,7 @@ export default function SideCart() {
       <aside
         data-testid={'side-cart'}
         style={{ transition: '0.3s', height: 'calc(100vh - 61px)' }}
-        className={`${isOpen ? 'right-0' : 'right-[-600px]'} absolute top-[61px] max-w-lg w-full transition p-4 border-l overflow-auto bg-white`}>
+        className={`${isOpen ? 'right-0' : 'right-[-600px]'} absolute top-[61px] max-w-[600px] w-full transition p-4 border-l overflow-auto bg-white`}>
         <div className={'relative'}>
           <div className={'relative'}>
             <h2 className="scroll-m-20 py-10 text-3xl font-semibold tracking-tight first:mt-0 text-center">

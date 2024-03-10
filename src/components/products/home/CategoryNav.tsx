@@ -8,7 +8,7 @@ export default function CategoryNav() {
   const { closeMenuHandler } = useMenuContext();
   return (
     <>
-      <div className={'flex gap-2 py-2 max-w-lg items-center bg-white'}>
+      <div className={'flex gap-2 py-2 max-w-[600px] items-center bg-white'}>
         <Container>
           <div className={'flex overflow-auto gap-2 flex-wrap'}>
             {categories.map((category) => (
