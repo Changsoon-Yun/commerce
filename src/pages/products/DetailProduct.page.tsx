@@ -8,8 +8,7 @@ import DetailProduct from '@/components/products/detail/DetailProduct.tsx';
 import Container from '@/components/Container.tsx';
 
 export default function DetailProductPage() {
-  const { id } = useParams();
-
+  const { id } = useParams() as { id: string };
   const { product } = useGetProduct({ id });
   const { products: recommendedProducts } = useGetRelatedProducts(
     product?.category as string,
