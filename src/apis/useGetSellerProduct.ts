@@ -1,21 +1,20 @@
 import { useAuth } from '@/apis/auth/useAuth.ts';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase/firebase.ts';
+import { getDoc } from 'firebase/firestore';
+import { createDocRef, db } from '@/lib/firebase/firebase.ts';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { useCallback, useMemo } from 'react';
+import { Product } from '@/types/product.ts';
 
-export default function useGetSellerProduct({ id }: { id: string }) {
+export default function useGetSellerProduct(id: string) {
   const { storedUserData } = useAuth();
 
   const fetchData = useCallback(async () => {
-    if (!id || !storedUserData?.uid) return null; // id나 storedUserData가 없으면 fetchData 실행하지 않음
-
-    const q = doc(db, `products/${id}`);
-    const querySnapshot = await getDoc(q);
+    const productRef = createDocRef<Product>(db, `products/${id}`);
+    const querySnapshot = await getDoc(productRef);
 
     return querySnapshot.data();
-  }, [id, storedUserData]);
+  }, [id]);
 
   const { data: product } = useQuery({
     queryKey: useMemo(

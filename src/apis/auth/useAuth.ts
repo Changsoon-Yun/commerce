@@ -1,4 +1,4 @@
-import { auth, db } from '@/lib/firebase/firebase.ts';
+import { auth, createDocRef, db } from '@/lib/firebase/firebase.ts';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -36,11 +36,11 @@ export function useAuth() {
 
   const fetchUserInfo = useCallback(async () => {
     const uid = auth.currentUser?.uid || '';
-    const q = doc(db, 'users', uid);
-    const querySnapshot = await getDoc(q);
+    const userRef = createDocRef<User>(db, 'users', uid);
+    const querySnapshot = await getDoc(userRef);
     localStorage.setItem('user', JSON.stringify(querySnapshot.data()));
-    setStoredUserData(querySnapshot.data() as User);
-    return querySnapshot.data() as User;
+    setStoredUserData(querySnapshot.data());
+    return querySnapshot.data();
   }, []);
 
   useEffect(() => {

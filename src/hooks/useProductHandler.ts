@@ -24,7 +24,7 @@ export type UploadImgListType = { src: string; blob: File }[];
 export default function useProductHandler(id?: string) {
   const navigate = useNavigate();
   const { userData, storedUserData } = useAuth();
-  const { product } = useGetSellerProduct({ id: id as string });
+  const { product } = useGetSellerProduct(id as string);
   const {
     uploadHandler,
     getImageURL,
