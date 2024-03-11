@@ -26,6 +26,7 @@ export default function FormUserName<T extends FieldValues>({
               <FormLabel className={'font-black text-black'}>{label}</FormLabel>
               <FormControl>
                 <Input
+                  data-testid={name}
                   disabled={!isEdit}
                   type={'text'}
                   autoComplete={'on'}
