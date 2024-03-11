@@ -44,14 +44,19 @@ export default function FormWrapper({ isEdit }: UserDashboardWrapperProps) {
             />
             <FormUserName form={form} name={'userName'} label={'닉네임'} isEdit={isEdit} />
             {isEdit ? (
-              <Button className={'w-full mt-10 py-6'} type={'submit'} disabled={isLoading}>
+              <Button
+                className={'w-full mt-10 py-6'}
+                type={'submit'}
+                disabled={isLoading}
+                data-testid={'submit-btn'}>
                 수정완료
               </Button>
             ) : (
               <Button
                 onClick={() => navigate('/user/dashboard/edit')}
                 className={'w-full mt-10 py-6'}
-                type={'button'}>
+                type={'button'}
+                data-testid={'go-edit-btn'}>
                 수정하러 가기
               </Button>
             )}

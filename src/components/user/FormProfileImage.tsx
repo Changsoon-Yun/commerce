@@ -27,6 +27,7 @@ export default function FormProfileImage<T extends FieldValues>({
         <FormItem>
           <div className={'relative w-32 h-32 m-auto'}>
             <img
+              data-testid={'profile-img'}
               src={profileImage || '/img/defaultProfileImage.png'}
               alt="Profile"
               className="w-full h-full object-cover rounded-full"
@@ -44,6 +45,7 @@ export default function FormProfileImage<T extends FieldValues>({
                 <FormControl>
                   <Input
                     {...field}
+                    data-testid={name + '-input'}
                     className={'hidden'}
                     // onChange={addImgHandler}
                     onChange={(e) => {
