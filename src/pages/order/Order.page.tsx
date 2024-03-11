@@ -27,9 +27,9 @@ import { Metatags } from '@/metadatas/metadatas.tsx';
 import Container from '@/components/Container.tsx';
 
 export default function OrderPage() {
-  const { id: pathName } = useParams();
+  const { id: pathName } = useParams() as { id: string };
   const { storedUserData } = useAuth();
-  const { product } = useGetProduct({ id: pathName });
+  const { product } = useGetProduct(pathName);
 
   const {
     onClickPayment,
