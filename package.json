@@ -12,7 +12,8 @@
     "lint": "eslint --cache .  --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --cache --write .",
     "sitemap": "babel-node sitemapGenerator.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "bundle": "npx vite-bundle-visualizer -c vite.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
