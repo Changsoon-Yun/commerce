@@ -27,7 +27,7 @@ export default function SellerProductEditPage() {
     deleteImageHandler,
     isLoading,
   } = useProductHandler(id);
-  const { product } = useGetSellerProduct({ id: id as string });
+  const { product } = useGetSellerProduct(id);
 
   const form = useForm({
     resolver: zodResolver(productFormSchema),
@@ -47,7 +47,7 @@ export default function SellerProductEditPage() {
       form.setValue('desc', product.desc);
       form.setValue('condition', product.condition);
       form.setValue('category', product.category);
-      form.setValue('price', product.price);
+      form.setValue('price', product.price.toString());
       const temp = [];
       for (let i = 0; i < product.imageList.length; i++) {
         temp.push(product.imageList[i]);

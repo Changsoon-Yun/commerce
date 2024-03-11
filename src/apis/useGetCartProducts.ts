@@ -15,9 +15,9 @@ export default function useGetCartProducts(carts: string[]) {
 
   const fetchProductsByIds = useMemo(
     () => async (carts: string[]) => {
-      if (carts.length === 0) return [];
-      const promises = carts.map((id: string) => fetchDataById(id));
-      return await Promise.all(promises);
+      if (carts.length === 0) return;
+      const promises = carts.map((id: string) => fetchDataById(id) as Promise<Product>);
+      return Promise.all(promises);
     },
     []
   );
