@@ -11,7 +11,7 @@ import {
   FirestoreDataConverter,
   getFirestore,
   QueryDocumentSnapshot,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 

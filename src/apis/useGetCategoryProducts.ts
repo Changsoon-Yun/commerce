@@ -9,7 +9,7 @@ import {
   QueryDocumentSnapshot,
   startAfter,
   where,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { useCallback, useEffect, useMemo } from 'react';

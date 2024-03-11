@@ -6,7 +6,7 @@ import {
   getDoc,
   serverTimestamp,
   updateDoc,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { db } from '@/lib/firebase/firebase.ts';
 import { User } from '@/types/user.ts';
 import { z } from 'zod';

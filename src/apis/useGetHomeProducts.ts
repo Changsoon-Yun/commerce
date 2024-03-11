@@ -1,5 +1,5 @@
 import { db } from '@/lib/firebase/firebase';
-import { collection, getDocs, limit, query, where } from 'firebase/firestore';
+import { collection, getDocs, limit, query, where } from 'firebase/firestore/lite';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { Product } from '@/types/product.ts';

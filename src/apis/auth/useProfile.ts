@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { profileSchema } from '@/lib/zod/schemas.ts';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase/firebase.ts';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore/lite';
 import { toastMessage } from '@/constant/toastMessage.ts';
 import { useNavigate } from 'react-router-dom';
 import { queryClient } from '@/lib/react-query/queryClient.ts';

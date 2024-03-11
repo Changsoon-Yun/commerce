@@ -9,7 +9,7 @@ import {
   QueryDocumentSnapshot,
   startAfter,
   where,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { db } from '@/lib/firebase/firebase.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo } from 'react';

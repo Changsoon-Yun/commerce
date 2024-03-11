@@ -1,4 +1,4 @@
-import { getDoc } from 'firebase/firestore';
+import { getDoc } from 'firebase/firestore/lite';
 import { createDocRef, db } from '@/lib/firebase/firebase.ts';
 import { Product } from '@/types/product.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';

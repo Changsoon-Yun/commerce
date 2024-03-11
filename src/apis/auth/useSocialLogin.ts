@@ -1,6 +1,6 @@
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, db } from '@/lib/firebase/firebase.ts';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore/lite';
 import { User } from '@/types/user.ts';
 import { handleFirebaseError } from '@/utils/handleFirebaseError.ts';
 import { toast } from '@/components/ui/use-toast.ts';

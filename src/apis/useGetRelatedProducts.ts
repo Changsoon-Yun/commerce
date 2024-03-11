@@ -1,10 +1,10 @@
 import { db } from '@/lib/firebase/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore/lite';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/react-query/queryKeys.ts';
 import { Product } from '@/types/product.ts';
 import { useCallback, useMemo } from 'react';
-import _ from 'lodash';
+import shuffle from 'lodash/shuffle';
 
 export default function useGetRelatedProducts(category: string, id: string) {
   const fetchData = useCallback(async () => {
@@ -25,7 +25,7 @@ export default function useGetRelatedProducts(category: string, id: string) {
       products.push({ id: doc.id, ...doc.data() } as Product);
     });
 
-    return _.shuffle(products).slice(0, 4);
+    return shuffle(products).slice(0, 4);
   }, [category, id]);
 
   const { data: products } = useQuery({

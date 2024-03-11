@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { UploadImgListType } from '@/hooks/useProductHandler.ts';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase/firebase.ts';
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore/lite';
 import { Product } from '@/types/product.ts';
 import { useAuth } from '@/apis/auth/useAuth.ts';
 import imageCompression from 'browser-image-compression';

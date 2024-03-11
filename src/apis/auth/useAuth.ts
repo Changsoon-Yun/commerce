@@ -8,7 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { loginFormSchema, registerFormSchema } from '@/lib/zod/schemas.ts';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore/lite';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast.ts';
