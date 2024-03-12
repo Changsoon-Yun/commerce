@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { formatNumberWithCommas, getDateFromProduct } from '@/utils/converter';
 import { Product } from '@/types/product.ts';
 import { Card } from '../compound/card';
-import { Button } from '@/components/ui/button.tsx';
 
 export default function CartList({ product }: { product: Product }) {
   const { removeCart, toggleHandler } = useContext(CartContext);
@@ -36,7 +35,7 @@ export default function CartList({ product }: { product: Product }) {
             }}>
             <Link to={`/product/${id}`}>상세보기</Link>
           </Card.Button>
-          <Button
+          <Card.Button
             variant={'outline'}
             asChild
             data-testid={'delete-button'}
@@ -44,7 +43,7 @@ export default function CartList({ product }: { product: Product }) {
               removeCart(id);
             }}>
             <Link to={`/product/${id}`}>삭제하기</Link>
-          </Button>
+          </Card.Button>
         </Card.Buttons>
       </Card.Root>
     </>
