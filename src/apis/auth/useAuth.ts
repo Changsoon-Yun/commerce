@@ -80,6 +80,7 @@ export function useAuth() {
           description: toastMessage.register.description,
         });
         navigate('/');
+        location.reload();
       }
 
       // 로그인
