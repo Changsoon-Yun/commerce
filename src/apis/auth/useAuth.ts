@@ -79,8 +79,8 @@ export function useAuth() {
           title: toastMessage.register.title,
           description: toastMessage.register.description,
         });
+        localStorage.setItem('user', JSON.stringify(await fetchUserInfo()));
         navigate('/');
-        location.reload();
       }
 
       // 로그인
